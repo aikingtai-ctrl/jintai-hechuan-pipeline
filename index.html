@@ -2,11 +2,11 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<title>閲戞嘲 脳 娌充紶 路 AI 褰辫鏅鸿兘鍒剁墖娴佹按绾?/title>
+<title>金泰 × 河传 · AI 影视智能制片流水线</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   :root{
-    /* 鈹€鈹€ 鐙珛褰遍櫌绾ц壊绯?鈹€鈹€ */
+    /* ── 独立影院级色系 ── */
     --void:#060608; --void-2:#0b0c10; --ink-panel:#101218;
     --crimson:#E50914; --crimson-soft:#ff3b46; --crimson-deep:#8f060d;
     --gold:#E9B44C; --gold-soft:#f6cf7d;
@@ -55,7 +55,7 @@
   .eyebrow{font-family:var(--mono);font-size:15px;letter-spacing:.34em;text-transform:uppercase;
     color:var(--crimson-soft);font-weight:600}
 
-  /* 鈹€鈹€ liquid glass 鈹€鈹€ */
+  /* ── liquid glass ── */
   .glass{position:relative;background:linear-gradient(150deg,rgba(255,255,255,.055),rgba(255,255,255,.012));
     backdrop-filter:blur(30px) saturate(150%);-webkit-backdrop-filter:blur(30px) saturate(150%);
     border:1px solid var(--glass-bd);border-radius:var(--rad);
@@ -63,7 +63,7 @@
   .glass::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
     background:linear-gradient(150deg,rgba(255,255,255,.14),transparent 34%);opacity:.6;mix-blend-mode:overlay}
 
-  /* 鈹€鈹€ top nav 鈹€鈹€ */
+  /* ── top nav ── */
   .nav{position:sticky;top:0;z-index:50;
     background:linear-gradient(rgba(6,6,8,.82),rgba(6,6,8,.4));
     backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
@@ -78,7 +78,7 @@
     white-space:nowrap;transition:.2s;letter-spacing:.02em}
   .navlinks a:hover{color:var(--white);background:rgba(255,255,255,.07)}
 
-  /* 鈹€鈹€ hero 鈹€鈹€ */
+  /* ── hero ── */
   .hero{position:relative;padding:96px 0 64px}
   .tagpair{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:28px}
   .ent{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:14.5px;
@@ -107,7 +107,7 @@
     background:linear-gradient(160deg,#fff,var(--mist));-webkit-background-clip:text;background-clip:text;color:transparent}
   .kpi .l{font-size:16px;color:var(--mist);margin-top:14px;letter-spacing:.02em}
 
-  /* 鈹€鈹€ section 鈹€鈹€ */
+  /* ── section ── */
   section{padding:70px 0;position:relative}
   section+section::before{content:"";position:absolute;top:0;left:26px;right:26px;height:1px;
     background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent)}
@@ -121,7 +121,7 @@
   .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
   .reveal.in{opacity:1;transform:none}
 
-  /* 鈹€鈹€ tabs 鈹€鈹€ */
+  /* ── tabs ── */
   .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
   .tab{font-family:var(--mono);font-size:13px;color:var(--mist);
     background:linear-gradient(rgba(255,255,255,.06),rgba(255,255,255,.02));
@@ -176,7 +176,7 @@
   .api .st{width:7px;height:7px;border-radius:50%;background:var(--azure);box-shadow:0 0 8px var(--azure)}
   .api.remote .st{background:var(--gold);box-shadow:0 0 8px var(--gold)}
 
-  /* 鈹€鈹€ pipeline 鈹€鈹€ */
+  /* ── pipeline ── */
   .controls{display:flex;gap:11px;align-items:center;margin-bottom:24px;flex-wrap:wrap}
   .btn{font-family:var(--mono);font-size:14px;color:var(--white);
     background:linear-gradient(rgba(255,255,255,.08),rgba(255,255,255,.03));
@@ -234,7 +234,7 @@
   .owner{font-size:15px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:9px;padding:8px 13px}
   .owner b{color:var(--crimson-soft)}
 
-  /* 鈹€鈹€ RACI 鈹€鈹€ */
+  /* ── RACI ── */
   .matrix-wrap{overflow-x:auto;border-radius:var(--rad)}
   table.raci{border-collapse:separate;border-spacing:0;width:100%;min-width:780px;font-size:13px}
   table.raci{font-size:16px}
@@ -253,7 +253,7 @@
   .raci-key{display:flex;gap:20px;flex-wrap:wrap;margin-top:18px;font-size:14.5px;color:var(--mist);font-family:var(--mono)}
   .raci-key span{display:inline-flex;align-items:center;gap:8px}
 
-  /* 鈹€鈹€ archive 鈹€鈹€ */
+  /* ── archive ── */
   .arch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:15px}
   .arch{padding:18px 19px;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
   .arch:hover{transform:translateY(-4px)}
@@ -265,7 +265,7 @@
     border:1px solid rgba(255,255,255,.08);border-radius:7px;padding:6px 11px}
   .arch .note{margin:11px 0 0;color:var(--faint);font-size:13.5px;font-family:var(--mono)}
 
-  /* 鈹€鈹€ access control 鈹€鈹€ */
+  /* ── access control ── */
   .acc{font-family:var(--mono);font-size:13.5px;font-weight:700;padding:6px 10px;border-radius:7px;
     display:inline-flex;gap:5px;align-items:center;white-space:nowrap;letter-spacing:.02em}
   .acc-full{color:#fff;background:var(--crimson);box-shadow:0 0 12px -3px rgba(229,9,20,.7)}
@@ -344,14 +344,14 @@
 
 <div class="nav">
   <div class="wrap row">
-    <div class="logo"><span class="mk"></span>閲戞嘲&nbsp;脳&nbsp;娌充紶 路 鏅鸿兘鍒剁墖娴佹按绾?/div>
+    <div class="logo"><span class="mk"></span>金泰&nbsp;×&nbsp;河传 · 智能制片流水线</div>
     <nav class="navlinks">
-      <a href="#arch">浣撶郴鏋舵瀯</a>
-      <a href="#pipeline">鍏樁娈垫祦姘寸嚎</a>
-      <a href="#raci">璐ｄ换鐭╅樀</a>
-      <a href="#tech">鎶€鏈帴鍏?/a>
-      <a href="#access">浣跨敤鏉冪鐞?/a>
-      <a href="#archive">鏂囦欢褰掓。</a>
+      <a href="#arch">体系架构</a>
+      <a href="#pipeline">六阶段流水线</a>
+      <a href="#raci">责任矩阵</a>
+      <a href="#tech">技术接入</a>
+      <a href="#access">使用权管理</a>
+      <a href="#archive">文件归档</a>
     </nav>
   </div>
 </div>
@@ -359,146 +359,146 @@
 <header class="hero">
   <div class="wrap">
     <div class="tagpair reveal">
-      <span class="ent jt"><b>閲戞嘲</b><span class="role">绠楀姏 路 涓撶嚎 路 API 路 鍚堣</span></span>
-      <span class="x">脳</span>
-      <span class="ent hc"><b>娌充紶</b><span class="role">鍒涗綔 路 鍒剁墖 路 鍐呭 路 瀵兼紨</span></span>
+      <span class="ent jt"><b>金泰</b><span class="role">算力 · 专线 · API · 合规</span></span>
+      <span class="x">×</span>
+      <span class="ent hc"><b>河传</b><span class="role">创作 · 制片 · 内容 · 导演</span></span>
     </div>
-    <div class="govbadge reveal"><span class="gdot"></span><b>涓撲笟褰辫瀵兼紨</b>&nbsp;鍏ㄧ▼鎸囧&nbsp;路&nbsp;<b>涓撲笟缂栧墽</b>&nbsp;鍏ㄧ▼瀹℃牳&nbsp;路&nbsp;璐┛鍏樁娈?/div>
-    <div class="eyebrow reveal">Production Bible 鈫?Final Cut 路 鍏ㄩ摼璺櫤鑳藉埗鐗囨柟妗?v2.0</div>
-    <h1 class="title reveal">浠?span class="grad">褰辫鍦ｇ粡</span><br>鍒版垚鐗囩殑宸ヤ笟鍖栫敓浜х嚎</h1>
-    <p class="lede reveal">浠?b>涓撲笟褰辫瀵兼紨鍏ㄧ▼鎸囧</b>銆?b>涓撲笟缂栧墽鍏ㄧ▼瀹℃牳</b>涓哄墠鎻愶紝浜庢渤浼犱紶缁熷埗鐗囨祦绋嬩箣涓婃帴鍏ラ噾娉扮殑<b>涓撶嚎绠楀姏</b>涓?<b>API 鐢熶骇鑳藉姏</b>锛屼互 ClaudeCode + Codex + 浜哄伐瀹℃牳鍏卞悓閿婚€犮€屽奖瑙嗗湥缁忋€嶏紝缁?Seedance / Kling 鐢熸垚銆佽揪鑺杩滅▼绮句慨锛屽舰鎴愪竴鏉?b>鍒嗗眰绾?路 鍒嗛儴闂?路 鍙拷婧?/b>鐨勫彲鎺ф祦姘寸嚎銆?/p>
+    <div class="govbadge reveal"><span class="gdot"></span><b>专业影视导演</b>&nbsp;全程指导&nbsp;·&nbsp;<b>专业编剧</b>&nbsp;全程审核&nbsp;·&nbsp;贯穿六阶段</div>
+    <div class="eyebrow reveal">Production Bible → Final Cut · 全链路智能制片方案 v2.0</div>
+    <h1 class="title reveal">从<span class="grad">影视圣经</span><br>到成片的工业化生产线</h1>
+    <p class="lede reveal">以<b>专业影视导演全程指导</b>、<b>专业编剧全程审核</b>为前提，于河传传统制片流程之上接入金泰的<b>专线算力</b>与 <b>API 生产能力</b>，以 ClaudeCode + Codex + 人工审核共同锻造「影视圣经」，经 Seedance / Kling 生成、达芬奇远程精修，形成一条<b>分层级 · 分部门 · 可追溯</b>的可控流水线。</p>
 
-    <div class="flowline reveal" aria-label="鏍稿績閾捐矾">
-      <span class="n k">灏忚</span><span class="arw">鈥?/span>
-      <span class="n">鍓ф湰</span><span class="arw">鈥?/span>
-      <span class="n">鑰冭瘉</span><span class="arw">鈥?/span>
-      <span class="n">涓栫晫瑙?/span><span class="arw">鈥?/span>
-      <span class="n">椤圭洰浜偣</span><span class="arw">鈥?/span>
-      <span class="n">鍒嗛暅</span><span class="arw">鈥?/span>
-      <span class="n">浜鸿/鍦烘櫙/閬撳叿</span><span class="arw">鈥?/span>
-      <span class="n">涓夊崱</span><span class="arw">鈥?/span>
-      <span class="n">鍒嗛泦</span><span class="arw">鈥?/span>
-      <span class="n">鍒嗛暅鍥?/span><span class="arw">鈥?/span>
-      <span class="n">瀵圭櫧</span><span class="arw">鈥?/span>
-      <span class="n k">鐢熸垚瑙嗛</span><span class="arw">鈥?/span>
-      <span class="n">杩愰暅鐗规晥鍙?/span><span class="arw">鈥?/span>
-      <span class="n">鍓緫</span><span class="arw">鈥?/span>
-      <span class="n">鍚堟垚</span><span class="arw">鈥?/span>
-      <span class="n k">鎴愮墖</span><span class="arw">鈥?/span>
-      <span class="n">瀹℃牳</span>
+    <div class="flowline reveal" aria-label="核心链路">
+      <span class="n k">小说</span><span class="arw">›</span>
+      <span class="n">剧本</span><span class="arw">›</span>
+      <span class="n">考证</span><span class="arw">›</span>
+      <span class="n">世界观</span><span class="arw">›</span>
+      <span class="n">项目亮点</span><span class="arw">›</span>
+      <span class="n">分镜</span><span class="arw">›</span>
+      <span class="n">人设/场景/道具</span><span class="arw">›</span>
+      <span class="n">三卡</span><span class="arw">›</span>
+      <span class="n">分集</span><span class="arw">›</span>
+      <span class="n">分镜图</span><span class="arw">›</span>
+      <span class="n">对白</span><span class="arw">›</span>
+      <span class="n k">生成视频</span><span class="arw">›</span>
+      <span class="n">运镜特效台</span><span class="arw">›</span>
+      <span class="n">剪辑</span><span class="arw">›</span>
+      <span class="n">合成</span><span class="arw">›</span>
+      <span class="n k">成片</span><span class="arw">›</span>
+      <span class="n">审核</span>
     </div>
 
     <div class="kpis reveal">
-      <div class="kpi glass"><div class="v">6</div><div class="l">娴佹按绾块樁娈?路 鍏亾瀹℃牳闂?/div></div>
-      <div class="kpi glass"><div class="v">13</div><div class="l">鍔熻兘閮ㄩ棬 路 璐ｄ换鍒颁汉</div></div>
-      <div class="kpi glass"><div class="v">4</div><div class="l">绠＄悊灞傜骇 路 L1鈫扡4</div></div>
-      <div class="kpi glass"><div class="v">100%</div><div class="l">鑺傜偣浜や粯鐗╁彲杩芥函褰掓。</div></div>
+      <div class="kpi glass"><div class="v">6</div><div class="l">流水线阶段 · 六道审核门</div></div>
+      <div class="kpi glass"><div class="v">13</div><div class="l">功能部门 · 责任到人</div></div>
+      <div class="kpi glass"><div class="v">4</div><div class="l">管理层级 · L1→L4</div></div>
+      <div class="kpi glass"><div class="v">100%</div><div class="l">节点交付物可追溯归档</div></div>
     </div>
   </div>
 </header>
 
 <main class="wrap">
 
-  <!-- 浣撶郴鏋舵瀯 -->
+  <!-- 体系架构 -->
   <section id="arch">
     <div class="sec-head reveal">
-      <div class="eyebrow"><span class="idx">01 /</span> 浣撶郴鏋舵瀯</div>
-      <h2>涓夌淮绠＄悊浣撶郴</h2>
-      <p>閲戞嘲璐熻矗鍩虹璁炬柦涓庡悎瑙勫簳搴э紙涓撶嚎鎺ュ叆杩滅▼绠楀姏銆丄PI 宸ョ▼鍖栥€佸唴瀹瑰悎瑙勶級锛屾渤浼犺礋璐ｅ垱浣滀笌鍒剁墖鍏ㄦ祦绋嬨€備笁涓淮搴︿氦鍙夋瀯鎴愮煩闃靛紡绠＄悊锛屼换浣曞埗浣滆妭鐐归兘鑳藉畾浣嶅埌銆?b>鍝竴灞傘€佸摢涓儴闂ㄣ€佺敤浠€涔堟帴鍏?/b>銆嶃€?/p>
+      <div class="eyebrow"><span class="idx">01 /</span> 体系架构</div>
+      <h2>三维管理体系</h2>
+      <p>金泰负责基础设施与合规底座（专线接入远程算力、API 工程化、内容合规），河传负责创作与制片全流程。三个维度交叉构成矩阵式管理，任何制作节点都能定位到「<b>哪一层、哪个部门、用什么接入</b>」。</p>
     </div>
 
-    <div class="tabs reveal" role="tablist" aria-label="绠＄悊缁村害">
-      <button class="tab" role="tab" aria-selected="true" data-tab="tier"><span class="tn">DIMENSION 01</span><strong>鍒嗗眰绾х鐞?路 鍥涚骇鍐崇瓥閾?/strong></button>
-      <button class="tab" role="tab" aria-selected="false" data-tab="dept"><span class="tn">DIMENSION 02</span><strong>鍒嗗姛鑳介儴闂?路 13 涓綔鎴樺崟鍏?/strong></button>
-      <button class="tab" role="tab" aria-selected="false" data-tab="infra"><span class="tn">DIMENSION 03</span><strong>涓撶嚎 + API 鎺ュ叆 路 閲戞嘲搴曞骇</strong></button>
+    <div class="tabs reveal" role="tablist" aria-label="管理维度">
+      <button class="tab" role="tab" aria-selected="true" data-tab="tier"><span class="tn">DIMENSION 01</span><strong>分层级管理 · 四级决策链</strong></button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="dept"><span class="tn">DIMENSION 02</span><strong>分功能部门 · 13 个作战单元</strong></button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="infra"><span class="tn">DIMENSION 03</span><strong>专线 + API 接入 · 金泰底座</strong></button>
     </div>
 
     <div class="tabpanel on" data-panel="tier">
       <div class="tiers">
-        <div class="tier l1 glass"><div class="lv"><b>L1</b><span>鍐崇瓥灞?/span></div><div><div class="who">鍑哄搧浜?路 鎬诲埗鐗囦汉 路 椤圭洰鎬荤洃</div><div class="duty">绔嬮」鍐崇瓥銆侀绠楃粓鎵广€侀噷绋嬬楠屾敹銆佹垚鐗囩粓瀹′笌瀵瑰鍙戝竷鎺堟潈銆傛寔鏈?<b>瀹℃牳闂ㄢ憼/鈶?/b> 鐨勬渶缁堢瀛楁潈銆?/div></div></div>
-        <div class="tier l2 glass"><div class="lv"><b>L2</b><span>缁熺灞?/span></div><div><div class="who">鍒剁墖涓讳换 路 瀵兼紨 路 鎶€鏈€荤洃锛堥噾娉帮級</div><div class="duty">鎺掍骇璋冨害銆佽法閮ㄩ棬鍗忚皟銆佽川閲忔妸鍏炽€佺畻鍔涗笌妗ｆ湡鍒嗛厤銆傚皢鍐崇瓥鎷嗚В涓洪儴闂ㄤ换鍔★紝涓绘寔 <b>瀹℃牳闂ㄢ憽鈥撯懁</b> 璇勫銆?/div></div></div>
-        <div class="tier l3 glass"><div class="lv"><b>L3</b><span>閮ㄩ棬灞?/span></div><div><div class="who">鍚勯儴闂ㄨ礋璐ｄ汉 / 缁勯暱</div><div class="duty">閮ㄩ棬鍐呬换鍔℃淳鍙戙€佷氦浠樼墿涓€瀹°€佹棩鎶ヤ笌璧勪骇鍏ュ簱銆佸涓婃眹鎶ヨ繘搴︿笌椋庨櫓銆傘€岃矗浠诲埌閮ㄩ棬銆嶇殑钀界偣銆?/div></div></div>
-        <div class="tier l4 glass"><div class="lv"><b>L4</b><span>鎵ц灞?/span></div><div><div class="who">缂栧墽 路 璁捐甯?路 AI 鎿嶄綔鍛?路 鍓緫甯?路 鍒剁墖</div><div class="duty">鍏蜂綋鍒朵綔锛氬啓鍦ｇ粡銆佸嚭璁捐鍗°€佽窇 Seedance/Kling銆佽繙绋嬭揪鑺绮惧壀銆佸～琛ㄥ綊妗ｃ€傘€岃矗浠诲埌浜恒€嶇殑钀界偣銆?/div></div></div>
+        <div class="tier l1 glass"><div class="lv"><b>L1</b><span>决策层</span></div><div><div class="who">出品人 · 总制片人 · 项目总监</div><div class="duty">立项决策、预算终批、里程碑验收、成片终审与对外发布授权。持有 <b>审核门①/⑥</b> 的最终签字权。</div></div></div>
+        <div class="tier l2 glass"><div class="lv"><b>L2</b><span>统筹层</span></div><div><div class="who">制片主任 · 导演 · 技术总监（金泰）</div><div class="duty">排产调度、跨部门协调、质量把关、算力与档期分配。将决策拆解为部门任务，主持 <b>审核门②–⑤</b> 评审。</div></div></div>
+        <div class="tier l3 glass"><div class="lv"><b>L3</b><span>部门层</span></div><div><div class="who">各部门负责人 / 组长</div><div class="duty">部门内任务派发、交付物一审、日报与资产入库、对上汇报进度与风险。「责任到部门」的落点。</div></div></div>
+        <div class="tier l4 glass"><div class="lv"><b>L4</b><span>执行层</span></div><div><div class="who">编剧 · 设计师 · AI 操作员 · 剪辑师 · 制片</div><div class="duty">具体制作：写圣经、出设计卡、跑 Seedance/Kling、远程达芬奇精剪、填表归档。「责任到人」的落点。</div></div></div>
       </div>
     </div>
 
     <div class="tabpanel" data-panel="dept">
       <div class="dept-grid">
-        <div class="dept glass"><div class="hd"><h4>绛栧垝閮?/h4><span class="side hc">娌充紶</span></div><p>閫夐绔嬮」銆侀」鐩寒鐐广€佹枃鏈?PPT 绛栧垝妗堛€?/p><div class="lead">鈼?璐熻矗浜?鈫?绛栧垝鎬荤洃</div></div>
-        <div class="dept glass"><div class="hd"><h4>鍓ф湰閮?/h4><span class="side hc">娌充紶</span></div><p>灏忚鏀圭紪銆佹枃瀛﹀墽鏈€佸垎闆嗐€佸鐧借璁°€?/p><div class="lead">鈼?璐熻矗浜?鈫?鏂囧缁熺</div></div>
-        <div class="dept glass"><div class="hd"><h4>鑰冭瘉椤鹃棶缁?/h4><span class="side hc">娌充紶</span></div><p>鍙插疄/涓栫晫瑙傝€冩嵁銆侀€昏緫鏍￠獙銆佺増鏉冮闄┿€?/p><div class="lead">鈼?璐熻矗浜?鈫?鐗归個椤鹃棶</div></div>
-        <div class="dept glass"><div class="hd"><h4>瀵兼紨閮?/h4><span class="side hc">娌充紶</span></div><p>鍒嗛暅澶磋剼鏈€佽繍闀滆璁°€佺壒鏁堝婕斿彴銆佸鐗囥€?/p><div class="lead">鈼?璐熻矗浜?鈫?瀵兼紨 / 鍒嗛暅甯?/div></div>
-        <div class="dept glass"><div class="hd"><h4>缇庢湳璁捐閮?/h4><span class="side hc">娌充紶</span></div><p>浜虹墿/鍦烘櫙/閬撳叿璁捐銆佷笁鍗°€佸垎闀滃浘銆佽祫浜у簱銆?/p><div class="lead">鈼?璐熻矗浜?鈫?缇庢湳鎸囧</div></div>
-        <div class="dept glass"><div class="hd"><h4>AI 鐢熸垚閮?/h4><span class="side hc">娌充紶</span></div><p>鍥?鏂囩敓瑙嗛銆佹壒閲忓嚭闀溿€佺礌鏉愬垵绛涖€?/p><div class="lead">鈼?璐熻矗浜?鈫?AI 鍒朵綔缁勯暱</div></div>
-        <div class="dept glass"><div class="hd"><h4>鍚庢湡閮?/h4><span class="side hc">娌充紶</span></div><p>鍓緫銆佸悎鎴愩€佽皟鑹层€佸０闊炽€佹垚鐗囨瘝鐗堛€?/p><div class="lead">鈼?璐熻矗浜?鈫?鍚庢湡鎬荤洃</div></div>
-        <div class="dept glass"><div class="hd"><h4>鍒剁墖閮紙缁熺锛?/h4><span class="side hc">娌充紶</span></div><p>椤哄満/鍒嗗満銆佹媿鎽勮鍒掋€侀€氬憡銆佸埗鐗囨棩鎶ャ€?/p><div class="lead">鈼?璐熻矗浜?鈫?鍒剁墖涓讳换</div></div>
-        <div class="dept glass"><div class="hd"><h4>璐㈠姟閮?/h4><span class="side hc">娌充紶</span></div><p>棰勭畻銆佽储鍔℃棩/鍛ㄦ姤銆佸悎鍚岀粺璁°€侀绠楀鐓с€?/p><div class="lead">鈼?璐熻矗浜?鈫?璐㈠姟涓荤</div></div>
-        <div class="dept glass"><div class="hd"><h4>瀹℃牳 / 璐ㄦ帶閮?/h4><span class="side hc">娌充紶</span></div><p>鍚勯棬璐ㄦ銆佷竴鑷存€ф牳楠屻€佸唴瀹圭粓瀹°€?/p><div class="lead">鈼?璐熻矗浜?鈫?QC 涓荤</div></div>
-        <div class="dept glass"><div class="hd"><h4>绠楀姏路涓撶嚎杩愮淮</h4><span class="side jt">閲戞嘲</span></div><p>杩滅▼ GPU 闆嗙兢銆佷笓绾挎帴鍏ャ€佹帓浜ч槦鍒椼€?/p><div class="lead">鈼?璐熻矗浜?鈫?杩愮淮宸ョ▼甯?/div></div>
-        <div class="dept glass"><div class="hd"><h4>API 宸ョ▼缁?/h4><span class="side jt">閲戞嘲</span></div><p>Seedance/Kling/杈捐姮濂囪繙绋?API 缂栨帓銆?/p><div class="lead">鈼?璐熻矗浜?鈫?骞冲彴宸ョ▼甯?/div></div>
-        <div class="dept glass"><div class="hd"><h4>鍚堣瀹℃牳缁?/h4><span class="side jt">閲戞嘲</span></div><p>AIGC 鍚堣銆佸彂甯冨鏌ャ€佺暀鐥曞瓨璇併€?/p><div class="lead">鈼?璐熻矗浜?鈫?鍚堣瀹?/div></div>
+        <div class="dept glass"><div class="hd"><h4>策划部</h4><span class="side hc">河传</span></div><p>选题立项、项目亮点、文本/PPT 策划案。</p><div class="lead">◇ 负责人 → 策划总监</div></div>
+        <div class="dept glass"><div class="hd"><h4>剧本部</h4><span class="side hc">河传</span></div><p>小说改编、文学剧本、分集、对白设计。</p><div class="lead">◇ 负责人 → 文学统筹</div></div>
+        <div class="dept glass"><div class="hd"><h4>考证顾问组</h4><span class="side hc">河传</span></div><p>史实/世界观考据、逻辑校验、版权风险。</p><div class="lead">◇ 负责人 → 特邀顾问</div></div>
+        <div class="dept glass"><div class="hd"><h4>导演部</h4><span class="side hc">河传</span></div><p>分镜头脚本、运镜设计、特效导演台、审片。</p><div class="lead">◇ 负责人 → 导演 / 分镜师</div></div>
+        <div class="dept glass"><div class="hd"><h4>美术设计部</h4><span class="side hc">河传</span></div><p>人物/场景/道具设计、三卡、分镜图、资产库。</p><div class="lead">◇ 负责人 → 美术指导</div></div>
+        <div class="dept glass"><div class="hd"><h4>AI 生成部</h4><span class="side hc">河传</span></div><p>图/文生视频、批量出镜、素材初筛。</p><div class="lead">◇ 负责人 → AI 制作组长</div></div>
+        <div class="dept glass"><div class="hd"><h4>后期部</h4><span class="side hc">河传</span></div><p>剪辑、合成、调色、声音、成片母版。</p><div class="lead">◇ 负责人 → 后期总监</div></div>
+        <div class="dept glass"><div class="hd"><h4>制片部（统筹）</h4><span class="side hc">河传</span></div><p>顺场/分场、拍摄计划、通告、制片日报。</p><div class="lead">◇ 负责人 → 制片主任</div></div>
+        <div class="dept glass"><div class="hd"><h4>财务部</h4><span class="side hc">河传</span></div><p>预算、财务日/周报、合同统计、预算对照。</p><div class="lead">◇ 负责人 → 财务主管</div></div>
+        <div class="dept glass"><div class="hd"><h4>审核 / 质控部</h4><span class="side hc">河传</span></div><p>各门质检、一致性核验、内容终审。</p><div class="lead">◇ 负责人 → QC 主管</div></div>
+        <div class="dept glass"><div class="hd"><h4>算力·专线运维</h4><span class="side jt">金泰</span></div><p>远程 GPU 集群、专线接入、排产队列。</p><div class="lead">◇ 负责人 → 运维工程师</div></div>
+        <div class="dept glass"><div class="hd"><h4>API 工程组</h4><span class="side jt">金泰</span></div><p>Seedance/Kling/达芬奇远程 API 编排。</p><div class="lead">◇ 负责人 → 平台工程师</div></div>
+        <div class="dept glass"><div class="hd"><h4>合规审核组</h4><span class="side jt">金泰</span></div><p>AIGC 合规、发布审查、留痕存证。</p><div class="lead">◇ 负责人 → 合规官</div></div>
       </div>
     </div>
 
     <div class="tabpanel" data-panel="infra">
       <div class="infra">
         <div class="infra-card glass">
-          <h4><span class="ic mono">鈻?/span> 涓撶嚎鎺ュ叆 路 鍒嗗眰绾х畻鍔涜皟搴?/h4>
-          <p style="color:var(--mist);font-size:16px;margin:0;line-height:1.55">娌充紶鏈湴宸ヤ綅缁忛噾娉颁笓绾跨洿杩炶繙绋嬬畻鍔涢泦缇わ紝鎸夐」鐩?閮ㄩ棬鍒嗛厤绠楀姏閰嶉涓庝紭鍏堢骇闃熷垪锛屽埗鐗囨棩鎶ュ洖浼犲崰鐢ㄤ笌鎴愭湰銆?/p>
+          <h4><span class="ic mono">▤</span> 专线接入 · 分层级算力调度</h4>
+          <p style="color:var(--mist);font-size:16px;margin:0;line-height:1.55">河传本地工位经金泰专线直连远程算力集群，按项目/部门分配算力配额与优先级队列，制片日报回传占用与成本。</p>
           <ul class="pipe-list">
-            <li><span class="k">鎺ュ叆鏂瑰紡</span><span class="d">涓撶嚎锛圫D-WAN / 涓撶敤鍏夌氦锛夆啋 閲戞嘲绠楀姏缃戝叧 鈫?鍒嗛儴闂ㄨ櫄鎷熷伐浣?/span></li>
-            <li><span class="k">鍒嗗眰璋冨害</span><span class="d">L2 鎶€鏈€荤洃鎸夋。鏈熷垎閰?GPU 姹狅紝L3 閮ㄩ棬棰嗙敤锛孡4 鎻愪氦浠诲姟</span></li>
-            <li><span class="k">闆嗙兢璧勬簮</span><span class="d">8脳H100 + 4脳RTX5090 娓叉煋/鐢熸垚鑺傜偣 路 11 鍗″苟琛屽嚭闀?/span></li>
-            <li><span class="k">缂栨帓灞?/span><span class="d">n8n 宸ヤ綔娴佺紪鎺掞細鍓ф湰鈫掑垎闀溾啋鐢熸垚鈫掑悎鎴愯嚜鍔ㄦ祦杞?/span></li>
-            <li><span class="k">鎴愭湰鍥炰紶</span><span class="d">姣忛暅绠楀姏 / 鏃堕暱 / 鎴愭湰杩涘叆璐㈠姟棰勭畻瀵圭収琛?/span></li>
+            <li><span class="k">接入方式</span><span class="d">专线（SD-WAN / 专用光纤）→ 金泰算力网关 → 分部门虚拟工位</span></li>
+            <li><span class="k">分层调度</span><span class="d">L2 技术总监按档期分配 GPU 池，L3 部门领用，L4 提交任务</span></li>
+            <li><span class="k">集群资源</span><span class="d">8×H100 + 4×RTX5090 渲染/生成节点 · 11 卡并行出镜</span></li>
+            <li><span class="k">编排层</span><span class="d">n8n 工作流编排：剧本→分镜→生成→合成自动流转</span></li>
+            <li><span class="k">成本回传</span><span class="d">每镜算力 / 时长 / 成本进入财务预算对照表</span></li>
           </ul>
         </div>
         <div class="infra-card glass">
-          <h4><span class="ic mono">鈼?/span> API 鎺ュ叆 路 鐢熶骇鑳藉姏宸ュ叿閾?/h4>
-          <p style="color:var(--mist);font-size:16px;margin:0;line-height:1.55">鐢熸垚涓庡悗鏈熻兘鍔涗互 API 鏂瑰紡缁熶竴缂栨帓锛屼汉宸ュ鏍搁棬璐┛鍏堕棿锛屽伐鍏峰彲鎻掓嫈鏇挎崲銆?/p>
+          <h4><span class="ic mono">◈</span> API 接入 · 生产能力工具链</h4>
+          <p style="color:var(--mist);font-size:16px;margin:0;line-height:1.55">生成与后期能力以 API 方式统一编排，人工审核门贯穿其间，工具可插拔替换。</p>
           <div class="api-badges" style="margin-top:16px">
-            <span class="api"><span class="st"></span>ClaudeCode 路 鍦ｇ粡/閫昏緫</span>
-            <span class="api"><span class="st"></span>Codex 路 鍓ф湰/宸ョ▼</span>
-            <span class="api"><span class="st"></span>Seedance 路 鐢熸垚瑙嗛</span>
-            <span class="api"><span class="st"></span>Kling 路 鐢熸垚瑙嗛</span>
-            <span class="api"><span class="st"></span>GPT Image 2 路 鍒嗛暅/闀滃ご涓诲姏</span>
-            <span class="api"><span class="st"></span>Nano Banana 路 鍏抽敭甯?/span>
-            <span class="api"><span class="st"></span>ComfyUI 路 涓夊崱/涓€鑷存€?/span>
-            <span class="api"><span class="st"></span>Qwen-Edit 路 鍥惧儚缂栬緫</span>
-            <span class="api remote"><span class="st"></span>杈捐姮濂?Resolve 路 杩滅▼鍓緫</span>
-            <span class="api remote"><span class="st"></span>ElevenLabs / ACE-Step 路 澹伴煶</span>
-            <span class="api"><span class="st"></span>ffmpeg 路 鍚堟垚灏佽</span>
+            <span class="api"><span class="st"></span>ClaudeCode · 圣经/逻辑</span>
+            <span class="api"><span class="st"></span>Codex · 剧本/工程</span>
+            <span class="api"><span class="st"></span>Seedance · 生成视频</span>
+            <span class="api"><span class="st"></span>Kling · 生成视频</span>
+            <span class="api"><span class="st"></span>GPT Image 2 · 分镜/镜头主力</span>
+            <span class="api"><span class="st"></span>Nano Banana · 关键帧</span>
+            <span class="api"><span class="st"></span>ComfyUI · 三卡/一致性</span>
+            <span class="api"><span class="st"></span>Qwen-Edit · 图像编辑</span>
+            <span class="api remote"><span class="st"></span>达芬奇 Resolve · 远程剪辑</span>
+            <span class="api remote"><span class="st"></span>ElevenLabs / ACE-Step · 声音</span>
+            <span class="api"><span class="st"></span>ffmpeg · 合成封装</span>
           </div>
           <ul class="pipe-list" style="margin-top:16px">
-            <li><span class="k">缁熶竴缂栨帓</span><span class="d">API 缃戝叧閴存潈 + 浠诲姟闃熷垪 + 鍥炶皟锛屾墍鏈夎皟鐢ㄧ暀鐥?/span></li>
-            <li><span class="k">杩滅▼鍗忎綔</span><span class="d">杈捐姮濂囪繙绋嬪伐浣滅珯锛屽紓鍦拌皟鑹插笀鎺ュ叆鍚屼竴姣嶇増</span></li>
-            <li><span class="k">鍚堣瀛樿瘉</span><span class="d">鐢熸垚鍙傛暟銆佹彁绀鸿瘝銆佸鏍歌褰曞叏閾捐矾鍙拷婧?/span></li>
+            <li><span class="k">统一编排</span><span class="d">API 网关鉴权 + 任务队列 + 回调，所有调用留痕</span></li>
+            <li><span class="k">远程协作</span><span class="d">达芬奇远程工作站，异地调色师接入同一母版</span></li>
+            <li><span class="k">合规存证</span><span class="d">生成参数、提示词、审核记录全链路可追溯</span></li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 娴佹按绾?-->
+  <!-- 流水线 -->
   <section id="pipeline">
     <div class="sec-head reveal">
-      <div class="eyebrow"><span class="idx">02 /</span> 鐢熶骇涓昏酱</div>
-      <h2>鍏樁娈垫櫤鑳藉埗鐗囨祦姘寸嚎</h2>
-      <p>鐐瑰嚮浠讳竴闃舵灞曞紑锛氭瘡涓珯鐐规爣娉?b>浣滀笟姝ラ</b>銆?b>璐ｄ换閮ㄩ棬涓庤矗浠讳汉</b>銆?b>宸ュ叿/鎺ュ叆</b>銆?b>浜や粯鐗?/b>涓?b>瀹℃牳闂?/b>銆傜化绾负涓昏矗涓庣敓鎴愯兘閲忋€侀噾涓轰汉宸ュ鏍搁棬銆佽摑涓洪噾娉版妧鏈帴鍏ャ€?/p>
+      <div class="eyebrow"><span class="idx">02 /</span> 生产主轴</div>
+      <h2>六阶段智能制片流水线</h2>
+      <p>点击任一阶段展开：每个站点标注<b>作业步骤</b>、<b>责任部门与责任人</b>、<b>工具/接入</b>、<b>交付物</b>与<b>审核门</b>。绯红为主责与生成能量、金为人工审核门、蓝为金泰技术接入。</p>
     </div>
 
     <div class="govbar glass reveal">
-      <div class="gk"><span class="gdot"></span>鍒涗綔缁熼</div>
-      <p>鍏ㄥ叚闃舵鍧囧湪 <b>涓撲笟褰辫瀵兼紨鍏ㄧ▼鎸囧</b> 涓?<b>涓撲笟缂栧墽鍏ㄧ▼瀹℃牳</b> 涔嬩笅杩愯鈥斺€斿婕旀妸鎺ц鍚笌鍙欎簨锛岀紪鍓у畧浣忓墽鏈€昏緫涓庡彶瀹烇紝AI 涓庡伐鍏蜂粎鍦ㄥ叾鍐崇瓥妗嗘灦鍐呮墽琛屻€?/p>
+      <div class="gk"><span class="gdot"></span>创作统领</div>
+      <p>全六阶段均在 <b>专业影视导演全程指导</b> 与 <b>专业编剧全程审核</b> 之下运行——导演把控视听与叙事，编剧守住剧本逻辑与史实，AI 与工具仅在其决策框架内执行。</p>
     </div>
 
     <div class="controls reveal">
-      <button class="btn" id="expandAll">灞曞紑鍏ㄩ儴</button>
-      <button class="btn" id="collapseAll">鏀惰捣鍏ㄩ儴</button>
+      <button class="btn" id="expandAll">展开全部</button>
+      <button class="btn" id="collapseAll">收起全部</button>
       <div class="legend">
-        <span><i style="background:var(--crimson)"></i>娌充紶鍒涗綔 / 涓昏矗</span>
-        <span><i style="background:var(--azure)"></i>閲戞嘲鎶€鏈?/span>
-        <span><i style="background:var(--gold)"></i>浜哄伐瀹℃牳闂?/span>
+        <span><i style="background:var(--crimson)"></i>河传创作 / 主责</span>
+        <span><i style="background:var(--azure)"></i>金泰技术</span>
+        <span><i style="background:var(--gold)"></i>人工审核门</span>
       </div>
     </div>
 
@@ -507,21 +507,21 @@
       <div class="stage reveal"><div class="stage-card glass">
         <div class="stage-top" tabindex="0" role="button" aria-expanded="false">
           <div class="stage-num">01</div>
-          <div class="stage-meta"><h3>绛栧垝绔嬮」</h3><div class="sub">IP 閫夐 路 椤圭洰浜偣 路 绛栧垝妗?/div>
-            <div class="stage-tags"><span class="chip hc">娌充紶绛栧垝閮?/span><span class="chip">L1 鍐崇瓥灞?/span><span class="chip">ClaudeCode 璋冪爺</span></div></div>
-          <div class="stage-right"><span class="gate">瀹℃牳闂?鈶?绔嬮」璇勫</span><span class="toggle">+</span></div>
+          <div class="stage-meta"><h3>策划立项</h3><div class="sub">IP 选题 · 项目亮点 · 策划案</div>
+            <div class="stage-tags"><span class="chip hc">河传策划部</span><span class="chip">L1 决策层</span><span class="chip">ClaudeCode 调研</span></div></div>
+          <div class="stage-right"><span class="gate">审核门 ① 立项评审</span><span class="toggle">+</span></div>
         </div>
         <div class="stage-body"><div class="stage-body-inner">
           <div class="steps">
-            <div class="step"><span class="sn">1.1</span><div class="stx"><b>閫夐涓?IP 璇勪及</b><p>灏忚/鍘熷垱棰樻潗绛涢€夛紝甯傚満涓庡悎瑙勫垵鍒ゃ€?/p></div></div>
-            <div class="step"><span class="sn">1.2</span><div class="stx"><b>椤圭洰浜偣鎻愮偧</b><p>ClaudeCode 杈呭姪鎷夊彇鍗栫偣銆佸鏍囥€佸樊寮傚寲瀹氫綅銆?/p></div></div>
-            <div class="step"><span class="sn">1.3</span><div class="stx"><b>鏂囨湰绛栧垝妗?+ PPT 绛栧垝妗?/b><p>椤圭洰鍩烘湰淇℃伅銆佹晠浜嬪ぇ绾?浜虹墿灏忎紶銆佷富瑙嗚鍙傝€冦€侀绠楁瑕併€佸懆鏈熴€佹嫙鍒朵綔鏂瑰紡銆?/p></div></div>
+            <div class="step"><span class="sn">1.1</span><div class="stx"><b>选题与 IP 评估</b><p>小说/原创题材筛选，市场与合规初判。</p></div></div>
+            <div class="step"><span class="sn">1.2</span><div class="stx"><b>项目亮点提炼</b><p>ClaudeCode 辅助拉取卖点、对标、差异化定位。</p></div></div>
+            <div class="step"><span class="sn">1.3</span><div class="stx"><b>文本策划案 + PPT 策划案</b><p>项目基本信息、故事大纲+人物小传、主视觉参考、预算概要、周期、拟制作方式。</p></div></div>
           </div>
           <div class="detail-grid">
-            <div class="dbox"><div class="dl">璐ｄ换閮ㄩ棬 / 璐ｄ换浜?/div><div class="owner-row"><span class="owner"><b>涓昏矗</b> 绛栧垝閮紙绛栧垝鎬荤洃 L3锛?/span><span class="owner"><b>瀹℃壒</b> 鍑哄搧浜?/ 鎬诲埗鐗?L1</span></div></div>
-            <div class="dbox"><div class="dl">宸ュ叿 / 鎺ュ叆</div><div class="owner-row"><span class="owner">ClaudeCode</span><span class="owner">璋冪爺 skill</span></div></div>
-            <div class="dbox"><div class="dl">浜や粯鐗?/div><ul><li>绔嬮」涔?路 鏂囨湰绛栧垝妗?/li><li>PPT 绛栧垝妗堬紙鍚富瑙嗚/棰勭畻/鍛ㄦ湡锛?/li></ul></div>
-            <div class="dbox gatebox"><div class="dl">瀹℃牳闂?鈶?路 绔嬮」璇勫</div><ul><li>鍐崇瓥灞傝瘎瀹★細棰樻潗/棰勭畻/鍚堣</li><li>閫氳繃 鈫?鎺堟潈杩涘叆鍓ф湰宸ョ▼</li></ul></div>
+            <div class="dbox"><div class="dl">责任部门 / 责任人</div><div class="owner-row"><span class="owner"><b>主责</b> 策划部（策划总监 L3）</span><span class="owner"><b>审批</b> 出品人 / 总制片 L1</span></div></div>
+            <div class="dbox"><div class="dl">工具 / 接入</div><div class="owner-row"><span class="owner">ClaudeCode</span><span class="owner">调研 skill</span></div></div>
+            <div class="dbox"><div class="dl">交付物</div><ul><li>立项书 · 文本策划案</li><li>PPT 策划案（含主视觉/预算/周期）</li></ul></div>
+            <div class="dbox gatebox"><div class="dl">审核门 ① · 立项评审</div><ul><li>决策层评审：题材/预算/合规</li><li>通过 → 授权进入剧本工程</li></ul></div>
           </div>
         </div></div>
       </div></div>
@@ -530,22 +530,22 @@
       <div class="stage reveal"><div class="stage-card glass">
         <div class="stage-top" tabindex="0" role="button" aria-expanded="false">
           <div class="stage-num">02</div>
-          <div class="stage-meta"><h3>鍓ф湰宸ョ▼ 路 褰辫鍦ｇ粡銆愭枃鏈眰銆?/h3><div class="sub">鍓ф湰 路 鑰冭瘉 路 涓栫晫瑙?路 鍒嗛泦 路 瀵圭櫧</div>
-            <div class="stage-tags"><span class="chip hc">鍓ф湰閮?/span><span class="chip hc">鑰冭瘉椤鹃棶缁?/span><span class="chip">ClaudeCode + Codex</span><span class="chip">浜哄伐瀹℃牳</span></div></div>
-          <div class="stage-right"><span class="gate">瀹℃牳闂?鈶?鍓ф湰缁堢瀹?/span><span class="toggle">+</span></div>
+          <div class="stage-meta"><h3>剧本工程 · 影视圣经【文本层】</h3><div class="sub">剧本 · 考证 · 世界观 · 分集 · 对白</div>
+            <div class="stage-tags"><span class="chip hc">剧本部</span><span class="chip hc">考证顾问组</span><span class="chip">ClaudeCode + Codex</span><span class="chip">人工审核</span></div></div>
+          <div class="stage-right"><span class="gate">审核门 ② 剧本终稿审</span><span class="toggle">+</span></div>
         </div>
         <div class="stage-body"><div class="stage-body-inner">
           <div class="steps">
-            <div class="step"><span class="sn">2.1</span><div class="stx"><b>灏忚 鈫?鍓ф湰鏀圭紪</b><p>ClaudeCode+Codex 缁撴瀯鍖栨敼缂栵紝鍦烘/鑺傚鍒囧垎銆?/p></div></div>
-            <div class="step"><span class="sn">2.2</span><div class="stx"><b>鍒嗘瀽鍓ф湰 路 鑰冭瘉</b><p>鑰冭瘉缁勬牳楠屽彶瀹?閫昏緫锛屾爣娉ㄩ闄╀笌淇鐐广€?/p></div></div>
-            <div class="step"><span class="sn">2.3</span><div class="stx"><b>涓栫晫瑙傛瀯寤?/b><p>鏃朵唬/鍦扮悊/浜虹墿鍏崇郴璁惧畾锛屽舰鎴愬湥缁忓簳灞傝瀹氬簱銆?/p></div></div>
-            <div class="step"><span class="sn">2.4</span><div class="stx"><b>鏂囧鍓ф湰 路 鍒嗛泦 路 瀵圭櫧璁捐</b><p>鎴愰泦鑴氭湰銆佸垎闆嗗ぇ绾层€侀€愬満瀵圭櫧鏈€?/p></div></div>
+            <div class="step"><span class="sn">2.1</span><div class="stx"><b>小说 → 剧本改编</b><p>ClaudeCode+Codex 结构化改编，场次/节奏切分。</p></div></div>
+            <div class="step"><span class="sn">2.2</span><div class="stx"><b>分析剧本 · 考证</b><p>考证组核验史实/逻辑，标注风险与修订点。</p></div></div>
+            <div class="step"><span class="sn">2.3</span><div class="stx"><b>世界观构建</b><p>时代/地理/人物关系设定，形成圣经底层设定库。</p></div></div>
+            <div class="step"><span class="sn">2.4</span><div class="stx"><b>文学剧本 · 分集 · 对白设计</b><p>成集脚本、分集大纲、逐场对白本。</p></div></div>
           </div>
           <div class="detail-grid">
-            <div class="dbox"><div class="dl">璐ｄ换閮ㄩ棬 / 璐ｄ换浜?/div><div class="owner-row"><span class="owner"><b>涓昏矗</b> 鍓ф湰閮紙鏂囧缁熺 L3锛?/span><span class="owner"><b>鍗忎綔</b> 鑰冭瘉椤鹃棶缁?/span><span class="owner"><b>瀹℃壒</b> 瀵兼紨 + 鎬诲埗鐗?L2/L1</span></div></div>
-            <div class="dbox"><div class="dl">宸ュ叿 / 鎺ュ叆</div><div class="owner-row"><span class="owner">ClaudeCode</span><span class="owner">Codex</span><span class="owner">浜哄伐绮句慨</span></div></div>
-            <div class="dbox"><div class="dl">浜や粯鐗?/div><ul><li>褰辫鍦ｇ粡路鏂囨湰鍗凤紙涓栫晫瑙?璁惧畾锛?/li><li>鏂囧鍓ф湰 路 鍒嗛泦澶х翰 路 瀵圭櫧鏈?/li></ul></div>
-            <div class="dbox gatebox"><div class="dl">瀹℃牳闂?鈶?路 鍓ф湰缁堢</div><ul><li>鍙插疄/閫昏緫/鐗堟潈涓夊</li><li>浜哄伐绛惧瓧閿佸畾锛岃繘鍏ヨ瑙夎璁?/li></ul></div>
+            <div class="dbox"><div class="dl">责任部门 / 责任人</div><div class="owner-row"><span class="owner"><b>主责</b> 剧本部（文学统筹 L3）</span><span class="owner"><b>协作</b> 考证顾问组</span><span class="owner"><b>审批</b> 导演 + 总制片 L2/L1</span></div></div>
+            <div class="dbox"><div class="dl">工具 / 接入</div><div class="owner-row"><span class="owner">ClaudeCode</span><span class="owner">Codex</span><span class="owner">人工精修</span></div></div>
+            <div class="dbox"><div class="dl">交付物</div><ul><li>影视圣经·文本卷（世界观+设定）</li><li>文学剧本 · 分集大纲 · 对白本</li></ul></div>
+            <div class="dbox gatebox"><div class="dl">审核门 ② · 剧本终稿</div><ul><li>史实/逻辑/版权三审</li><li>人工签字锁定，进入视觉设计</li></ul></div>
           </div>
         </div></div>
       </div></div>
@@ -554,22 +554,22 @@
       <div class="stage reveal"><div class="stage-card glass">
         <div class="stage-top" tabindex="0" role="button" aria-expanded="false">
           <div class="stage-num">03</div>
-          <div class="stage-meta"><h3>鍒嗛暅涓庤瑙夎璁?路 褰辫鍦ｇ粡銆愯瑙夊眰銆?/h3><div class="sub">鍒嗛暅 路 浜鸿/鍦烘櫙/閬撳叿 路 涓夊崱 路 鍒嗛暅鍥?/div>
-            <div class="stage-tags"><span class="chip hc">瀵兼紨閮?/span><span class="chip hc">缇庢湳璁捐閮?/span><span class="chip">ClaudeCode + Codex</span><span class="chip" style="color:var(--crimson-soft);border-color:rgba(229,9,20,.55)">GPT Image 2 路 缁濆涓诲姏</span><span class="chip">Nano Banana</span><span class="chip">ComfyUI</span></div></div>
-          <div class="stage-right"><span class="gate">瀹℃牳闂?鈶?涓€鑷存€?璧勪骇瀹?/span><span class="toggle">+</span></div>
+          <div class="stage-meta"><h3>分镜与视觉设计 · 影视圣经【视觉层】</h3><div class="sub">分镜 · 人设/场景/道具 · 三卡 · 分镜图</div>
+            <div class="stage-tags"><span class="chip hc">导演部</span><span class="chip hc">美术设计部</span><span class="chip">ClaudeCode + Codex</span><span class="chip" style="color:var(--crimson-soft);border-color:rgba(229,9,20,.55)">GPT Image 2 · 绝对主力</span><span class="chip">Nano Banana</span><span class="chip">ComfyUI</span></div></div>
+          <div class="stage-right"><span class="gate">审核门 ③ 一致性/资产审</span><span class="toggle">+</span></div>
         </div>
         <div class="stage-body"><div class="stage-body-inner">
           <div class="steps">
-            <div class="step"><span class="sn">3.1</span><div class="stx"><b>鍒嗛暅澶磋剼鏈?路 闀滃ご璁捐</b><p>瀵兼紨閮ㄧ粡 <b>ClaudeCode + Codex</b> 缁撴瀯鍖栨媶闀滐紝鏍囨敞鏅埆/杩愰暅/鏃堕暱锛堝垎闀滀笌闀滃ご璁捐蹇呴』璧?CC+Codex锛夈€?/p></div></div>
-            <div class="step"><span class="sn">3.2</span><div class="stx"><b>浜虹墿 / 鍦烘櫙 / 閬撳叿璁捐</b><p>缇庢湳璁捐閮ㄥ嚭姒傚康璁捐锛岄攣瀹氳瑙夊熀璋冦€?/p></div></div>
-            <div class="step"><span class="sn">3.3</span><div class="stx"><b>浜虹墿鍗?/ 鍦烘櫙鍗?/ 閬撳叿鍗★紙涓夊崱锛?/b><p><b>GPT Image 2锛堜富鍔涳級</b> / Nano Banana / ComfyUI 瀹氬鍑哄浘锛屽缓绔嬪彲澶嶇敤涓€鑷存€ц祫浜у簱銆?/p></div></div>
-            <div class="step"><span class="sn">3.4</span><div class="stx"><b>鍒嗛暅鍥?/b><p>閫愰暅鍏抽敭甯у嚭鍥撅紝褰㈡垚鍙鍖栧垎闀滆剼鏈€?/p></div></div>
+            <div class="step"><span class="sn">3.1</span><div class="stx"><b>分镜头脚本 · 镜头设计</b><p>导演部经 <b>ClaudeCode + Codex</b> 结构化拆镜，标注景别/运镜/时长（分镜与镜头设计必须走 CC+Codex）。</p></div></div>
+            <div class="step"><span class="sn">3.2</span><div class="stx"><b>人物 / 场景 / 道具设计</b><p>美术设计部出概念设计，锁定视觉基调。</p></div></div>
+            <div class="step"><span class="sn">3.3</span><div class="stx"><b>人物卡 / 场景卡 / 道具卡（三卡）</b><p><b>GPT Image 2（主力）</b> / Nano Banana / ComfyUI 定妆出图，建立可复用一致性资产库。</p></div></div>
+            <div class="step"><span class="sn">3.4</span><div class="stx"><b>分镜图</b><p>逐镜关键帧出图，形成可视化分镜脚本。</p></div></div>
           </div>
           <div class="detail-grid">
-            <div class="dbox"><div class="dl">璐ｄ换閮ㄩ棬 / 璐ｄ换浜?/div><div class="owner-row"><span class="owner"><b>涓昏矗</b> 缇庢湳璁捐閮紙缇庢湳鎸囧 L3锛?/span><span class="owner"><b>鍗忎綔</b> 瀵兼紨閮紙鍒嗛暅甯堬級</span></div></div>
-            <div class="dbox"><div class="dl">宸ュ叿 / 鎺ュ叆</div><div class="owner-row"><span class="owner"><b>ClaudeCode + Codex</b> 鍒嗛暅/闀滃ご閫昏緫</span><span class="owner"><b>GPT Image 2</b> 缁濆涓诲姏</span><span class="owner">Nano Banana</span><span class="owner">ComfyUI锛堜笓绾跨畻鍔涳級</span></div></div>
-            <div class="dbox"><div class="dl">浜や粯鐗?/div><ul><li>鍒嗛暅澶磋剼鏈?路 鍒嗛暅鍥?/li><li>涓夊崱璧勪骇搴擄紙瑙掕壊/鍦烘櫙/閬撳叿锛?/li><li>鍒嗛暅澶存暣鐞嗘眹鎬昏〃 路 璧勪骇绠＄悊琛?/li></ul></div>
-            <div class="dbox gatebox"><div class="dl">瀹℃牳闂?鈶?路 涓€鑷存€?& 璧勪骇瀹℃牳</div><ul><li>瑙嗚涓€鑷存€ф牳楠屻€佽祫浜у鏍歌〃绛炬牳</li><li>閫氳繃 鈫?鍐荤粨璧勪骇锛岃繘鍏ョ敓鎴?/li></ul></div>
+            <div class="dbox"><div class="dl">责任部门 / 责任人</div><div class="owner-row"><span class="owner"><b>主责</b> 美术设计部（美术指导 L3）</span><span class="owner"><b>协作</b> 导演部（分镜师）</span></div></div>
+            <div class="dbox"><div class="dl">工具 / 接入</div><div class="owner-row"><span class="owner"><b>ClaudeCode + Codex</b> 分镜/镜头逻辑</span><span class="owner"><b>GPT Image 2</b> 绝对主力</span><span class="owner">Nano Banana</span><span class="owner">ComfyUI（专线算力）</span></div></div>
+            <div class="dbox"><div class="dl">交付物</div><ul><li>分镜头脚本 · 分镜图</li><li>三卡资产库（角色/场景/道具）</li><li>分镜头整理汇总表 · 资产管理表</li></ul></div>
+            <div class="dbox gatebox"><div class="dl">审核门 ③ · 一致性 & 资产审核</div><ul><li>视觉一致性核验、资产审核表签核</li><li>通过 → 冻结资产，进入生成</li></ul></div>
           </div>
         </div></div>
       </div></div>
@@ -578,21 +578,21 @@
       <div class="stage reveal"><div class="stage-card glass">
         <div class="stage-top" tabindex="0" role="button" aria-expanded="false">
           <div class="stage-num">04</div>
-          <div class="stage-meta"><h3>AI 瑙嗛鐢熸垚 路 褰辫鍦ｇ粡銆愮敓鎴愬眰銆?/h3><div class="sub">鍥?鏂囩敓瑙嗛 路 杩愰暅 路 鐗规晥瀵兼紨鍙?/div>
-            <div class="stage-tags"><span class="chip hc">AI 鐢熸垚閮?/span><span class="chip hc">瀵兼紨閮?/span><span class="chip jt">閲戞嘲涓撶嚎 / API</span><span class="chip">Seedance 路 Kling</span></div></div>
-          <div class="stage-right"><span class="gate">瀹℃牳闂?鈶?闀滃ご瀹＄墖</span><span class="toggle">+</span></div>
+          <div class="stage-meta"><h3>AI 视频生成 · 影视圣经【生成层】</h3><div class="sub">图/文生视频 · 运镜 · 特效导演台</div>
+            <div class="stage-tags"><span class="chip hc">AI 生成部</span><span class="chip hc">导演部</span><span class="chip jt">金泰专线 / API</span><span class="chip">Seedance · Kling</span></div></div>
+          <div class="stage-right"><span class="gate">审核门 ④ 镜头审片</span><span class="toggle">+</span></div>
         </div>
         <div class="stage-body"><div class="stage-body-inner">
           <div class="steps">
-            <div class="step"><span class="sn">4.1</span><div class="stx"><b>鍥剧敓瑙嗛 / 鏂囩敓瑙嗛</b><p>浠ヤ笁鍗?鍒嗛暅鍥句负閿氾紝Seedance/Kling 缁?API 涓撶嚎鎵归噺鍑洪暅锛?1 鍗″苟琛岋級銆?/p></div></div>
-            <div class="step"><span class="sn">4.2</span><div class="stx"><b>杩愰暅璁捐</b><p>瀵兼紨閮ㄩ€愰暅鎸囧畾杩愰暅/鏅埆/鑺傚鍙傛暟銆?/p></div></div>
-            <div class="step"><span class="sn">4.3</span><div class="stx"><b>鐗规晥瀵兼紨鍙?/b><p>缁熶竴璋冨害鐗规晥/杞満/姘涘洿锛屼骇鍑洪暅澶寸礌鏉愶紙瑙嗛/澹伴煶/鐗规晥锛夈€?/p></div></div>
+            <div class="step"><span class="sn">4.1</span><div class="stx"><b>图生视频 / 文生视频</b><p>以三卡+分镜图为锚，Seedance/Kling 经 API 专线批量出镜（11 卡并行）。</p></div></div>
+            <div class="step"><span class="sn">4.2</span><div class="stx"><b>运镜设计</b><p>导演部逐镜指定运镜/景别/节奏参数。</p></div></div>
+            <div class="step"><span class="sn">4.3</span><div class="stx"><b>特效导演台</b><p>统一调度特效/转场/氛围，产出镜头素材（视频/声音/特效）。</p></div></div>
           </div>
           <div class="detail-grid">
-            <div class="dbox"><div class="dl">璐ｄ换閮ㄩ棬 / 璐ｄ换浜?/div><div class="owner-row"><span class="owner"><b>涓昏矗</b> AI 鐢熸垚閮紙AI 缁勯暱 L3锛?/span><span class="owner"><b>鍗忎綔</b> 瀵兼紨閮?路 閲戞嘲 API 缁?/span><span class="owner"><b>鏀拺</b> 绠楀姏杩愮淮</span></div></div>
-            <div class="dbox"><div class="dl">宸ュ叿 / 鎺ュ叆</div><div class="owner-row"><span class="owner">Seedance API</span><span class="owner">Kling API</span><span class="owner">涓撶嚎绠楀姏闆嗙兢</span></div></div>
-            <div class="dbox"><div class="dl">浜や粯鐗?/div><ul><li>闀滃ご绱犳潗锛堣棰?澹伴煶/鐗规晥锛?/li><li>绱犳潗绠＄悊鏂囨。锛堝満璁板崟/缁熺琛級</li><li>AI 鍒朵綔路璧勪骇瀹℃牳琛?路 鍒剁墖鏃ユ姤</li></ul></div>
-            <div class="dbox gatebox"><div class="dl">瀹℃牳闂?鈶?路 闀滃ご瀹＄墖</div><ul><li>瀵兼紨+璐ㄦ帶閫愰暅瀹★紝鏍囨敞閲嶇敓鎴愭竻鍗?/li><li>鍚堟牸闀滃ご鍏ョ簿鍓礌鏉愭睜</li></ul></div>
+            <div class="dbox"><div class="dl">责任部门 / 责任人</div><div class="owner-row"><span class="owner"><b>主责</b> AI 生成部（AI 组长 L3）</span><span class="owner"><b>协作</b> 导演部 · 金泰 API 组</span><span class="owner"><b>支撑</b> 算力运维</span></div></div>
+            <div class="dbox"><div class="dl">工具 / 接入</div><div class="owner-row"><span class="owner">Seedance API</span><span class="owner">Kling API</span><span class="owner">专线算力集群</span></div></div>
+            <div class="dbox"><div class="dl">交付物</div><ul><li>镜头素材（视频/声音/特效）</li><li>素材管理文档（场记单/统筹表）</li><li>AI 制作·资产审核表 · 制片日报</li></ul></div>
+            <div class="dbox gatebox"><div class="dl">审核门 ④ · 镜头审片</div><ul><li>导演+质控逐镜审，标注重生成清单</li><li>合格镜头入精剪素材池</li></ul></div>
           </div>
         </div></div>
       </div></div>
@@ -601,22 +601,22 @@
       <div class="stage reveal"><div class="stage-card glass">
         <div class="stage-top" tabindex="0" role="button" aria-expanded="false">
           <div class="stage-num">05</div>
-          <div class="stage-meta"><h3>鍚庢湡鍚堟垚</h3><div class="sub">鍓緫 路 鍚堟垚 路 璋冭壊 路 澹伴煶 路 鎴愮墖</div>
-            <div class="stage-tags"><span class="chip hc">鍚庢湡閮?/span><span class="chip jt">杈捐姮濂囪繙绋?/span><span class="chip">ffmpeg 路 鍚堟垚</span></div></div>
-          <div class="stage-right"><span class="gate">瀹℃牳闂?鈶?鍚庢湡璐ㄦ</span><span class="toggle">+</span></div>
+          <div class="stage-meta"><h3>后期合成</h3><div class="sub">剪辑 · 合成 · 调色 · 声音 · 成片</div>
+            <div class="stage-tags"><span class="chip hc">后期部</span><span class="chip jt">达芬奇远程</span><span class="chip">ffmpeg · 合成</span></div></div>
+          <div class="stage-right"><span class="gate">审核门 ⑤ 后期质检</span><span class="toggle">+</span></div>
         </div>
         <div class="stage-body"><div class="stage-body-inner">
           <div class="steps">
-            <div class="step"><span class="sn">5.1</span><div class="stx"><b>鍓緫锛堣揪鑺杩滅▼锛?/b><p>寮傚湴鍓緫甯堢粡杩滅▼宸ヤ綔绔欐帴鍏ュ悓涓€姣嶇増锛屾垚搴忕簿鍓€?/p></div></div>
-            <div class="step"><span class="sn">5.2</span><div class="stx"><b>鐗规晥鍚堟垚 路 璋冭壊</b><p>鍚堟垚灞傚彔鍔犮€佽揪鑺璋冭壊缁熶竴褰辫皟銆?/p></div></div>
-            <div class="step"><span class="sn">5.3</span><div class="stx"><b>澹伴煶 路 閰嶄箰 路 娣烽煶</b><p>ElevenLabs/ACE-Step 閰嶉煶閰嶄箰锛宖fmpeg 灏佽銆?/p></div></div>
-            <div class="step"><span class="sn">5.4</span><div class="stx"><b>鎴愮墖姣嶇増杈撳嚭</b><p>杈撳嚭鎴愮墖姣嶇増涓庡瑙勬牸鍙戝竷鐗堟湰銆?/p></div></div>
+            <div class="step"><span class="sn">5.1</span><div class="stx"><b>剪辑（达芬奇远程）</b><p>异地剪辑师经远程工作站接入同一母版，成序精剪。</p></div></div>
+            <div class="step"><span class="sn">5.2</span><div class="stx"><b>特效合成 · 调色</b><p>合成层叠加、达芬奇调色统一影调。</p></div></div>
+            <div class="step"><span class="sn">5.3</span><div class="stx"><b>声音 · 配乐 · 混音</b><p>ElevenLabs/ACE-Step 配音配乐，ffmpeg 封装。</p></div></div>
+            <div class="step"><span class="sn">5.4</span><div class="stx"><b>成片母版输出</b><p>输出成片母版与多规格发布版本。</p></div></div>
           </div>
           <div class="detail-grid">
-            <div class="dbox"><div class="dl">璐ｄ换閮ㄩ棬 / 璐ｄ换浜?/div><div class="owner-row"><span class="owner"><b>涓昏矗</b> 鍚庢湡閮紙鍚庢湡鎬荤洃 L3锛?/span><span class="owner"><b>鍗忎綔</b> 閲戞嘲 API 缁勶紙杩滅▼鎺ュ叆锛?/span></div></div>
-            <div class="dbox"><div class="dl">宸ュ叿 / 鎺ュ叆</div><div class="owner-row"><span class="owner">杈捐姮濂?Resolve锛堣繙绋嬶級</span><span class="owner">ffmpeg</span><span class="owner">ElevenLabs / ACE-Step</span></div></div>
-            <div class="dbox"><div class="dl">浜や粯鐗?/div><ul><li>绮惧壀搴忓垪 路 璋冭壊姣嶇増</li><li>鎴愮墖姣嶇増 + 鍙戝竷鐗堟湰</li></ul></div>
-            <div class="dbox gatebox"><div class="dl">瀹℃牳闂?鈶?路 鍚庢湡璐ㄦ</div><ul><li>鐢婚潰/澹伴煶/鑺傚璐ㄦ</li><li>鎶€瀹￠€氳繃 鈫?閫佺粓瀹?/li></ul></div>
+            <div class="dbox"><div class="dl">责任部门 / 责任人</div><div class="owner-row"><span class="owner"><b>主责</b> 后期部（后期总监 L3）</span><span class="owner"><b>协作</b> 金泰 API 组（远程接入）</span></div></div>
+            <div class="dbox"><div class="dl">工具 / 接入</div><div class="owner-row"><span class="owner">达芬奇 Resolve（远程）</span><span class="owner">ffmpeg</span><span class="owner">ElevenLabs / ACE-Step</span></div></div>
+            <div class="dbox"><div class="dl">交付物</div><ul><li>精剪序列 · 调色母版</li><li>成片母版 + 发布版本</li></ul></div>
+            <div class="dbox gatebox"><div class="dl">审核门 ⑤ · 后期质检</div><ul><li>画面/声音/节奏质检</li><li>技审通过 → 送终审</li></ul></div>
           </div>
         </div></div>
       </div></div>
@@ -625,21 +625,21 @@
       <div class="stage reveal"><div class="stage-card glass">
         <div class="stage-top" tabindex="0" role="button" aria-expanded="false">
           <div class="stage-num">06</div>
-          <div class="stage-meta"><h3>瀹℃牳浜や粯</h3><div class="sub">鍐呭瀹?路 鍚堣瀹?路 缁堝 路 褰掓。鍙戝竷</div>
-            <div class="stage-tags"><span class="chip hc">瀹℃牳 / 璐ㄦ帶閮?/span><span class="chip jt">閲戞嘲鍚堣缁?/span><span class="chip">L1 鍐崇瓥灞?/span></div></div>
-          <div class="stage-right"><span class="gate">瀹℃牳闂?鈶?缁堝 + 鍚堣鍙戝竷</span><span class="toggle">+</span></div>
+          <div class="stage-meta"><h3>审核交付</h3><div class="sub">内容审 · 合规审 · 终审 · 归档发布</div>
+            <div class="stage-tags"><span class="chip hc">审核 / 质控部</span><span class="chip jt">金泰合规组</span><span class="chip">L1 决策层</span></div></div>
+          <div class="stage-right"><span class="gate">审核门 ⑥ 终审 + 合规发布</span><span class="toggle">+</span></div>
         </div>
         <div class="stage-body"><div class="stage-body-inner">
           <div class="steps">
-            <div class="step"><span class="sn">6.1</span><div class="stx"><b>鍐呭缁堝</b><p>璐ㄦ帶閮ㄥ鎴愮墖鍋氬唴瀹?浠峰€艰/涓€鑷存€х粓妫€銆?/p></div></div>
-            <div class="step"><span class="sn">6.2</span><div class="stx"><b>鍚堣瀹℃牳锛堥噾娉帮級</b><p>AIGC 鍚堣瀹℃煡锛岀敓鎴愬弬鏁颁笌瀹℃牳璁板綍鐣欑棔瀛樿瘉銆?/p></div></div>
-            <div class="step"><span class="sn">6.3</span><div class="stx"><b>鍐崇瓥灞傜粓绛?路 浜や粯褰掓。</b><p>L1 鎺堟潈鍙戝竷锛屾垚鐗囦笌鍏ㄩ摼璺祫浜у綊妗ｃ€?/p></div></div>
+            <div class="step"><span class="sn">6.1</span><div class="stx"><b>内容终审</b><p>质控部对成片做内容/价值观/一致性终检。</p></div></div>
+            <div class="step"><span class="sn">6.2</span><div class="stx"><b>合规审核（金泰）</b><p>AIGC 合规审查，生成参数与审核记录留痕存证。</p></div></div>
+            <div class="step"><span class="sn">6.3</span><div class="stx"><b>决策层终签 · 交付归档</b><p>L1 授权发布，成片与全链路资产归档。</p></div></div>
           </div>
           <div class="detail-grid">
-            <div class="dbox"><div class="dl">璐ｄ换閮ㄩ棬 / 璐ｄ换浜?/div><div class="owner-row"><span class="owner"><b>涓昏矗</b> 瀹℃牳/璐ㄦ帶閮紙QC 涓荤 L3锛?/span><span class="owner"><b>鍗忎綔</b> 閲戞嘲鍚堣缁?/span><span class="owner"><b>缁堟壒</b> 鍑哄搧浜?L1</span></div></div>
-            <div class="dbox"><div class="dl">宸ュ叿 / 鎺ュ叆</div><div class="owner-row"><span class="owner">澶氱骇瀹℃牳娴?/span><span class="owner">鍚堣瀛樿瘉绯荤粺</span></div></div>
-            <div class="dbox"><div class="dl">浜や粯鐗?/div><ul><li>鎴愮墖锛堢粓鐗堬級 路 浜や粯鍖?/li><li>鍏ㄩ摼璺綊妗ｏ紙鍦ｇ粡/璧勪骇/瀹℃牳璁板綍锛?/li></ul></div>
-            <div class="dbox gatebox"><div class="dl">瀹℃牳闂?鈶?路 缁堝 & 鍚堣</div><ul><li>鍐呭+鍚堣鍙岀</li><li>鎺堟潈鍙戝竷 / 褰掓。缁撻」</li></ul></div>
+            <div class="dbox"><div class="dl">责任部门 / 责任人</div><div class="owner-row"><span class="owner"><b>主责</b> 审核/质控部（QC 主管 L3）</span><span class="owner"><b>协作</b> 金泰合规组</span><span class="owner"><b>终批</b> 出品人 L1</span></div></div>
+            <div class="dbox"><div class="dl">工具 / 接入</div><div class="owner-row"><span class="owner">多级审核流</span><span class="owner">合规存证系统</span></div></div>
+            <div class="dbox"><div class="dl">交付物</div><ul><li>成片（终版） · 交付包</li><li>全链路归档（圣经/资产/审核记录）</li></ul></div>
+            <div class="dbox gatebox"><div class="dl">审核门 ⑥ · 终审 & 合规</div><ul><li>内容+合规双签</li><li>授权发布 / 归档结项</li></ul></div>
           </div>
         </div></div>
       </div></div>
@@ -649,175 +649,175 @@
   <!-- RACI -->
   <section id="raci">
     <div class="sec-head reveal">
-      <div class="eyebrow"><span class="idx">03 /</span> 璐ｄ换鐭╅樀</div>
-      <h2>閮ㄩ棬 脳 闃舵璐ｄ换鐭╅樀</h2>
-      <p>妯涓€涓儴闂ㄧ殑鍏ㄦ祦绋嬭亴璐ｏ紝绾佃涓€涓樁娈电殑璐ｄ换鍒嗗竷銆?b>R</b> 涓昏矗鎵ц銆?b>A</b> 瀹℃壒绛惧瓧銆?b>C</b> 鍗忎綔鍙備笌銆?b>S</b> 鏀拺淇濋殰銆?/p>
+      <div class="eyebrow"><span class="idx">03 /</span> 责任矩阵</div>
+      <h2>部门 × 阶段责任矩阵</h2>
+      <p>横读一个部门的全流程职责，纵读一个阶段的责任分布。<b>R</b> 主责执行、<b>A</b> 审批签字、<b>C</b> 协作参与、<b>S</b> 支撑保障。</p>
     </div>
     <div class="matrix-wrap glass reveal">
       <table class="raci">
-        <thead><tr><th style="text-align:left">閮ㄩ棬 \ 闃舵</th><th>鈶?绛栧垝绔嬮」</th><th>鈶?鍓ф湰宸ョ▼</th><th>鈶?鍒嗛暅璁捐</th><th>鈶?AI 鐢熸垚</th><th>鈶?鍚庢湡鍚堟垚</th><th>鈶?瀹℃牳浜や粯</th></tr></thead>
+        <thead><tr><th style="text-align:left">部门 \ 阶段</th><th>① 策划立项</th><th>② 剧本工程</th><th>③ 分镜设计</th><th>④ AI 生成</th><th>⑤ 后期合成</th><th>⑥ 审核交付</th></tr></thead>
         <tbody>
-          <tr><th>绛栧垝閮?/th><td><span class="r r-R">R</span></td><td><span class="r r-C">C</span></td><td></td><td></td><td></td><td><span class="r r-C">C</span></td></tr>
-          <tr><th>鍓ф湰閮?/th><td><span class="r r-C">C</span></td><td><span class="r r-R">R</span></td><td><span class="r r-C">C</span></td><td></td><td></td><td></td></tr>
-          <tr><th>鑰冭瘉椤鹃棶缁?/th><td><span class="r r-S">S</span></td><td><span class="r r-C">C</span></td><td><span class="r r-S">S</span></td><td></td><td></td><td><span class="r r-C">C</span></td></tr>
-          <tr><th>瀵兼紨閮?/th><td></td><td><span class="r r-A">A</span></td><td><span class="r r-R">R</span></td><td><span class="r r-C">C</span></td><td><span class="r r-C">C</span></td><td><span class="r r-C">C</span></td></tr>
-          <tr><th>缇庢湳璁捐閮?/th><td></td><td></td><td><span class="r r-R">R</span></td><td><span class="r r-S">S</span></td><td></td><td></td></tr>
-          <tr><th>AI 鐢熸垚閮?/th><td></td><td></td><td><span class="r r-C">C</span></td><td><span class="r r-R">R</span></td><td><span class="r r-S">S</span></td><td></td></tr>
-          <tr><th>鍚庢湡閮?/th><td></td><td></td><td></td><td><span class="r r-C">C</span></td><td><span class="r r-R">R</span></td><td><span class="r r-C">C</span></td></tr>
-          <tr><th>鍒剁墖閮紙缁熺锛?/th><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td></tr>
-          <tr><th>璐㈠姟閮?/th><td><span class="r r-S">S</span></td><td></td><td></td><td><span class="r r-S">S</span></td><td></td><td><span class="r r-S">S</span></td></tr>
-          <tr><th>瀹℃牳 / 璐ㄦ帶閮?/th><td><span class="r r-C">C</span></td><td><span class="r r-C">C</span></td><td><span class="r r-A">A</span></td><td><span class="r r-A">A</span></td><td><span class="r r-A">A</span></td><td><span class="r r-R">R</span></td></tr>
-          <tr><th>閲戞嘲 路 绠楀姏杩愮淮</th><td></td><td></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td></td></tr>
-          <tr><th>閲戞嘲 路 API 宸ョ▼</th><td></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-R">R</span></td><td><span class="r r-R">R</span></td><td></td></tr>
-          <tr><th>閲戞嘲 路 鍚堣缁?/th><td><span class="r r-C">C</span></td><td></td><td></td><td></td><td></td><td><span class="r r-A">A</span></td></tr>
-          <tr><th>L1 鍐崇瓥灞?/th><td><span class="r r-A">A</span></td><td><span class="r r-A">A</span></td><td></td><td></td><td></td><td><span class="r r-A">A</span></td></tr>
+          <tr><th>策划部</th><td><span class="r r-R">R</span></td><td><span class="r r-C">C</span></td><td></td><td></td><td></td><td><span class="r r-C">C</span></td></tr>
+          <tr><th>剧本部</th><td><span class="r r-C">C</span></td><td><span class="r r-R">R</span></td><td><span class="r r-C">C</span></td><td></td><td></td><td></td></tr>
+          <tr><th>考证顾问组</th><td><span class="r r-S">S</span></td><td><span class="r r-C">C</span></td><td><span class="r r-S">S</span></td><td></td><td></td><td><span class="r r-C">C</span></td></tr>
+          <tr><th>导演部</th><td></td><td><span class="r r-A">A</span></td><td><span class="r r-R">R</span></td><td><span class="r r-C">C</span></td><td><span class="r r-C">C</span></td><td><span class="r r-C">C</span></td></tr>
+          <tr><th>美术设计部</th><td></td><td></td><td><span class="r r-R">R</span></td><td><span class="r r-S">S</span></td><td></td><td></td></tr>
+          <tr><th>AI 生成部</th><td></td><td></td><td><span class="r r-C">C</span></td><td><span class="r r-R">R</span></td><td><span class="r r-S">S</span></td><td></td></tr>
+          <tr><th>后期部</th><td></td><td></td><td></td><td><span class="r r-C">C</span></td><td><span class="r r-R">R</span></td><td><span class="r r-C">C</span></td></tr>
+          <tr><th>制片部（统筹）</th><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td></tr>
+          <tr><th>财务部</th><td><span class="r r-S">S</span></td><td></td><td></td><td><span class="r r-S">S</span></td><td></td><td><span class="r r-S">S</span></td></tr>
+          <tr><th>审核 / 质控部</th><td><span class="r r-C">C</span></td><td><span class="r r-C">C</span></td><td><span class="r r-A">A</span></td><td><span class="r r-A">A</span></td><td><span class="r r-A">A</span></td><td><span class="r r-R">R</span></td></tr>
+          <tr><th>金泰 · 算力运维</th><td></td><td></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td></td></tr>
+          <tr><th>金泰 · API 工程</th><td></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-R">R</span></td><td><span class="r r-R">R</span></td><td></td></tr>
+          <tr><th>金泰 · 合规组</th><td><span class="r r-C">C</span></td><td></td><td></td><td></td><td></td><td><span class="r r-A">A</span></td></tr>
+          <tr><th>L1 决策层</th><td><span class="r r-A">A</span></td><td><span class="r r-A">A</span></td><td></td><td></td><td></td><td><span class="r r-A">A</span></td></tr>
         </tbody>
       </table>
     </div>
     <div class="raci-key reveal">
-      <span><span class="r r-R">R</span> 涓昏矗鎵ц</span><span><span class="r r-A">A</span> 瀹℃壒绛惧瓧</span>
-      <span><span class="r r-C">C</span> 鍗忎綔鍙備笌</span><span><span class="r r-S">S</span> 鏀拺淇濋殰</span>
+      <span><span class="r r-R">R</span> 主责执行</span><span><span class="r r-A">A</span> 审批签字</span>
+      <span><span class="r r-C">C</span> 协作参与</span><span><span class="r r-S">S</span> 支撑保障</span>
     </div>
   </section>
 
-  <!-- 鎶€鏈帴鍏?-->
+  <!-- 技术接入 -->
   <section id="tech">
     <div class="sec-head reveal">
-      <div class="eyebrow"><span class="idx">04 /</span> 閲戞嘲鎶€鏈簳搴?/div>
-      <h2>涓撶嚎鎺ュ叆 路 API 缂栨帓 路 鍚堣瀛樿瘉</h2>
-      <p>閲戞嘲浣滀负鎶€鏈笌鍚堣搴曞骇锛屼负娌充紶鍒涗綔鍏ㄦ祦绋嬫彁渚涖€?b>鎺ュ緱杩涖€佽窇寰楀姩銆佺暀寰楃棔</b>銆嶇殑鍩虹璁炬柦淇濋殰銆?/p>
+      <div class="eyebrow"><span class="idx">04 /</span> 金泰技术底座</div>
+      <h2>专线接入 · API 编排 · 合规存证</h2>
+      <p>金泰作为技术与合规底座，为河传创作全流程提供「<b>接得进、跑得动、留得痕</b>」的基础设施保障。</p>
     </div>
     <div class="infra">
       <div class="infra-card glass reveal">
-        <h4><span class="ic mono">鈬?/span> 鏁版嵁 / 绠楀姏娴佸悜</h4>
+        <h4><span class="ic mono">⇄</span> 数据 / 算力流向</h4>
         <ul class="pipe-list">
-          <li><span class="k">鏈湴宸ヤ綅</span><span class="d">娌充紶鍚勯儴闂ㄤ骇鍑哄湥缁?鍒嗛暅/涓夊崱锛岀粡涓撶嚎涓婅</span></li>
-          <li><span class="k">閲戞嘲缃戝叧</span><span class="d">閴存潈 路 閰嶉 路 浼樺厛绾ч槦鍒?路 鎴愭湰璁￠噺</span></li>
-          <li><span class="k">绠楀姏闆嗙兢</span><span class="d">8脳H100 + 4脳5090 鐢熸垚/娓叉煋锛?1 鍗″苟琛?/span></li>
-          <li><span class="k">API 灞?/span><span class="d">Seedance / Kling / 杈捐姮濂囪繙绋嬬粺涓€缂栨帓</span></li>
-          <li><span class="k">鍥炰紶褰掓。</span><span class="d">绱犳潗 + 鍙傛暟 + 瀹℃牳璁板綍鍥炴湰鍦拌祫浜у簱</span></li>
+          <li><span class="k">本地工位</span><span class="d">河传各部门产出圣经/分镜/三卡，经专线上行</span></li>
+          <li><span class="k">金泰网关</span><span class="d">鉴权 · 配额 · 优先级队列 · 成本计量</span></li>
+          <li><span class="k">算力集群</span><span class="d">8×H100 + 4×5090 生成/渲染，11 卡并行</span></li>
+          <li><span class="k">API 层</span><span class="d">Seedance / Kling / 达芬奇远程统一编排</span></li>
+          <li><span class="k">回传归档</span><span class="d">素材 + 参数 + 审核记录回本地资产库</span></li>
         </ul>
       </div>
       <div class="infra-card glass reveal">
-        <h4><span class="ic mono">鉁?/span> 鍚堣涓庡彲杩芥函</h4>
+        <h4><span class="ic mono">✓</span> 合规与可追溯</h4>
         <ul class="pipe-list">
-          <li><span class="k">鍏ㄧ▼鐣欑棔</span><span class="d">鎻愮ず璇?鐢熸垚鍙傛暟/妯″瀷鐗堟湰閫愰暅瀛樿瘉</span></li>
-          <li><span class="k">瀹℃牳杩芥函</span><span class="d">鍏亾瀹℃牳闂ㄧ瀛楄褰曟寕鎺ュ搴斾氦浠樼墿</span></li>
-          <li><span class="k">鍚堣瀹℃煡</span><span class="d">鍙戝竷鍓?AIGC 鍚堣瀹★紝棣欐腐鍚堣缁撴瀯鎵挎帴</span></li>
-          <li><span class="k">鎴愭湰鏍哥畻</span><span class="d">姣忛暅绠楀姏鎴愭湰鍥炴祦璐㈠姟棰勭畻瀵圭収琛?/span></li>
+          <li><span class="k">全程留痕</span><span class="d">提示词/生成参数/模型版本逐镜存证</span></li>
+          <li><span class="k">审核追溯</span><span class="d">六道审核门签字记录挂接对应交付物</span></li>
+          <li><span class="k">合规审查</span><span class="d">发布前 AIGC 合规审，香港合规结构承接</span></li>
+          <li><span class="k">成本核算</span><span class="d">每镜算力成本回流财务预算对照表</span></li>
         </ul>
         <div class="api-badges" style="margin-top:14px">
-          <span class="api"><span class="st"></span>n8n 缂栨帓</span>
-          <span class="api"><span class="st"></span>璧勪骇搴?/ 鍦鸿鍗?/span>
-          <span class="api remote"><span class="st"></span>杩滅▼杈捐姮濂囧伐浣滅珯</span>
+          <span class="api"><span class="st"></span>n8n 编排</span>
+          <span class="api"><span class="st"></span>资产库 / 场记单</span>
+          <span class="api remote"><span class="st"></span>远程达芬奇工作站</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 浣跨敤鏉冪鐞?-->
+  <!-- 使用权管理 -->
   <section id="access">
     <div class="sec-head reveal">
-      <div class="eyebrow"><span class="idx">05 /</span> 浣跨敤鏉冪鐞?路 璁块棶鎺у埗</div>
-      <h2>鏍稿績鐢熶骇璧勬枡鐨勪弗鏍兼巿鏉?/h2>
-      <p><b>ClaudeCode 涓?Codex 鏄€屽奖瑙嗗湥缁忋€嶇殑鏍稿績鐢熶骇璧勬枡锛屼笉瀵瑰鏍″鐢燂紙AI 鎿嶄綔鍛樸€佸壀杈戝笀绛?L4 鎵ц灞傦級寮€鏀俱€?/b>鍓ф湰宸ョ▼涓?b>鍒嗛暅/闀滃ご璁捐</b>绛夋牳蹇冨垱浣滅幆鑺傦紝鐢辨牳蹇冨憳宸ワ紙鍓ф湰閮?绛栧垝閮?瀵兼紨閮?缇庢湳璁捐閮級鍦?b>鍙楁帶宸ヤ綅</b>浣跨敤 CC + Codex锛涘鐢熷彧鍦ㄦ矙绠卞唴棰嗙敤<b>鍐荤粨鍚?/b>鐨勫湥缁?鍒嗛暅/绱犳潗锛屾垨缁?API 缃戝叧浠ｇ悊鎻愪氦鐢熸垚浠诲姟鈥斺€斿缁堟帴瑙︿笉鍒板簳灞傚伐鍏蜂笌瀵嗛挜銆傞噰鐢ㄣ€屽垎绾ф巿鏉?路 鏈€灏忔潈闄?路 瀵嗛挜闆朵笅鍙?路 缃戝叧鍗曠偣绠℃帶 路 鍏ㄩ噺瀹¤銆嶇殑 RBAC 璁块棶鎺у埗銆?/p>
+      <div class="eyebrow"><span class="idx">05 /</span> 使用权管理 · 访问控制</div>
+      <h2>核心生产资料的严格授权</h2>
+      <p><b>ClaudeCode 与 Codex 是「影视圣经」的核心生产资料，不对学校学生（AI 操作员、剪辑师等 L4 执行层）开放。</b>剧本工程与<b>分镜/镜头设计</b>等核心创作环节，由核心员工（剧本部/策划部/导演部/美术设计部）在<b>受控工位</b>使用 CC + Codex；学生只在沙箱内领用<b>冻结后</b>的圣经/分镜/素材，或经 API 网关代理提交生成任务——始终接触不到底层工具与密钥。采用「分级授权 · 最小权限 · 密钥零下发 · 网关单点管控 · 全量审计」的 RBAC 访问控制。</p>
     </div>
 
     <div class="principles reveal">
-      <div class="principle glass"><div class="pn">01</div><h4>鏈€灏忔潈闄?/h4><p>鎸夎鑹插彧鎺堜簣瀹屾垚鏈亴鎵€闇€鐨勬渶灏忓伐鍏蜂笌鏁版嵁鑼冨洿锛岄粯璁ゆ嫆缁濄€?/p></div>
-      <div class="principle glass"><div class="pn">02</div><h4>瀵嗛挜闆朵笅鍙?/h4><p>ANTHROPIC_API_KEY / Codex 鍑瘉鍙瓨閲戞嘲缃戝叧涓绘満锛岀粷涓嶈惤鍦板埌瀛︾敓/鎿嶄綔鍛樻満鍣ㄣ€?/p></div>
-      <div class="principle glass"><div class="pn">03</div><h4>缃戝叧鍗曠偣绠℃帶</h4><p>鎵€鏈夌敓鎴愯姹傜粡 claude-bridge 缃戝叧 + BRIDGE_TOKEN 閴存潈浠ｇ悊锛屾湰鍦版嬁涓嶅埌搴曞眰宸ュ叿銆?/p></div>
-      <div class="principle glass"><div class="pn">04</div><h4>鍏ㄩ噺瀹¤</h4><p>閫愭璋冪敤鐣欑棔 who / when / what / cost锛岃繚瑙勪笌瓒呴鍙拷婧€佸彲鍥炴函銆?/p></div>
+      <div class="principle glass"><div class="pn">01</div><h4>最小权限</h4><p>按角色只授予完成本职所需的最小工具与数据范围，默认拒绝。</p></div>
+      <div class="principle glass"><div class="pn">02</div><h4>密钥零下发</h4><p>ANTHROPIC_API_KEY / Codex 凭证只存金泰网关主机，绝不落地到学生/操作员机器。</p></div>
+      <div class="principle glass"><div class="pn">03</div><h4>网关单点管控</h4><p>所有生成请求经 claude-bridge 网关 + BRIDGE_TOKEN 鉴权代理，本地拿不到底层工具。</p></div>
+      <div class="principle glass"><div class="pn">04</div><h4>全量审计</h4><p>逐次调用留痕 who / when / what / cost，违规与超额可追溯、可回溯。</p></div>
     </div>
 
     <div class="matrix-wrap glass reveal" style="margin-bottom:16px">
       <table class="raci acc-matrix">
         <thead><tr>
-          <th>瑙掕壊 \ 璧勬簮</th><th>ClaudeCode</th><th>Codex</th><th>鐢熸垚缃戝叧<br>Seedance/Kling</th><th>杈捐姮濂囪繙绋?/th><th>鍦ｇ粡/璧勪骇搴?/th><th>API 瀵嗛挜</th>
+          <th>角色 \ 资源</th><th>ClaudeCode</th><th>Codex</th><th>生成网关<br>Seedance/Kling</th><th>达芬奇远程</th><th>圣经/资产库</th><th>API 密钥</th>
         </tr></thead>
         <tbody>
-          <tr><th>L1 鍐崇瓥灞?/th><td><span class="acc acc-full">鈼忓畬鍏?/span></td><td><span class="acc acc-full">鈼忓畬鍏?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-full">鈼忓畬鍏?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td></tr>
-          <tr><th>L2 瀵兼紨 / 鎶€鏈€荤洃</th><td><span class="acc acc-ctrl">鈼愬彈鎺?/span></td><td><span class="acc acc-ctrl">鈼愬彈鎺?/span></td><td><span class="acc acc-ctrl">鈼愬彈鎺?/span></td><td><span class="acc acc-ctrl">鈼愬彈鎺?/span></td><td><span class="acc acc-full">鈼忓畬鍏?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td></tr>
-          <tr><th>鍓ф湰閮?/ 绛栧垝閮紙鏍稿績鍒涗綔锛?/th><td><span class="acc acc-ctrl">鈼愬彈鎺?/span></td><td><span class="acc acc-ctrl">鈼愬彈鎺?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-full">鈼忓畬鍏?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td></tr>
-          <tr><th>缇庢湳璁捐閮?/th><td><span class="acc acc-ctrl">鈼愬彈鎺?/span></td><td><span class="acc acc-ctrl">鈼愬彈鎺?/span></td><td><span class="acc acc-gw">鈬勭綉鍏?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-ro">鈼嬭鍐櫬疯祫浜?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td></tr>
-          <tr><th>AI 鐢熸垚閮?<b style="color:var(--gold-soft)">锛堝惈瀛︾敓鎿嶄綔鍛橈級</b></th><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-gw">鈬勭綉鍏充唬鐞?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-ro">鈼嬪彧璇宦峰湥缁?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td></tr>
-          <tr><th>鍚庢湡閮?<b style="color:var(--gold-soft)">锛堝惈瀛︾敓鍓緫甯堬級</b></th><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-ro">鈼嬪彧璇诲伐浣?/span></td><td><span class="acc acc-ro">鈼嬪彧璇宦风礌鏉?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td></tr>
-          <tr><th>閲戞嘲 路 API 宸ョ▼ / 鍚堣</th><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-ctrl">鈼愮鐞?/span></td><td><span class="acc acc-ctrl">鈼愮鐞?/span></td><td><span class="acc acc-ro">鈼嬪璁?/span></td><td><span class="acc acc-ctrl">鈼愭墭绠?/span></td></tr>
+          <tr><th>L1 决策层</th><td><span class="acc acc-full">●完全</span></td><td><span class="acc acc-full">●完全</span></td><td><span class="acc acc-no">⛔禁止</span></td><td><span class="acc acc-no">⛔禁止</span></td><td><span class="acc acc-full">●完全</span></td><td><span class="acc acc-no">⛔禁止</span></td></tr>
+          <tr><th>L2 导演 / 技术总监</th><td><span class="acc acc-ctrl">◐受控</span></td><td><span class="acc acc-ctrl">◐受控</span></td><td><span class="acc acc-ctrl">◐受控</span></td><td><span class="acc acc-ctrl">◐受控</span></td><td><span class="acc acc-full">●完全</span></td><td><span class="acc acc-no">⛔禁止</span></td></tr>
+          <tr><th>剧本部 / 策划部（核心创作）</th><td><span class="acc acc-ctrl">◐受控</span></td><td><span class="acc acc-ctrl">◐受控</span></td><td><span class="acc acc-no">⛔禁止</span></td><td><span class="acc acc-no">⛔禁止</span></td><td><span class="acc acc-full">●完全</span></td><td><span class="acc acc-no">⛔禁止</span></td></tr>
+          <tr><th>美术设计部</th><td><span class="acc acc-ctrl">◐受控</span></td><td><span class="acc acc-ctrl">◐受控</span></td><td><span class="acc acc-gw">⇄网关</span></td><td><span class="acc acc-no">⛔禁止</span></td><td><span class="acc acc-ro">○读写·资产</span></td><td><span class="acc acc-no">⛔禁止</span></td></tr>
+          <tr><th>AI 生成部 <b style="color:var(--gold-soft)">（含学生操作员）</b></th><td><span class="acc acc-no">⛔禁止</span></td><td><span class="acc acc-no">⛔禁止</span></td><td><span class="acc acc-gw">⇄网关代理</span></td><td><span class="acc acc-no">⛔禁止</span></td><td><span class="acc acc-ro">○只读·圣经</span></td><td><span class="acc acc-no">⛔禁止</span></td></tr>
+          <tr><th>后期部 <b style="color:var(--gold-soft)">（含学生剪辑师）</b></th><td><span class="acc acc-no">⛔禁止</span></td><td><span class="acc acc-no">⛔禁止</span></td><td><span class="acc acc-no">⛔禁止</span></td><td><span class="acc acc-ro">○只读工位</span></td><td><span class="acc acc-ro">○只读·素材</span></td><td><span class="acc acc-no">⛔禁止</span></td></tr>
+          <tr><th>金泰 · API 工程 / 合规</th><td><span class="acc acc-no">⛔禁止</span></td><td><span class="acc acc-no">⛔禁止</span></td><td><span class="acc acc-ctrl">◐管理</span></td><td><span class="acc acc-ctrl">◐管理</span></td><td><span class="acc acc-ro">○审计</span></td><td><span class="acc acc-ctrl">◐托管</span></td></tr>
         </tbody>
       </table>
     </div>
     <div class="raci-key reveal" style="margin-bottom:34px">
-      <span><span class="acc acc-full">鈼忓畬鍏?/span> 鐩存帴璁块棶</span>
-      <span><span class="acc acc-ctrl">鈼愬彈鎺?/span> 闇€瀹℃壒 + 鍙楁帶宸ヤ綅</span>
-      <span><span class="acc acc-gw">鈬勭綉鍏?/span> 浠呯粡 API 缃戝叧浠ｇ悊</span>
-      <span><span class="acc acc-ro">鈼嬪彧璇?/span> 棰嗙敤/鍙</span>
-      <span><span class="acc acc-no">鉀旂姝?/span> 鏃犳潈璁块棶</span>
+      <span><span class="acc acc-full">●完全</span> 直接访问</span>
+      <span><span class="acc acc-ctrl">◐受控</span> 需审批 + 受控工位</span>
+      <span><span class="acc acc-gw">⇄网关</span> 仅经 API 网关代理</span>
+      <span><span class="acc acc-ro">○只读</span> 领用/只读</span>
+      <span><span class="acc acc-no">⛔禁止</span> 无权访问</span>
     </div>
 
-    <div class="sec-head reveal" style="margin-bottom:20px"><h2 style="font-size:22px">涓夊尯鐗╃悊 / 缃戠粶闅旂</h2></div>
+    <div class="sec-head reveal" style="margin-bottom:20px"><h2 style="font-size:22px">三区物理 / 网络隔离</h2></div>
     <div class="zones">
       <div class="zone za glass reveal">
-        <div class="zt">ZONE A 路 鏈€楂樺瘑绾?/div><h4>鏍稿績鍒涗綔鍖?/h4>
-        <div class="ztool">ClaudeCode + Codex 路 閿婚€犲奖瑙嗗湥缁?/div>
+        <div class="zt">ZONE A · 最高密级</div><h4>核心创作区</h4>
+        <div class="ztool">ClaudeCode + Codex · 锻造影视圣经</div>
         <ul>
-          <li>鍙楁帶涓撶嚎宸ヤ綅锛岄渶瀹℃壒 + NDA + 宸ヤ綅缁戝畾</li>
-          <li>浠?L1/L2 涓庡墽鏈€佺瓥鍒掓牳蹇冨憳宸ュ噯鍏?/li>
-          <li>瀵嗛挜鎵樼浜庨噾娉扮綉鍏筹紝宸ヤ綅涓嶈惤鍦板嚟璇?/li>
-          <li>浜у嚭鍦ｇ粡/鍒嗛暅缁忓鏍搁棬閿佸畾鍚庢柟鍙笅鍙?/li>
+          <li>受控专线工位，需审批 + NDA + 工位绑定</li>
+          <li>仅 L1/L2 与剧本、策划核心员工准入</li>
+          <li>密钥托管于金泰网关，工位不落地凭证</li>
+          <li>产出圣经/分镜经审核门锁定后方可下发</li>
         </ul>
-        <div class="who">鈼?鍑嗗叆锛氭牳蹇冨憳宸?路 绛惧瓧瀹℃壒</div>
+        <div class="who">◆ 准入：核心员工 · 签字审批</div>
       </div>
       <div class="zone zb glass reveal">
-        <div class="zt">ZONE B 路 鍙楁帶鐢熶骇</div><h4>鍙楁帶鐢熸垚鍖?/h4>
-        <div class="ztool">API 缃戝叧 路 Seedance / Kling 鍑洪暅</div>
+        <div class="zt">ZONE B · 受控生产</div><h4>受控生成区</h4>
+        <div class="ztool">API 网关 · Seedance / Kling 出镜</div>
         <ul>
-          <li>AI 鐢熸垚閮ㄧ粡 claude-bridge 缃戝叧鎻愪氦浠诲姟</li>
-          <li>BRIDGE_TOKEN 閴存潈锛屾棤搴曞眰宸ュ叿銆佹棤瀵嗛挜</li>
-          <li>鍙棰嗙敤鍐荤粨鍚庣殑鍦ｇ粡 / 鍒嗛暅 / 涓夊崱</li>
-          <li>姣忛暅璋冪敤涓庣畻鍔涙垚鏈€愭潯瀹¤鐣欑棔</li>
+          <li>AI 生成部经 claude-bridge 网关提交任务</li>
+          <li>BRIDGE_TOKEN 鉴权，无底层工具、无密钥</li>
+          <li>只读领用冻结后的圣经 / 分镜 / 三卡</li>
+          <li>每镜调用与算力成本逐条审计留痕</li>
         </ul>
-        <div class="who">鈼?鍑嗗叆锛欰I 鎿嶄綔鍛橈紙瀛︾敓锛壜?鍙楅檺浠ょ墝</div>
+        <div class="who">◆ 准入：AI 操作员（学生）· 受限令牌</div>
       </div>
       <div class="zone zc glass reveal">
-        <div class="zt">ZONE C 路 娌欑</div><h4>瀛︾敓娌欑鍖?/h4>
-        <div class="ztool">杈捐姮濂囧彧璇诲伐浣?路 鍓緫 / 鍚堟垚</div>
+        <div class="zt">ZONE C · 沙箱</div><h4>学生沙箱区</h4>
+        <div class="ztool">达芬奇只读工位 · 剪辑 / 合成</div>
         <ul>
-          <li>鍓緫/鎿嶄綔瀛︾敓浠呮帴鍏ヨ揪鑺杩滅▼宸ヤ綅</li>
-          <li>鏃犲缃戙€佹棤鐢熸垚寮忓伐鍏枫€佹棤 API 瀵嗛挜</li>
-          <li>鍙棰嗙敤绱犳潗锛岃緭鍑哄甫姘村嵃涓庡璁℃爣璇?/li>
-          <li>绂诲満 / 杩濊涓€閿悐閿€浠ょ墝涓庡伐浣嶆潈闄?/li>
+          <li>剪辑/操作学生仅接入达芬奇远程工位</li>
+          <li>无外网、无生成式工具、无 API 密钥</li>
+          <li>只读领用素材，输出带水印与审计标识</li>
+          <li>离场 / 违规一键吊销令牌与工位权限</li>
         </ul>
-        <div class="who">鈼?鍑嗗叆锛氬壀杈戝笀锛堝鐢燂級路 娌欑浠ょ墝</div>
+        <div class="who">◆ 准入：剪辑师（学生）· 沙箱令牌</div>
       </div>
     </div>
 
-    <div class="sec-head reveal" style="margin-bottom:20px"><h2 style="font-size:22px">鍑嗗叆鐢熷懡鍛ㄦ湡</h2></div>
+    <div class="sec-head reveal" style="margin-bottom:20px"><h2 style="font-size:22px">准入生命周期</h2></div>
     <div class="lifecycle reveal">
-      <div class="lc glass"><h4>鐢宠</h4><p>鎻愪氦瑙掕壊 + 鎵€闇€宸ュ叿/鏁版嵁鑼冨洿銆?/p></div>
-      <div class="lc glass"><h4>瀹℃壒</h4><p>L2 + 鍚堣瀹樺弻绛撅紝绛剧讲 NDA / 淇濆瘑鍗忚銆?/p></div>
-      <div class="lc glass"><h4>鎺堟潈</h4><p>缃戝叧涓嬪彂鍙楅檺浠ょ墝锛堥潪瀵嗛挜锛夛紝缁戝畾宸ヤ綅/鏃舵銆?/p></div>
-      <div class="lc glass"><h4>瀹¤</h4><p>閫愭璋冪敤鐣欑棔 who/when/what/cost銆?/p></div>
-      <div class="lc glass"><h4>澶嶆牳</h4><p>瀛ｅ害鏉冮檺澶嶅锛岃秴棰?闂茬疆鍗抽檷鏉冦€?/p></div>
-      <div class="lc glass"><h4>鍚婇攢</h4><p>绂诲満/杩濊涓€閿悐閿€浠ょ墝涓庡叏閮ㄨ闂€?/p></div>
+      <div class="lc glass"><h4>申请</h4><p>提交角色 + 所需工具/数据范围。</p></div>
+      <div class="lc glass"><h4>审批</h4><p>L2 + 合规官双签，签署 NDA / 保密协议。</p></div>
+      <div class="lc glass"><h4>授权</h4><p>网关下发受限令牌（非密钥），绑定工位/时段。</p></div>
+      <div class="lc glass"><h4>审计</h4><p>逐次调用留痕 who/when/what/cost。</p></div>
+      <div class="lc glass"><h4>复核</h4><p>季度权限复审，超额/闲置即降权。</p></div>
+      <div class="lc glass"><h4>吊销</h4><p>离场/违规一键吊销令牌与全部访问。</p></div>
     </div>
   </section>
 
-  <!-- 褰掓。 -->
+  <!-- 归档 -->
   <section id="archive">
     <div class="sec-head reveal">
-      <div class="eyebrow"><span class="idx">06 /</span> 鍒剁墖绠＄悊鏂囦欢褰掓。</div>
-      <h2>鏂囦欢浣撶郴</h2>
-      <p>淇濈暀娌充紶浼犵粺鍒剁墖绠＄悊鏂囦欢缁撴瀯锛屽湪銆岀粺绛规枃浠躲€嶄腑骞惰<b>浼犵粺鍒朵綔</b>涓?<b>AI 鍒朵綔</b>涓ゆ潯褰掓。绾匡紝鍏ㄩ儴鎸傛帴鍒板搴旀祦姘寸嚎闃舵銆?/p>
+      <div class="eyebrow"><span class="idx">06 /</span> 制片管理文件归档</div>
+      <h2>文件体系</h2>
+      <p>保留河传传统制片管理文件结构，在「统筹文件」中并行<b>传统制作</b>与 <b>AI 制作</b>两条归档线，全部挂接到对应流水线阶段。</p>
     </div>
     <div class="arch-grid">
-      <div class="arch glass reveal"><h4>绛栧垝鏂囦欢 <span class="tg">闃舵鈶?/span></h4><div class="files"><span class="file">鏂囨湰绛栧垝妗?/span><span class="file">PPT 绛栧垝妗?/span><span class="file">椤圭洰鍩烘湰淇℃伅</span><span class="file">鏁呬簨澶х翰+浜虹墿灏忎紶</span><span class="file">椤圭洰浜偣</span></div></div>
-      <div class="arch glass reveal"><h4>鍓ф湰鏂囦欢 <span class="tg">闃舵鈶?/span></h4><div class="files"><span class="file">褰辫鍦ｇ粡路鏂囨湰鍗?/span><span class="file">鏂囧鍓ф湰</span><span class="file">鍒嗛泦澶х翰</span><span class="file">瀵圭櫧鏈?/span><span class="file">鑰冭瘉璁板綍</span></div></div>
-      <div class="arch glass reveal"><h4>缁熺鏂囦欢 路 浼犵粺鍒朵綔 <span class="tg">闃舵鈶⑩懁</span></h4><div class="files"><span class="file">椤哄満鏅〃</span><span class="file">鍒嗗満鏅〃</span><span class="file">鎷嶆憚澶ц鍒?/span><span class="file">閫氬憡</span><span class="file">鍒剁墖鏃ユ姤</span></div></div>
-      <div class="arch glass reveal"><h4>缁熺鏂囦欢 路 AI 鍒朵綔 <span class="tg">闃舵鈶⑩懀</span></h4><div class="files"><span class="file">鍒嗛暅澶存暣鐞嗘眹鎬昏〃</span><span class="file">璧勪骇绠＄悊琛?/span><span class="file">璧勪骇瀹℃牳琛?/span><span class="file">鍒剁墖鏃ユ姤</span></div><p class="note">// 鏂板 AI 鍒朵綔褰掓。绾?/p></div>
-      <div class="arch glass reveal"><h4>璐㈠姟鏂囦欢 <span class="tg">鍏ㄦ祦绋?/span></h4><div class="files"><span class="file">棰勭畻琛?/span><span class="file">璐㈠姟鏃ユ姤</span><span class="file">璐㈠姟鍛ㄦ姤</span><span class="file">鍚堝悓缁熻琛?/span><span class="file">璐㈠姟鍒嗙被琛?/span><span class="file">棰勭畻瀵圭収琛?/span></div></div>
-      <div class="arch glass reveal"><h4>鍒剁墖绠＄悊鏂囦欢 <span class="tg">鍏ㄦ祦绋?/span></h4><div class="files"><span class="file">鍒剁墖鏃ユ姤</span><span class="file">婕斿憳/璧勬簮缁熺琛?/span><span class="file">鍦烘櫙绠＄悊琛?/span><span class="file">鏈嶅寲閬撶鐞嗚〃</span><span class="file">浜哄憳鍑哄嫟琛?/span><span class="file">杞﹁締绠＄悊琛?/span><span class="file">鐢熸椿鍒剁墖锛堥/瀹?琛岋級</span></div></div>
-      <div class="arch glass reveal"><h4>绱犳潗鏂囦欢 <span class="tg">闃舵鈶?/span></h4><div class="files"><span class="file">瑙嗛绱犳潗</span><span class="file">澹伴煶绱犳潗</span><span class="file">鐗规晥绱犳潗</span><span class="file">鍦鸿鍗?/span><span class="file">缁熺琛?/span></div></div>
-      <div class="arch glass reveal"><h4>鎴愮墖鏂囦欢 <span class="tg">闃舵鈶も懃</span></h4><div class="files"><span class="file">鎴愮墖姣嶇増</span><span class="file">鍙戝竷鐗堟湰</span><span class="file">瀹℃牳璁板綍</span><span class="file">鍚堣瀛樿瘉</span><span class="file">鍏ㄩ摼璺綊妗ｅ寘</span></div></div>
+      <div class="arch glass reveal"><h4>策划文件 <span class="tg">阶段①</span></h4><div class="files"><span class="file">文本策划案</span><span class="file">PPT 策划案</span><span class="file">项目基本信息</span><span class="file">故事大纲+人物小传</span><span class="file">项目亮点</span></div></div>
+      <div class="arch glass reveal"><h4>剧本文件 <span class="tg">阶段②</span></h4><div class="files"><span class="file">影视圣经·文本卷</span><span class="file">文学剧本</span><span class="file">分集大纲</span><span class="file">对白本</span><span class="file">考证记录</span></div></div>
+      <div class="arch glass reveal"><h4>统筹文件 · 传统制作 <span class="tg">阶段③⑤</span></h4><div class="files"><span class="file">顺场景表</span><span class="file">分场景表</span><span class="file">拍摄大计划</span><span class="file">通告</span><span class="file">制片日报</span></div></div>
+      <div class="arch glass reveal"><h4>统筹文件 · AI 制作 <span class="tg">阶段③④</span></h4><div class="files"><span class="file">分镜头整理汇总表</span><span class="file">资产管理表</span><span class="file">资产审核表</span><span class="file">制片日报</span></div><p class="note">// 新增 AI 制作归档线</p></div>
+      <div class="arch glass reveal"><h4>财务文件 <span class="tg">全流程</span></h4><div class="files"><span class="file">预算表</span><span class="file">财务日报</span><span class="file">财务周报</span><span class="file">合同统计表</span><span class="file">财务分类表</span><span class="file">预算对照表</span></div></div>
+      <div class="arch glass reveal"><h4>制片管理文件 <span class="tg">全流程</span></h4><div class="files"><span class="file">制片日报</span><span class="file">演员/资源统筹表</span><span class="file">场景管理表</span><span class="file">服化道管理表</span><span class="file">人员出勤表</span><span class="file">车辆管理表</span><span class="file">生活制片（餐/宿/行）</span></div></div>
+      <div class="arch glass reveal"><h4>素材文件 <span class="tg">阶段④</span></h4><div class="files"><span class="file">视频素材</span><span class="file">声音素材</span><span class="file">特效素材</span><span class="file">场记单</span><span class="file">统筹表</span></div></div>
+      <div class="arch glass reveal"><h4>成片文件 <span class="tg">阶段⑤⑥</span></h4><div class="files"><span class="file">成片母版</span><span class="file">发布版本</span><span class="file">审核记录</span><span class="file">合规存证</span><span class="file">全链路归档包</span></div></div>
     </div>
   </section>
 
@@ -825,8 +825,8 @@
 
 <footer>
   <div class="wrap frow">
-    <div>閲戞嘲 脳 娌充紶 路 AI 鏅鸿兘鍒剁墖娴佹按绾挎柟妗?路 <span class="mono">Production Bible 鈫?Final Cut</span></div>
-    <div class="mono">鍒嗗眰绾?路 鍒嗛儴闂?路 涓撶嚎 + API 路 鍏棬鍙拷婧?路 v2.0</div>
+    <div>金泰 × 河传 · AI 智能制片流水线方案 · <span class="mono">Production Bible → Final Cut</span></div>
+    <div class="mono">分层级 · 分部门 · 专线 + API · 六门可追溯 · v2.0</div>
   </div>
 </footer>
 
@@ -865,12 +865,12 @@
     io.observe(el);
   });
 
-  // cinematic abstract texture 鈥?depth dust + faint code rain + anamorphic sweep
+  // cinematic abstract texture — depth dust + faint code rain + anamorphic sweep
   (function(){
     const c=document.getElementById('fx'); if(!c||!c.getContext) return;
     const ctx=c.getContext('2d');
     const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-    const GL='01{}<>/=+*#|:.銈偆銈︽案鍏夊奖闀?;
+    const GL='01{}<>/=+*#|:.アイウ永光影镜';
     let W,H,DPR,parts,cols,t=0;
     const mk=()=>({x:Math.random()*W,y:Math.random()*H,z:Math.random()});
     function size(){
