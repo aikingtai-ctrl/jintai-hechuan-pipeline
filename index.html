@@ -377,12 +377,15 @@
       <span class="n">分镜</span><span class="arw">›</span>
       <span class="n">人设/场景/道具</span><span class="arw">›</span>
       <span class="n">三卡</span><span class="arw">›</span>
+      <span class="n k">LoRA训练</span><span class="arw">›</span>
       <span class="n">分集</span><span class="arw">›</span>
       <span class="n">分镜图</span><span class="arw">›</span>
       <span class="n">对白</span><span class="arw">›</span>
+      <span class="n">实拍/动捕</span><span class="arw">›</span>
       <span class="n k">生成视频</span><span class="arw">›</span>
       <span class="n">运镜特效台</span><span class="arw">›</span>
       <span class="n">剪辑</span><span class="arw">›</span>
+      <span class="n">声音</span><span class="arw">›</span>
       <span class="n">合成</span><span class="arw">›</span>
       <span class="n k">成片</span><span class="arw">›</span>
       <span class="n">审核</span>
@@ -390,7 +393,7 @@
 
     <div class="kpis reveal">
       <div class="kpi glass"><div class="v">6</div><div class="l">流水线阶段 · 六道审核门</div></div>
-      <div class="kpi glass"><div class="v">13</div><div class="l">功能部门 · 责任到人</div></div>
+      <div class="kpi glass"><div class="v">15</div><div class="l">功能部门 · 责任到人</div></div>
       <div class="kpi glass"><div class="v">4</div><div class="l">管理层级 · L1→L4</div></div>
       <div class="kpi glass"><div class="v">100%</div><div class="l">节点交付物可追溯归档</div></div>
     </div>
@@ -409,7 +412,7 @@
 
     <div class="tabs reveal" role="tablist" aria-label="管理维度">
       <button class="tab" role="tab" aria-selected="true" data-tab="tier"><span class="tn">DIMENSION 01</span><strong>分层级管理 · 四级决策链</strong></button>
-      <button class="tab" role="tab" aria-selected="false" data-tab="dept"><span class="tn">DIMENSION 02</span><strong>分功能部门 · 13 个作战单元</strong></button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="dept"><span class="tn">DIMENSION 02</span><strong>分功能部门 · 15 个作战单元</strong></button>
       <button class="tab" role="tab" aria-selected="false" data-tab="infra"><span class="tn">DIMENSION 03</span><strong>专线 + API 接入 · 金泰底座</strong></button>
     </div>
 
@@ -430,7 +433,9 @@
         <div class="dept glass"><div class="hd"><h4>导演部</h4><span class="side hc">河传</span></div><p>分镜头脚本、运镜设计、特效导演台、审片。</p><div class="lead">◇ 负责人 → 导演 / 分镜师</div></div>
         <div class="dept glass"><div class="hd"><h4>美术设计部</h4><span class="side hc">河传</span></div><p>人物/场景/道具设计、三卡、分镜图、资产库。</p><div class="lead">◇ 负责人 → 美术指导</div></div>
         <div class="dept glass"><div class="hd"><h4>AI 生成部</h4><span class="side hc">河传</span></div><p>图/文生视频、批量出镜、素材初筛。</p><div class="lead">◇ 负责人 → AI 制作组长</div></div>
-        <div class="dept glass"><div class="hd"><h4>后期部</h4><span class="side hc">河传</span></div><p>剪辑、合成、调色、声音、成片母版。</p><div class="lead">◇ 负责人 → 后期总监</div></div>
+        <div class="dept glass"><div class="hd"><h4>后期部</h4><span class="side hc">河传</span></div><p>剪辑、合成、调色、成片母版。</p><div class="lead">◇ 负责人 → 后期总监</div></div>
+        <div class="dept glass"><div class="hd"><h4>声音部</h4><span class="side hc">河传</span></div><p>背景音乐、配音、音效、混音合成（AI 覆盖）。</p><div class="lead">◇ 负责人 → 声音指导</div></div>
+        <div class="dept glass"><div class="hd"><h4>实拍 · 动捕组</h4><span class="side hc">河传</span></div><p>实拍拍摄、AI 动捕、实拍与生成融合。</p><div class="lead">◇ 负责人 → 现场导演 / 动捕师</div></div>
         <div class="dept glass"><div class="hd"><h4>制片部（统筹）</h4><span class="side hc">河传</span></div><p>顺场/分场、拍摄计划、通告、制片日报。</p><div class="lead">◇ 负责人 → 制片主任</div></div>
         <div class="dept glass"><div class="hd"><h4>财务部</h4><span class="side hc">河传</span></div><p>预算、财务日/周报、合同统计、预算对照。</p><div class="lead">◇ 负责人 → 财务主管</div></div>
         <div class="dept glass"><div class="hd"><h4>审核 / 质控部</h4><span class="side hc">河传</span></div><p>各门质检、一致性核验、内容终审。</p><div class="lead">◇ 负责人 → QC 主管</div></div>
@@ -555,7 +560,7 @@
         <div class="stage-top" tabindex="0" role="button" aria-expanded="false">
           <div class="stage-num">03</div>
           <div class="stage-meta"><h3>分镜与视觉设计 · 影视圣经【视觉层】</h3><div class="sub">分镜 · 人设/场景/道具 · 三卡 · 分镜图</div>
-            <div class="stage-tags"><span class="chip hc">导演部</span><span class="chip hc">美术设计部</span><span class="chip">ClaudeCode + Codex</span><span class="chip" style="color:var(--crimson-soft);border-color:rgba(229,9,20,.55)">GPT Image 2 · 绝对主力</span><span class="chip">Nano Banana</span><span class="chip">ComfyUI</span></div></div>
+            <div class="stage-tags"><span class="chip hc">导演部</span><span class="chip hc">美术设计部</span><span class="chip">ClaudeCode + Codex</span><span class="chip" style="color:var(--crimson-soft);border-color:rgba(229,9,20,.55)">GPT Image 2 · 绝对主力</span><span class="chip">Nano Banana</span><span class="chip">ComfyUI</span><span class="chip" style="color:var(--gold-soft);border-color:rgba(233,180,76,.5)">LoRA · IP一致性</span></div></div>
           <div class="stage-right"><span class="gate">审核门 ③ 一致性/资产审</span><span class="toggle">+</span></div>
         </div>
         <div class="stage-body"><div class="stage-body-inner">
@@ -563,12 +568,13 @@
             <div class="step"><span class="sn">3.1</span><div class="stx"><b>分镜头脚本 · 镜头设计</b><p>导演部经 <b>ClaudeCode + Codex</b> 结构化拆镜，标注景别/运镜/时长（分镜与镜头设计必须走 CC+Codex）。</p></div></div>
             <div class="step"><span class="sn">3.2</span><div class="stx"><b>人物 / 场景 / 道具设计</b><p>美术设计部出概念设计，锁定视觉基调。</p></div></div>
             <div class="step"><span class="sn">3.3</span><div class="stx"><b>人物卡 / 场景卡 / 道具卡（三卡）</b><p><b>GPT Image 2（主力）</b> / Nano Banana / ComfyUI 定妆出图，建立可复用一致性资产库。</p></div></div>
-            <div class="step"><span class="sn">3.4</span><div class="stx"><b>分镜图</b><p>逐镜关键帧出图，形成可视化分镜脚本。</p></div></div>
+            <div class="step"><span class="sn">3.4</span><div class="stx"><b>LoRA 训练 · IP 一致性资产</b><p>基于三卡与定妆图训练<b>角色 / 风格 LoRA</b>（kohya / ComfyUI），锁定人物与画风一致性——是可复用的核心 IP 资产，供后续所有生成镜头统一调用。</p></div></div>
+            <div class="step"><span class="sn">3.5</span><div class="stx"><b>分镜图</b><p>逐镜关键帧出图，形成可视化分镜脚本。</p></div></div>
           </div>
           <div class="detail-grid">
             <div class="dbox"><div class="dl">责任部门 / 责任人</div><div class="owner-row"><span class="owner"><b>主责</b> 美术设计部（美术指导 L3）</span><span class="owner"><b>协作</b> 导演部（分镜师）</span></div></div>
-            <div class="dbox"><div class="dl">工具 / 接入</div><div class="owner-row"><span class="owner"><b>ClaudeCode + Codex</b> 分镜/镜头逻辑</span><span class="owner"><b>GPT Image 2</b> 绝对主力</span><span class="owner">Nano Banana</span><span class="owner">ComfyUI（专线算力）</span></div></div>
-            <div class="dbox"><div class="dl">交付物</div><ul><li>分镜头脚本 · 分镜图</li><li>三卡资产库（角色/场景/道具）</li><li>分镜头整理汇总表 · 资产管理表</li></ul></div>
+            <div class="dbox"><div class="dl">工具 / 接入</div><div class="owner-row"><span class="owner"><b>ClaudeCode + Codex</b> 分镜/镜头逻辑</span><span class="owner"><b>GPT Image 2</b> 绝对主力</span><span class="owner">Nano Banana</span><span class="owner">ComfyUI（专线算力）</span><span class="owner"><b>LoRA 训练</b> kohya / ComfyUI</span></div></div>
+            <div class="dbox"><div class="dl">交付物</div><ul><li>分镜头脚本 · 分镜图</li><li>三卡资产库（角色/场景/道具）</li><li><b>IP 一致性 LoRA 模型库</b>（角色/风格 · 可复用）</li><li>分镜头整理汇总表 · 资产管理表</li></ul></div>
             <div class="dbox gatebox"><div class="dl">审核门 ③ · 一致性 & 资产审核</div><ul><li>视觉一致性核验、资产审核表签核</li><li>通过 → 冻结资产，进入生成</li></ul></div>
           </div>
         </div></div>
@@ -578,20 +584,22 @@
       <div class="stage reveal"><div class="stage-card glass">
         <div class="stage-top" tabindex="0" role="button" aria-expanded="false">
           <div class="stage-num">04</div>
-          <div class="stage-meta"><h3>AI 视频生成 · 影视圣经【生成层】</h3><div class="sub">图/文生视频 · 运镜 · 特效导演台</div>
-            <div class="stage-tags"><span class="chip hc">AI 生成部</span><span class="chip hc">导演部</span><span class="chip jt">金泰专线 / API</span><span class="chip">Seedance · Kling</span></div></div>
+          <div class="stage-meta"><h3>视频生成 · 实拍 / AI 动捕融合 · 影视圣经【生成层】</h3><div class="sub">图/文生视频 · 实拍 + AI动捕 · 运镜 · 特效导演台</div>
+            <div class="stage-tags"><span class="chip hc">AI 生成部</span><span class="chip hc">实拍 · 动捕组</span><span class="chip hc">导演部</span><span class="chip jt">金泰专线 / API</span><span class="chip">Seedance · Kling</span><span class="chip">实拍</span><span class="chip">AI 动捕</span></div></div>
           <div class="stage-right"><span class="gate">审核门 ④ 镜头审片</span><span class="toggle">+</span></div>
         </div>
         <div class="stage-body"><div class="stage-body-inner">
           <div class="steps">
-            <div class="step"><span class="sn">4.1</span><div class="stx"><b>图生视频 / 文生视频</b><p>以三卡+分镜图为锚，Seedance/Kling 经 API 专线批量出镜（11 卡并行）。</p></div></div>
-            <div class="step"><span class="sn">4.2</span><div class="stx"><b>运镜设计</b><p>导演部逐镜指定运镜/景别/节奏参数。</p></div></div>
-            <div class="step"><span class="sn">4.3</span><div class="stx"><b>特效导演台</b><p>统一调度特效/转场/氛围，产出镜头素材（视频/声音/特效）。</p></div></div>
+            <div class="step"><span class="sn">4.1</span><div class="stx"><b>图生视频 / 文生视频</b><p>以三卡 + <b>LoRA</b> + 分镜图为锚，Seedance/Kling 经 API 专线批量出镜（11 卡并行）。</p></div></div>
+            <div class="step"><span class="sn">4.2</span><div class="stx"><b>实拍拍摄</b><p>对关键场景 / 演员表演 / 绿幕做实拍，补足 AI 难以稳定生成的表演、动作与细节。</p></div></div>
+            <div class="step"><span class="sn">4.3</span><div class="stx"><b>AI 动捕 · 实拍融合</b><p>Kling 等把<b>实拍动作 / 表情迁移</b>到 AI 角色，或以实拍为参考驱动生成；实拍与生成镜头统一到同一 IP 形象（依赖阶段③的 LoRA）。</p></div></div>
+            <div class="step"><span class="sn">4.4</span><div class="stx"><b>运镜设计</b><p>导演部逐镜指定运镜/景别/节奏参数。</p></div></div>
+            <div class="step"><span class="sn">4.5</span><div class="stx"><b>特效导演台</b><p>统一调度特效/转场/氛围，产出镜头素材（<b>纯生成 + 实拍/动捕融合</b>），入精剪素材池直接对接阶段⑤剪辑。</p></div></div>
           </div>
           <div class="detail-grid">
-            <div class="dbox"><div class="dl">责任部门 / 责任人</div><div class="owner-row"><span class="owner"><b>主责</b> AI 生成部（AI 组长 L3）</span><span class="owner"><b>协作</b> 导演部 · 金泰 API 组</span><span class="owner"><b>支撑</b> 算力运维</span></div></div>
-            <div class="dbox"><div class="dl">工具 / 接入</div><div class="owner-row"><span class="owner">Seedance API</span><span class="owner">Kling API</span><span class="owner">专线算力集群</span></div></div>
-            <div class="dbox"><div class="dl">交付物</div><ul><li>镜头素材（视频/声音/特效）</li><li>素材管理文档（场记单/统筹表）</li><li>AI 制作·资产审核表 · 制片日报</li></ul></div>
+            <div class="dbox"><div class="dl">责任部门 / 责任人</div><div class="owner-row"><span class="owner"><b>主责</b> AI 生成部（AI 组长 L3）</span><span class="owner"><b>主责</b> 实拍·动捕组（现场导演）</span><span class="owner"><b>协作</b> 导演部 · 金泰 API 组</span><span class="owner"><b>支撑</b> 算力运维</span></div></div>
+            <div class="dbox"><div class="dl">工具 / 接入</div><div class="owner-row"><span class="owner">Seedance API</span><span class="owner">Kling API（生成 + 动捕）</span><span class="owner">实拍设备 / 绿幕</span><span class="owner">专线算力集群</span></div></div>
+            <div class="dbox"><div class="dl">交付物</div><ul><li>镜头素材（<b>纯生成 + 实拍/动捕融合</b>）</li><li>实拍素材 · 动捕数据</li><li>素材管理文档（场记单/统筹表）· 资产审核表 · 制片日报</li></ul></div>
             <div class="dbox gatebox"><div class="dl">审核门 ④ · 镜头审片</div><ul><li>导演+质控逐镜审，标注重生成清单</li><li>合格镜头入精剪素材池</li></ul></div>
           </div>
         </div></div>
@@ -602,19 +610,19 @@
         <div class="stage-top" tabindex="0" role="button" aria-expanded="false">
           <div class="stage-num">05</div>
           <div class="stage-meta"><h3>后期合成</h3><div class="sub">剪辑 · 合成 · 调色 · 声音 · 成片</div>
-            <div class="stage-tags"><span class="chip hc" style="color:var(--gold-soft);border-color:rgba(233,180,76,.5)">导演全程指导</span><span class="chip hc">后期部</span><span class="chip jt">达芬奇远程</span><span class="chip">ffmpeg · 合成</span></div></div>
+            <div class="stage-tags"><span class="chip hc" style="color:var(--gold-soft);border-color:rgba(233,180,76,.5)">导演全程指导</span><span class="chip hc">后期部</span><span class="chip hc">声音部</span><span class="chip jt">达芬奇远程</span><span class="chip">ffmpeg · 合成</span></div></div>
           <div class="stage-right"><span class="gate">审核门 ⑤ 后期质检</span><span class="toggle">+</span></div>
         </div>
         <div class="stage-body"><div class="stage-body-inner">
           <div class="steps">
             <div class="step"><span class="sn">5.1</span><div class="stx"><b>剪辑（达芬奇远程）</b><p>异地剪辑师经远程工作站接入同一母版，<b>在导演指导下</b>成序精剪、定节奏。</p></div></div>
             <div class="step"><span class="sn">5.2</span><div class="stx"><b>特效合成 · 调色</b><p>合成层叠加、达芬奇调色统一影调。</p></div></div>
-            <div class="step"><span class="sn">5.3</span><div class="stx"><b>声音 · 配乐 · 混音</b><p>ElevenLabs/ACE-Step 配音配乐，ffmpeg 封装。</p></div></div>
+            <div class="step"><span class="sn">5.3</span><div class="stx"><b>声音制作 · AI 覆盖</b><p>声音部统筹 <b>背景音乐</b>（ACE-Step/Suno）、<b>配音</b>（ElevenLabs 多角色）、<b>音效 SFX</b>（AI 生成）与<b>混音合成</b>，ffmpeg 封装成片音轨。</p></div></div>
             <div class="step"><span class="sn">5.4</span><div class="stx"><b>成片母版输出</b><p>经<b>导演终剪确认</b>后，输出成片母版与多规格发布版本。</p></div></div>
           </div>
           <div class="detail-grid">
-            <div class="dbox"><div class="dl">责任部门 / 责任人</div><div class="owner-row"><span class="owner"><b>指导</b> 导演部（全程 · 终剪把关）</span><span class="owner"><b>主责</b> 后期部（后期总监 L3）</span><span class="owner"><b>协作</b> 金泰 API 组（远程接入）</span></div></div>
-            <div class="dbox"><div class="dl">工具 / 接入</div><div class="owner-row"><span class="owner">达芬奇 Resolve（远程）</span><span class="owner">ffmpeg</span><span class="owner">ElevenLabs / ACE-Step</span></div></div>
+            <div class="dbox"><div class="dl">责任部门 / 责任人</div><div class="owner-row"><span class="owner"><b>指导</b> 导演部（全程 · 终剪把关）</span><span class="owner"><b>主责</b> 后期部（后期总监 L3）</span><span class="owner"><b>主责</b> 声音部（声音指导）</span><span class="owner"><b>协作</b> 金泰 API 组（远程接入）</span></div></div>
+            <div class="dbox"><div class="dl">工具 / 接入</div><div class="owner-row"><span class="owner">达芬奇 Resolve（远程）</span><span class="owner">ffmpeg</span><span class="owner">ElevenLabs · ACE-Step · Suno</span><span class="owner">AI 音效 SFX</span></div></div>
             <div class="dbox"><div class="dl">交付物</div><ul><li>精剪序列 · 调色母版</li><li>成片母版 + 发布版本</li></ul></div>
             <div class="dbox gatebox"><div class="dl">审核门 ⑤ · 后期质检</div><ul><li>画面/声音/节奏质检</li><li>技审通过 → 送终审</li></ul></div>
           </div>
@@ -663,7 +671,9 @@
           <tr><th>导演部</th><td></td><td><span class="r r-A">A</span></td><td><span class="r r-R">R</span></td><td><span class="r r-C">C</span></td><td><span class="r r-A">A</span></td><td><span class="r r-C">C</span></td></tr>
           <tr><th>美术设计部</th><td></td><td></td><td><span class="r r-R">R</span></td><td><span class="r r-S">S</span></td><td></td><td></td></tr>
           <tr><th>AI 生成部</th><td></td><td></td><td><span class="r r-C">C</span></td><td><span class="r r-R">R</span></td><td><span class="r r-S">S</span></td><td></td></tr>
+          <tr><th>实拍 · 动捕组</th><td></td><td></td><td><span class="r r-S">S</span></td><td><span class="r r-R">R</span></td><td><span class="r r-C">C</span></td><td></td></tr>
           <tr><th>后期部</th><td></td><td></td><td></td><td><span class="r r-C">C</span></td><td><span class="r r-R">R</span></td><td><span class="r r-C">C</span></td></tr>
+          <tr><th>声音部</th><td></td><td></td><td></td><td><span class="r r-S">S</span></td><td><span class="r r-R">R</span></td><td><span class="r r-C">C</span></td></tr>
           <tr><th>制片部（统筹）</th><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td></tr>
           <tr><th>财务部</th><td><span class="r r-S">S</span></td><td></td><td></td><td><span class="r r-S">S</span></td><td></td><td><span class="r r-S">S</span></td></tr>
           <tr><th>审核 / 质控部</th><td><span class="r r-C">C</span></td><td><span class="r r-C">C</span></td><td><span class="r r-A">A</span></td><td><span class="r r-A">A</span></td><td><span class="r r-A">A</span></td><td><span class="r r-R">R</span></td></tr>
