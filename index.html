@@ -1,0 +1,916 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>閲戞嘲 脳 娌充紶 路 AI 褰辫鏅鸿兘鍒剁墖娴佹按绾?/title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    /* 鈹€鈹€ 鐙珛褰遍櫌绾ц壊绯?鈹€鈹€ */
+    --void:#060608; --void-2:#0b0c10; --ink-panel:#101218;
+    --crimson:#E50914; --crimson-soft:#ff3b46; --crimson-deep:#8f060d;
+    --gold:#E9B44C; --gold-soft:#f6cf7d;
+    --azure:#4DA3FF; --azure-soft:#8ec6ff;
+    --violet:#7b4dff;
+    --white:#F5F6F8; --mist:#aeb4c2; --dim:#6c7382; --faint:#454b58;
+    --glass-bd:rgba(255,255,255,.10);
+    --glass-hi:rgba(255,255,255,.16);
+    --rad:20px; --rad-s:14px;
+    --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Microsoft YaHei","Noto Sans SC","Segoe UI",system-ui,sans-serif;
+    --mono:ui-monospace,"SF Mono","Cascadia Code",Consolas,"Liberation Mono",monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--void);color:var(--white);font-family:var(--sans);
+    line-height:1.66;font-size:19.5px;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+    letter-spacing:.012em;
+  }
+  /* ambient cinematic mesh */
+  .ambient{position:fixed;inset:0;z-index:-6;pointer-events:none;overflow:hidden}
+  .blob{position:absolute;border-radius:50%;filter:blur(100px);opacity:.62;mix-blend-mode:screen;will-change:transform}
+  .b1{width:56vw;height:56vw;left:-12vw;top:-16vw;background:radial-gradient(circle,var(--crimson-deep),transparent 66%);animation:drift1 26s ease-in-out infinite}
+  .b2{width:48vw;height:48vw;right:-14vw;top:4vh;background:radial-gradient(circle,#2a1b6b,transparent 64%);animation:drift2 32s ease-in-out infinite}
+  .b3{width:44vw;height:44vw;left:22vw;bottom:-18vw;background:radial-gradient(circle,#0d3a6b,transparent 66%);animation:drift3 30s ease-in-out infinite}
+  .b4{width:30vw;height:30vw;right:14vw;bottom:8vh;background:radial-gradient(circle,#5a1230,transparent 66%);animation:drift1 38s ease-in-out infinite}
+  @keyframes drift1{50%{transform:translate(9vw,11vh) scale(1.14)}}
+  @keyframes drift2{50%{transform:translate(-8vw,9vh) scale(1.1)}}
+  @keyframes drift3{50%{transform:translate(7vw,-10vh) scale(1.16)}}
+  /* canvas cinematic texture layer */
+  #fx{position:fixed;inset:0;z-index:-5;pointer-events:none;opacity:.7}
+  .grain{position:fixed;inset:0;z-index:-3;pointer-events:none;opacity:.07;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .scanlines{position:fixed;inset:0;z-index:-3;pointer-events:none;opacity:.5;
+    background:repeating-linear-gradient(rgba(255,255,255,.022) 0 1px,transparent 1px 3px)}
+  .vignette{position:fixed;inset:0;z-index:-2;pointer-events:none;
+    background:radial-gradient(125% 95% at 50% -5%,transparent 48%,rgba(0,0,0,.62) 100%)}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+  @keyframes sheen{to{background-position:220% center}}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.blob,#fx,.floaty{animation:none!important}*{transition-duration:.001ms!important}}
+
+  .wrap{max-width:1200px;margin:0 auto;padding:0 26px}
+  .mono{font-family:var(--mono)}
+  h1,h2,h3,h4{margin:0;text-wrap:balance;font-weight:700;letter-spacing:-.02em}
+  a{color:inherit;text-decoration:none}
+  .eyebrow{font-family:var(--mono);font-size:15px;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--crimson-soft);font-weight:600}
+
+  /* 鈹€鈹€ liquid glass 鈹€鈹€ */
+  .glass{position:relative;background:linear-gradient(150deg,rgba(255,255,255,.055),rgba(255,255,255,.012));
+    backdrop-filter:blur(30px) saturate(150%);-webkit-backdrop-filter:blur(30px) saturate(150%);
+    border:1px solid var(--glass-bd);border-radius:var(--rad);
+    box-shadow:inset 0 1px 0 var(--glass-hi),inset 0 -1px 0 rgba(0,0,0,.28),0 30px 70px -30px rgba(0,0,0,.9)}
+  .glass::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    background:linear-gradient(150deg,rgba(255,255,255,.14),transparent 34%);opacity:.6;mix-blend-mode:overlay}
+
+  /* 鈹€鈹€ top nav 鈹€鈹€ */
+  .nav{position:sticky;top:0;z-index:50;
+    background:linear-gradient(rgba(6,6,8,.82),rgba(6,6,8,.4));
+    backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
+    border-bottom:1px solid rgba(255,255,255,.07)}
+  .nav .row{display:flex;align-items:center;gap:18px;height:60px}
+  .logo{display:flex;align-items:center;gap:11px;font-weight:700;font-size:16.5px;white-space:nowrap;letter-spacing:-.01em}
+  .logo .mk{width:11px;height:22px;border-radius:3px;background:linear-gradient(var(--crimson-soft),var(--crimson-deep));
+    box-shadow:0 0 14px rgba(229,9,20,.7)}
+  .navlinks{display:flex;gap:2px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+  .navlinks::-webkit-scrollbar{display:none}
+  .navlinks a{font-family:var(--mono);font-size:14.5px;color:var(--mist);padding:8px 13px;border-radius:9px;
+    white-space:nowrap;transition:.2s;letter-spacing:.02em}
+  .navlinks a:hover{color:var(--white);background:rgba(255,255,255,.07)}
+
+  /* 鈹€鈹€ hero 鈹€鈹€ */
+  .hero{position:relative;padding:96px 0 64px}
+  .tagpair{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:28px}
+  .ent{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:14.5px;
+    padding:9px 16px;border-radius:999px;border:1px solid var(--glass-bd);
+    background:linear-gradient(rgba(255,255,255,.07),rgba(255,255,255,.02));backdrop-filter:blur(12px)}
+  .ent b{font-weight:700}
+  .ent.jt b{color:var(--azure-soft)} .ent.hc b{color:var(--gold-soft)}
+  .ent .role{color:var(--dim)}
+  .x{color:var(--faint);font-family:var(--mono);font-size:17px}
+  h1.title{font-size:clamp(46px,8vw,98px);line-height:.96;margin:10px 0 30px;font-weight:800;letter-spacing:-.038em}
+  h1.title .grad{background:linear-gradient(100deg,#fff 6%,var(--crimson-soft) 40%,var(--violet) 74%,var(--azure) 100%);
+    background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:sheen 9s linear infinite}
+  .lede{max-width:60ch;color:var(--mist);font-size:clamp(20px,2.2vw,26px);font-weight:400;line-height:1.6}
+  .lede b{color:var(--white);font-weight:600}
+  .flowline{display:flex;flex-wrap:wrap;gap:9px 7px;align-items:center;margin-top:40px;font-family:var(--mono);font-size:15.5px}
+  .flowline .n{padding:9px 15px;border-radius:9px;background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.08);color:var(--mist);white-space:nowrap;transition:.2s}
+  .flowline .n:hover{background:rgba(255,255,255,.1);color:var(--white)}
+  .flowline .n.k{border-color:var(--crimson);color:var(--crimson-soft);background:rgba(229,9,20,.1)}
+  .flowline .arw{color:var(--faint)}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:52px}
+  .kpi{padding:26px 22px;animation:floaty 7s ease-in-out infinite}
+  .kpi:nth-child(2){animation-delay:-1.6s} .kpi:nth-child(3){animation-delay:-3.2s} .kpi:nth-child(4){animation-delay:-4.8s}
+  .kpi .v{font-family:var(--mono);font-size:48px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;
+    background:linear-gradient(160deg,#fff,var(--mist));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .kpi .l{font-size:16px;color:var(--mist);margin-top:14px;letter-spacing:.02em}
+
+  /* 鈹€鈹€ section 鈹€鈹€ */
+  section{padding:70px 0;position:relative}
+  section+section::before{content:"";position:absolute;top:0;left:26px;right:26px;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent)}
+  .sec-head{margin-bottom:40px}
+  .sec-head h2{font-size:clamp(34px,4.6vw,54px);margin:16px 0 15px;font-weight:800;letter-spacing:-.032em}
+  .sec-head p{margin:0;color:var(--mist);max-width:74ch;font-size:19px;line-height:1.6}
+  .sec-head p b{color:var(--white)}
+  .idx{color:var(--crimson-soft)}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* 鈹€鈹€ tabs 鈹€鈹€ */
+  .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+  .tab{font-family:var(--mono);font-size:13px;color:var(--mist);
+    background:linear-gradient(rgba(255,255,255,.06),rgba(255,255,255,.02));
+    border:1px solid var(--glass-bd);border-radius:13px;padding:13px 17px;cursor:pointer;transition:.25s;text-align:left;
+    backdrop-filter:blur(14px)}
+  .tab .tn{color:var(--crimson-soft);font-size:13px;letter-spacing:.16em;display:block;margin-bottom:6px}
+  .tab strong{color:var(--white);font-weight:600;font-size:17px;letter-spacing:0}
+  .tab[aria-selected="true"]{border-color:rgba(229,9,20,.5);
+    box-shadow:0 0 0 1px rgba(229,9,20,.4),0 10px 30px -10px rgba(229,9,20,.5);
+    background:linear-gradient(rgba(229,9,20,.12),rgba(255,255,255,.03))}
+  .tabpanel{display:none}
+  .tabpanel.on{display:block;animation:fade .45s cubic-bezier(.2,.7,.2,1)}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  /* tiers */
+  .tiers{display:grid;gap:14px}
+  .tier{display:grid;grid-template-columns:158px 1fr;gap:20px;align-items:center;padding:20px 22px;overflow:hidden}
+  .tier::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:4px}
+  .tier .lv b{display:block;font-family:var(--mono);font-size:25px;letter-spacing:.04em}
+  .tier .lv span{font-size:13.5px;color:var(--dim)}
+  .tier .who{font-weight:600;font-size:18.5px;margin-bottom:8px}
+  .tier .duty{color:var(--mist);font-size:16px;line-height:1.6}
+  .tier.l1::before{background:var(--crimson)} .tier.l1 .lv b{color:var(--crimson-soft)}
+  .tier.l2::before{background:var(--gold)} .tier.l2 .lv b{color:var(--gold-soft)}
+  .tier.l3::before{background:var(--azure)} .tier.l3 .lv b{color:var(--azure-soft)}
+  .tier.l4::before{background:var(--violet)} .tier.l4 .lv b{color:#b39cff}
+
+  /* dept grid */
+  .dept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(222px,1fr));gap:14px}
+  .dept{padding:17px 18px;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+  .dept:hover{transform:translateY(-4px)}
+  .dept .hd{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px}
+  .dept h4{font-size:18.5px}
+  .dept .side{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;padding:4px 9px;border-radius:7px}
+  .side.hc{color:var(--gold-soft);background:rgba(233,180,76,.13)}
+  .side.jt{color:var(--azure-soft);background:rgba(77,163,255,.13)}
+  .dept p{margin:0;color:var(--mist);font-size:15.5px;line-height:1.55}
+  .dept .lead{margin-top:12px;font-family:var(--mono);font-size:14px;color:var(--mist)}
+
+  /* infra */
+  .infra{display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
+  .infra-card{padding:24px}
+  .infra-card h4{font-size:18.5px;margin-bottom:9px;display:flex;align-items:center;gap:10px}
+  .infra-card h4 .ic{color:var(--azure-soft);font-size:20px}
+  .pipe-list{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:11px}
+  .pipe-list li{display:grid;grid-template-columns:150px 1fr;gap:16px;font-size:16px;align-items:baseline;line-height:1.55}
+  .pipe-list .k{font-family:var(--mono);font-size:14.5px;color:var(--azure-soft);letter-spacing:.02em}
+  .pipe-list .d{color:var(--mist)}
+  .api-badges{display:flex;flex-wrap:wrap;gap:9px;margin-top:6px}
+  .api{font-family:var(--mono);font-size:14.5px;padding:9px 14px;border-radius:9px;
+    border:1px solid var(--glass-bd);background:rgba(255,255,255,.04);color:var(--mist);display:inline-flex;gap:8px;align-items:center}
+  .api .st{width:7px;height:7px;border-radius:50%;background:var(--azure);box-shadow:0 0 8px var(--azure)}
+  .api.remote .st{background:var(--gold);box-shadow:0 0 8px var(--gold)}
+
+  /* 鈹€鈹€ pipeline 鈹€鈹€ */
+  .controls{display:flex;gap:11px;align-items:center;margin-bottom:24px;flex-wrap:wrap}
+  .btn{font-family:var(--mono);font-size:14px;color:var(--white);
+    background:linear-gradient(rgba(255,255,255,.08),rgba(255,255,255,.03));
+    border:1px solid var(--glass-bd);border-radius:11px;padding:10px 16px;cursor:pointer;transition:.22s;backdrop-filter:blur(12px)}
+  .btn:hover{border-color:rgba(229,9,20,.5);color:var(--crimson-soft)}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-left:auto;font-family:var(--mono);font-size:13.5px;color:var(--mist)}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .legend i{width:11px;height:11px;border-radius:4px;display:inline-block}
+
+  .spine{display:grid;gap:16px}
+  .stage{position:relative}
+  .stage-card{overflow:hidden;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
+  .stage-card:hover{box-shadow:inset 0 1px 0 var(--glass-hi),0 30px 70px -30px rgba(229,9,20,.4)}
+  .stage-top{display:grid;grid-template-columns:86px 1fr auto;gap:22px;align-items:center;padding:24px 26px;cursor:pointer}
+  .stage-num{font-family:var(--mono);font-weight:700;font-size:33px;
+    width:86px;height:86px;border-radius:20px;display:grid;place-items:center;font-variant-numeric:tabular-nums;
+    background:linear-gradient(155deg,rgba(255,255,255,.1),rgba(255,255,255,.02));
+    border:1px solid var(--glass-bd);color:#fff;
+    box-shadow:inset 0 1px 0 var(--glass-hi)}
+  .stage.open .stage-num{background:linear-gradient(155deg,var(--crimson),var(--crimson-deep));border-color:transparent;
+    box-shadow:0 12px 30px -10px rgba(229,9,20,.7)}
+  .stage-meta h3{font-size:26px;margin-bottom:8px;font-weight:700;letter-spacing:-.022em}
+  .stage-meta .sub{color:var(--mist);font-size:16.5px;font-family:var(--mono)}
+  .stage-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .chip{font-family:var(--mono);font-size:14px;padding:7px 13px;border-radius:999px;
+    border:1px solid var(--glass-bd);color:var(--mist);white-space:nowrap;background:rgba(255,255,255,.03)}
+  .chip.hc{color:var(--gold-soft);border-color:rgba(233,180,76,.4)}
+  .chip.jt{color:var(--azure-soft);border-color:rgba(77,163,255,.4)}
+  .stage-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px;text-align:right}
+  .gate{font-family:var(--mono);font-size:13px;color:var(--gold-soft);border:1px solid rgba(233,180,76,.45);
+    background:rgba(233,180,76,.09);padding:7px 12px;border-radius:9px;white-space:nowrap}
+  .toggle{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+    background:rgba(255,255,255,.06);border:1px solid var(--glass-bd);
+    color:var(--mist);font-size:19px;transition:transform .35s cubic-bezier(.2,.7,.2,1),background .3s;line-height:1;user-select:none}
+  .stage.open .toggle{transform:rotate(135deg);background:rgba(229,9,20,.2);color:var(--crimson-soft)}
+
+  .stage-body{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.2,.7,.2,1)}
+  .stage.open .stage-body{max-height:1500px}
+  .stage-body-inner{padding:6px 24px 26px}
+  .stage-body-inner::before{content:"";display:block;height:1px;margin-bottom:20px;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.14),transparent)}
+  .steps{display:grid;gap:10px;margin-bottom:18px}
+  .step{display:grid;grid-template-columns:34px 1fr;gap:13px;align-items:start}
+  .step .sn{font-family:var(--mono);font-size:13px;color:var(--crimson-soft);padding-top:3px}
+  .step .stx b{font-weight:600;font-size:17.5px}
+  .step .stx p{margin:5px 0 0;color:var(--mist);font-size:16px;line-height:1.55}
+  .detail-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+  .dbox{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);border-radius:15px;padding:15px 17px}
+  .dbox .dl{font-family:var(--mono);font-size:13.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:11px}
+  .dbox ul{margin:0;padding-left:17px;color:var(--mist);font-size:16px;line-height:1.55}
+  .dbox ul li{margin:5px 0}
+  .dbox.gatebox{border-color:rgba(233,180,76,.4);background:rgba(233,180,76,.06)}
+  .dbox.gatebox .dl{color:var(--gold-soft)}
+  .owner-row{display:flex;flex-wrap:wrap;gap:8px}
+  .owner{font-size:15px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:9px;padding:8px 13px}
+  .owner b{color:var(--crimson-soft)}
+
+  /* 鈹€鈹€ RACI 鈹€鈹€ */
+  .matrix-wrap{overflow-x:auto;border-radius:var(--rad)}
+  table.raci{border-collapse:separate;border-spacing:0;width:100%;min-width:780px;font-size:13px}
+  table.raci{font-size:16px}
+  table.raci th,table.raci td{padding:14px 12px;text-align:center;border-bottom:1px solid rgba(255,255,255,.06)}
+  table.raci thead th{position:sticky;top:0;background:rgba(20,14,16,.94);backdrop-filter:blur(10px);
+    font-family:var(--mono);font-size:14px;color:var(--crimson-soft);font-weight:600;z-index:2}
+  table.raci tbody th{text-align:left;font-weight:600;color:var(--white);white-space:nowrap;
+    position:sticky;left:0;background:rgba(16,18,24,.94);backdrop-filter:blur(10px);font-size:15.5px}
+  table.raci tbody tr:hover td,table.raci tbody tr:hover th{background:rgba(255,255,255,.05)}
+  .r{display:inline-block;min-width:30px;font-family:var(--mono);font-weight:700;font-size:13px;
+    padding:5px 8px;border-radius:7px;font-variant-numeric:tabular-nums}
+  .r-R{color:#fff;background:var(--crimson)}
+  .r-A{color:#1a1206;background:var(--gold)}
+  .r-C{color:var(--azure-soft);border:1px solid rgba(77,163,255,.5)}
+  .r-S{color:var(--dim);border:1px solid rgba(255,255,255,.15)}
+  .raci-key{display:flex;gap:20px;flex-wrap:wrap;margin-top:18px;font-size:14.5px;color:var(--mist);font-family:var(--mono)}
+  .raci-key span{display:inline-flex;align-items:center;gap:8px}
+
+  /* 鈹€鈹€ archive 鈹€鈹€ */
+  .arch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:15px}
+  .arch{padding:18px 19px;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+  .arch:hover{transform:translateY(-4px)}
+  .arch h4{font-size:17px;margin-bottom:5px;display:flex;align-items:center;gap:9px}
+  .arch h4 .tg{font-family:var(--mono);font-size:12px;color:var(--crimson-soft);
+    border:1px solid rgba(229,9,20,.35);padding:3px 8px;border-radius:6px;font-weight:400}
+  .arch .files{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
+  .file{font-size:14px;color:var(--mist);background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);border-radius:7px;padding:6px 11px}
+  .arch .note{margin:11px 0 0;color:var(--faint);font-size:13.5px;font-family:var(--mono)}
+
+  /* 鈹€鈹€ access control 鈹€鈹€ */
+  .acc{font-family:var(--mono);font-size:13.5px;font-weight:700;padding:6px 10px;border-radius:7px;
+    display:inline-flex;gap:5px;align-items:center;white-space:nowrap;letter-spacing:.02em}
+  .acc-full{color:#fff;background:var(--crimson);box-shadow:0 0 12px -3px rgba(229,9,20,.7)}
+  .acc-ctrl{color:#1a1206;background:var(--gold)}
+  .acc-gw{color:var(--azure-soft);border:1px solid rgba(77,163,255,.55);background:rgba(77,163,255,.08)}
+  .acc-ro{color:var(--mist);border:1px solid rgba(255,255,255,.16)}
+  .acc-no{color:var(--faint);border:1px dashed rgba(255,255,255,.16);background:rgba(255,255,255,.02)}
+  table.acc-matrix td:first-child,table.acc-matrix th:first-child{text-align:left}
+
+  .principles{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-bottom:30px}
+  .principle{padding:18px 19px}
+  .principle .pn{font-family:var(--mono);font-size:24px;font-weight:700;color:var(--crimson-soft);line-height:1}
+  .principle h4{font-size:18.5px;margin:13px 0 8px}
+  .principle p{margin:0;color:var(--mist);font-size:15.5px;line-height:1.55}
+
+  .zones{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:8px 0 30px}
+  .zone{padding:22px 20px;overflow:hidden}
+  .zone::before{content:"";position:absolute;left:0;right:0;top:0;height:4px}
+  .zone.za::before{background:linear-gradient(90deg,var(--crimson),var(--crimson-deep))}
+  .zone.zb::before{background:linear-gradient(90deg,var(--azure),#1c5fb0)}
+  .zone.zc::before{background:linear-gradient(90deg,var(--violet),#4a2fb0)}
+  .zone .zt{font-family:var(--mono);font-size:13.5px;letter-spacing:.14em;color:var(--dim);margin-bottom:8px}
+  .zone h4{font-size:21px;margin-bottom:5px}
+  .zone .ztool{font-size:16px;color:var(--mist);margin:12px 0 14px}
+  .zone ul{margin:0;padding-left:17px;color:var(--mist);font-size:15.5px;line-height:1.55}
+  .zone ul li{margin:7px 0}
+  .zone .who{margin-top:15px;font-family:var(--mono);font-size:13.5px;color:var(--gold-soft)}
+  .zone.za h4{color:var(--crimson-soft)} .zone.zb h4{color:var(--azure-soft)} .zone.zc h4{color:#b39cff}
+
+  .lifecycle{display:flex;gap:10px;flex-wrap:wrap;counter-reset:lc}
+  .lc{flex:1 1 150px;padding:16px 15px;position:relative}
+  .lc::before{counter-increment:lc;content:counter(lc,decimal-leading-zero);
+    font-family:var(--mono);font-size:12px;color:var(--crimson-soft);font-weight:700}
+  .lc h4{font-size:17px;margin:9px 0 7px}
+  .lc p{margin:0;color:var(--mist);font-size:15px;line-height:1.5}
+
+  /* governance premise */
+  .govbadge{display:inline-flex;align-items:center;gap:10px;margin-top:22px;font-family:var(--mono);font-size:15px;
+    padding:11px 18px;border-radius:999px;color:var(--gold-soft);letter-spacing:.02em;
+    border:1px solid rgba(233,180,76,.42);background:rgba(233,180,76,.07);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+  .govbadge .gdot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold);flex:none}
+  .govbadge b{color:#fff;font-weight:700}
+  .govbar{display:grid;grid-template-columns:auto 1fr;gap:16px 20px;align-items:center;padding:18px 22px;margin-bottom:24px}
+  .govbar .gk{font-family:var(--mono);font-size:14px;letter-spacing:.14em;color:var(--gold-soft);
+    text-transform:uppercase;white-space:nowrap;display:flex;align-items:center;gap:9px}
+  .govbar .gk .gdot{width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold)}
+  .govbar p{margin:0;color:var(--mist);font-size:16.5px;line-height:1.55}
+  .govbar p b{color:#fff;font-weight:600}
+  @media (max-width:860px){.govbar{grid-template-columns:1fr;gap:10px}}
+
+  /* footer */
+  footer{padding:48px 0 74px;color:var(--mist);font-size:15px;position:relative}
+  footer::before{content:"";position:absolute;top:0;left:26px;right:26px;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent)}
+  footer .frow{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+  footer .mono{font-size:13.5px;color:var(--faint)}
+
+  @media (max-width:860px){
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    .infra{grid-template-columns:1fr}
+    .zones{grid-template-columns:1fr}
+    .detail-grid{grid-template-columns:1fr}
+    .tier{grid-template-columns:92px 1fr;gap:14px}
+    .stage-top{grid-template-columns:58px 1fr;gap:14px;padding:18px}
+    .stage-right{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between}
+    .stage-num{width:58px;height:58px;font-size:22px;border-radius:14px}
+  }
+</style>
+
+</head>
+<body>
+<div class="ambient"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div></div>
+<canvas id="fx"></canvas>
+<div class="grain"></div><div class="scanlines"></div><div class="vignette"></div>
+
+<div class="nav">
+  <div class="wrap row">
+    <div class="logo"><span class="mk"></span>閲戞嘲&nbsp;脳&nbsp;娌充紶 路 鏅鸿兘鍒剁墖娴佹按绾?/div>
+    <nav class="navlinks">
+      <a href="#arch">浣撶郴鏋舵瀯</a>
+      <a href="#pipeline">鍏樁娈垫祦姘寸嚎</a>
+      <a href="#raci">璐ｄ换鐭╅樀</a>
+      <a href="#tech">鎶€鏈帴鍏?/a>
+      <a href="#access">浣跨敤鏉冪鐞?/a>
+      <a href="#archive">鏂囦欢褰掓。</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="tagpair reveal">
+      <span class="ent jt"><b>閲戞嘲</b><span class="role">绠楀姏 路 涓撶嚎 路 API 路 鍚堣</span></span>
+      <span class="x">脳</span>
+      <span class="ent hc"><b>娌充紶</b><span class="role">鍒涗綔 路 鍒剁墖 路 鍐呭 路 瀵兼紨</span></span>
+    </div>
+    <div class="govbadge reveal"><span class="gdot"></span><b>涓撲笟褰辫瀵兼紨</b>&nbsp;鍏ㄧ▼鎸囧&nbsp;路&nbsp;<b>涓撲笟缂栧墽</b>&nbsp;鍏ㄧ▼瀹℃牳&nbsp;路&nbsp;璐┛鍏樁娈?/div>
+    <div class="eyebrow reveal">Production Bible 鈫?Final Cut 路 鍏ㄩ摼璺櫤鑳藉埗鐗囨柟妗?v2.0</div>
+    <h1 class="title reveal">浠?span class="grad">褰辫鍦ｇ粡</span><br>鍒版垚鐗囩殑宸ヤ笟鍖栫敓浜х嚎</h1>
+    <p class="lede reveal">浠?b>涓撲笟褰辫瀵兼紨鍏ㄧ▼鎸囧</b>銆?b>涓撲笟缂栧墽鍏ㄧ▼瀹℃牳</b>涓哄墠鎻愶紝浜庢渤浼犱紶缁熷埗鐗囨祦绋嬩箣涓婃帴鍏ラ噾娉扮殑<b>涓撶嚎绠楀姏</b>涓?<b>API 鐢熶骇鑳藉姏</b>锛屼互 ClaudeCode + Codex + 浜哄伐瀹℃牳鍏卞悓閿婚€犮€屽奖瑙嗗湥缁忋€嶏紝缁?Seedance / Kling 鐢熸垚銆佽揪鑺杩滅▼绮句慨锛屽舰鎴愪竴鏉?b>鍒嗗眰绾?路 鍒嗛儴闂?路 鍙拷婧?/b>鐨勫彲鎺ф祦姘寸嚎銆?/p>
+
+    <div class="flowline reveal" aria-label="鏍稿績閾捐矾">
+      <span class="n k">灏忚</span><span class="arw">鈥?/span>
+      <span class="n">鍓ф湰</span><span class="arw">鈥?/span>
+      <span class="n">鑰冭瘉</span><span class="arw">鈥?/span>
+      <span class="n">涓栫晫瑙?/span><span class="arw">鈥?/span>
+      <span class="n">椤圭洰浜偣</span><span class="arw">鈥?/span>
+      <span class="n">鍒嗛暅</span><span class="arw">鈥?/span>
+      <span class="n">浜鸿/鍦烘櫙/閬撳叿</span><span class="arw">鈥?/span>
+      <span class="n">涓夊崱</span><span class="arw">鈥?/span>
+      <span class="n">鍒嗛泦</span><span class="arw">鈥?/span>
+      <span class="n">鍒嗛暅鍥?/span><span class="arw">鈥?/span>
+      <span class="n">瀵圭櫧</span><span class="arw">鈥?/span>
+      <span class="n k">鐢熸垚瑙嗛</span><span class="arw">鈥?/span>
+      <span class="n">杩愰暅鐗规晥鍙?/span><span class="arw">鈥?/span>
+      <span class="n">鍓緫</span><span class="arw">鈥?/span>
+      <span class="n">鍚堟垚</span><span class="arw">鈥?/span>
+      <span class="n k">鎴愮墖</span><span class="arw">鈥?/span>
+      <span class="n">瀹℃牳</span>
+    </div>
+
+    <div class="kpis reveal">
+      <div class="kpi glass"><div class="v">6</div><div class="l">娴佹按绾块樁娈?路 鍏亾瀹℃牳闂?/div></div>
+      <div class="kpi glass"><div class="v">13</div><div class="l">鍔熻兘閮ㄩ棬 路 璐ｄ换鍒颁汉</div></div>
+      <div class="kpi glass"><div class="v">4</div><div class="l">绠＄悊灞傜骇 路 L1鈫扡4</div></div>
+      <div class="kpi glass"><div class="v">100%</div><div class="l">鑺傜偣浜や粯鐗╁彲杩芥函褰掓。</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- 浣撶郴鏋舵瀯 -->
+  <section id="arch">
+    <div class="sec-head reveal">
+      <div class="eyebrow"><span class="idx">01 /</span> 浣撶郴鏋舵瀯</div>
+      <h2>涓夌淮绠＄悊浣撶郴</h2>
+      <p>閲戞嘲璐熻矗鍩虹璁炬柦涓庡悎瑙勫簳搴э紙涓撶嚎鎺ュ叆杩滅▼绠楀姏銆丄PI 宸ョ▼鍖栥€佸唴瀹瑰悎瑙勶級锛屾渤浼犺礋璐ｅ垱浣滀笌鍒剁墖鍏ㄦ祦绋嬨€備笁涓淮搴︿氦鍙夋瀯鎴愮煩闃靛紡绠＄悊锛屼换浣曞埗浣滆妭鐐归兘鑳藉畾浣嶅埌銆?b>鍝竴灞傘€佸摢涓儴闂ㄣ€佺敤浠€涔堟帴鍏?/b>銆嶃€?/p>
+    </div>
+
+    <div class="tabs reveal" role="tablist" aria-label="绠＄悊缁村害">
+      <button class="tab" role="tab" aria-selected="true" data-tab="tier"><span class="tn">DIMENSION 01</span><strong>鍒嗗眰绾х鐞?路 鍥涚骇鍐崇瓥閾?/strong></button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="dept"><span class="tn">DIMENSION 02</span><strong>鍒嗗姛鑳介儴闂?路 13 涓綔鎴樺崟鍏?/strong></button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="infra"><span class="tn">DIMENSION 03</span><strong>涓撶嚎 + API 鎺ュ叆 路 閲戞嘲搴曞骇</strong></button>
+    </div>
+
+    <div class="tabpanel on" data-panel="tier">
+      <div class="tiers">
+        <div class="tier l1 glass"><div class="lv"><b>L1</b><span>鍐崇瓥灞?/span></div><div><div class="who">鍑哄搧浜?路 鎬诲埗鐗囦汉 路 椤圭洰鎬荤洃</div><div class="duty">绔嬮」鍐崇瓥銆侀绠楃粓鎵广€侀噷绋嬬楠屾敹銆佹垚鐗囩粓瀹′笌瀵瑰鍙戝竷鎺堟潈銆傛寔鏈?<b>瀹℃牳闂ㄢ憼/鈶?/b> 鐨勬渶缁堢瀛楁潈銆?/div></div></div>
+        <div class="tier l2 glass"><div class="lv"><b>L2</b><span>缁熺灞?/span></div><div><div class="who">鍒剁墖涓讳换 路 瀵兼紨 路 鎶€鏈€荤洃锛堥噾娉帮級</div><div class="duty">鎺掍骇璋冨害銆佽法閮ㄩ棬鍗忚皟銆佽川閲忔妸鍏炽€佺畻鍔涗笌妗ｆ湡鍒嗛厤銆傚皢鍐崇瓥鎷嗚В涓洪儴闂ㄤ换鍔★紝涓绘寔 <b>瀹℃牳闂ㄢ憽鈥撯懁</b> 璇勫銆?/div></div></div>
+        <div class="tier l3 glass"><div class="lv"><b>L3</b><span>閮ㄩ棬灞?/span></div><div><div class="who">鍚勯儴闂ㄨ礋璐ｄ汉 / 缁勯暱</div><div class="duty">閮ㄩ棬鍐呬换鍔℃淳鍙戙€佷氦浠樼墿涓€瀹°€佹棩鎶ヤ笌璧勪骇鍏ュ簱銆佸涓婃眹鎶ヨ繘搴︿笌椋庨櫓銆傘€岃矗浠诲埌閮ㄩ棬銆嶇殑钀界偣銆?/div></div></div>
+        <div class="tier l4 glass"><div class="lv"><b>L4</b><span>鎵ц灞?/span></div><div><div class="who">缂栧墽 路 璁捐甯?路 AI 鎿嶄綔鍛?路 鍓緫甯?路 鍒剁墖</div><div class="duty">鍏蜂綋鍒朵綔锛氬啓鍦ｇ粡銆佸嚭璁捐鍗°€佽窇 Seedance/Kling銆佽繙绋嬭揪鑺绮惧壀銆佸～琛ㄥ綊妗ｃ€傘€岃矗浠诲埌浜恒€嶇殑钀界偣銆?/div></div></div>
+      </div>
+    </div>
+
+    <div class="tabpanel" data-panel="dept">
+      <div class="dept-grid">
+        <div class="dept glass"><div class="hd"><h4>绛栧垝閮?/h4><span class="side hc">娌充紶</span></div><p>閫夐绔嬮」銆侀」鐩寒鐐广€佹枃鏈?PPT 绛栧垝妗堛€?/p><div class="lead">鈼?璐熻矗浜?鈫?绛栧垝鎬荤洃</div></div>
+        <div class="dept glass"><div class="hd"><h4>鍓ф湰閮?/h4><span class="side hc">娌充紶</span></div><p>灏忚鏀圭紪銆佹枃瀛﹀墽鏈€佸垎闆嗐€佸鐧借璁°€?/p><div class="lead">鈼?璐熻矗浜?鈫?鏂囧缁熺</div></div>
+        <div class="dept glass"><div class="hd"><h4>鑰冭瘉椤鹃棶缁?/h4><span class="side hc">娌充紶</span></div><p>鍙插疄/涓栫晫瑙傝€冩嵁銆侀€昏緫鏍￠獙銆佺増鏉冮闄┿€?/p><div class="lead">鈼?璐熻矗浜?鈫?鐗归個椤鹃棶</div></div>
+        <div class="dept glass"><div class="hd"><h4>瀵兼紨閮?/h4><span class="side hc">娌充紶</span></div><p>鍒嗛暅澶磋剼鏈€佽繍闀滆璁°€佺壒鏁堝婕斿彴銆佸鐗囥€?/p><div class="lead">鈼?璐熻矗浜?鈫?瀵兼紨 / 鍒嗛暅甯?/div></div>
+        <div class="dept glass"><div class="hd"><h4>缇庢湳璁捐閮?/h4><span class="side hc">娌充紶</span></div><p>浜虹墿/鍦烘櫙/閬撳叿璁捐銆佷笁鍗°€佸垎闀滃浘銆佽祫浜у簱銆?/p><div class="lead">鈼?璐熻矗浜?鈫?缇庢湳鎸囧</div></div>
+        <div class="dept glass"><div class="hd"><h4>AI 鐢熸垚閮?/h4><span class="side hc">娌充紶</span></div><p>鍥?鏂囩敓瑙嗛銆佹壒閲忓嚭闀溿€佺礌鏉愬垵绛涖€?/p><div class="lead">鈼?璐熻矗浜?鈫?AI 鍒朵綔缁勯暱</div></div>
+        <div class="dept glass"><div class="hd"><h4>鍚庢湡閮?/h4><span class="side hc">娌充紶</span></div><p>鍓緫銆佸悎鎴愩€佽皟鑹层€佸０闊炽€佹垚鐗囨瘝鐗堛€?/p><div class="lead">鈼?璐熻矗浜?鈫?鍚庢湡鎬荤洃</div></div>
+        <div class="dept glass"><div class="hd"><h4>鍒剁墖閮紙缁熺锛?/h4><span class="side hc">娌充紶</span></div><p>椤哄満/鍒嗗満銆佹媿鎽勮鍒掋€侀€氬憡銆佸埗鐗囨棩鎶ャ€?/p><div class="lead">鈼?璐熻矗浜?鈫?鍒剁墖涓讳换</div></div>
+        <div class="dept glass"><div class="hd"><h4>璐㈠姟閮?/h4><span class="side hc">娌充紶</span></div><p>棰勭畻銆佽储鍔℃棩/鍛ㄦ姤銆佸悎鍚岀粺璁°€侀绠楀鐓с€?/p><div class="lead">鈼?璐熻矗浜?鈫?璐㈠姟涓荤</div></div>
+        <div class="dept glass"><div class="hd"><h4>瀹℃牳 / 璐ㄦ帶閮?/h4><span class="side hc">娌充紶</span></div><p>鍚勯棬璐ㄦ銆佷竴鑷存€ф牳楠屻€佸唴瀹圭粓瀹°€?/p><div class="lead">鈼?璐熻矗浜?鈫?QC 涓荤</div></div>
+        <div class="dept glass"><div class="hd"><h4>绠楀姏路涓撶嚎杩愮淮</h4><span class="side jt">閲戞嘲</span></div><p>杩滅▼ GPU 闆嗙兢銆佷笓绾挎帴鍏ャ€佹帓浜ч槦鍒椼€?/p><div class="lead">鈼?璐熻矗浜?鈫?杩愮淮宸ョ▼甯?/div></div>
+        <div class="dept glass"><div class="hd"><h4>API 宸ョ▼缁?/h4><span class="side jt">閲戞嘲</span></div><p>Seedance/Kling/杈捐姮濂囪繙绋?API 缂栨帓銆?/p><div class="lead">鈼?璐熻矗浜?鈫?骞冲彴宸ョ▼甯?/div></div>
+        <div class="dept glass"><div class="hd"><h4>鍚堣瀹℃牳缁?/h4><span class="side jt">閲戞嘲</span></div><p>AIGC 鍚堣銆佸彂甯冨鏌ャ€佺暀鐥曞瓨璇併€?/p><div class="lead">鈼?璐熻矗浜?鈫?鍚堣瀹?/div></div>
+      </div>
+    </div>
+
+    <div class="tabpanel" data-panel="infra">
+      <div class="infra">
+        <div class="infra-card glass">
+          <h4><span class="ic mono">鈻?/span> 涓撶嚎鎺ュ叆 路 鍒嗗眰绾х畻鍔涜皟搴?/h4>
+          <p style="color:var(--mist);font-size:16px;margin:0;line-height:1.55">娌充紶鏈湴宸ヤ綅缁忛噾娉颁笓绾跨洿杩炶繙绋嬬畻鍔涢泦缇わ紝鎸夐」鐩?閮ㄩ棬鍒嗛厤绠楀姏閰嶉涓庝紭鍏堢骇闃熷垪锛屽埗鐗囨棩鎶ュ洖浼犲崰鐢ㄤ笌鎴愭湰銆?/p>
+          <ul class="pipe-list">
+            <li><span class="k">鎺ュ叆鏂瑰紡</span><span class="d">涓撶嚎锛圫D-WAN / 涓撶敤鍏夌氦锛夆啋 閲戞嘲绠楀姏缃戝叧 鈫?鍒嗛儴闂ㄨ櫄鎷熷伐浣?/span></li>
+            <li><span class="k">鍒嗗眰璋冨害</span><span class="d">L2 鎶€鏈€荤洃鎸夋。鏈熷垎閰?GPU 姹狅紝L3 閮ㄩ棬棰嗙敤锛孡4 鎻愪氦浠诲姟</span></li>
+            <li><span class="k">闆嗙兢璧勬簮</span><span class="d">8脳H100 + 4脳RTX5090 娓叉煋/鐢熸垚鑺傜偣 路 11 鍗″苟琛屽嚭闀?/span></li>
+            <li><span class="k">缂栨帓灞?/span><span class="d">n8n 宸ヤ綔娴佺紪鎺掞細鍓ф湰鈫掑垎闀溾啋鐢熸垚鈫掑悎鎴愯嚜鍔ㄦ祦杞?/span></li>
+            <li><span class="k">鎴愭湰鍥炰紶</span><span class="d">姣忛暅绠楀姏 / 鏃堕暱 / 鎴愭湰杩涘叆璐㈠姟棰勭畻瀵圭収琛?/span></li>
+          </ul>
+        </div>
+        <div class="infra-card glass">
+          <h4><span class="ic mono">鈼?/span> API 鎺ュ叆 路 鐢熶骇鑳藉姏宸ュ叿閾?/h4>
+          <p style="color:var(--mist);font-size:16px;margin:0;line-height:1.55">鐢熸垚涓庡悗鏈熻兘鍔涗互 API 鏂瑰紡缁熶竴缂栨帓锛屼汉宸ュ鏍搁棬璐┛鍏堕棿锛屽伐鍏峰彲鎻掓嫈鏇挎崲銆?/p>
+          <div class="api-badges" style="margin-top:16px">
+            <span class="api"><span class="st"></span>ClaudeCode 路 鍦ｇ粡/閫昏緫</span>
+            <span class="api"><span class="st"></span>Codex 路 鍓ф湰/宸ョ▼</span>
+            <span class="api"><span class="st"></span>Seedance 路 鐢熸垚瑙嗛</span>
+            <span class="api"><span class="st"></span>Kling 路 鐢熸垚瑙嗛</span>
+            <span class="api"><span class="st"></span>GPT Image 2 路 鍒嗛暅/闀滃ご涓诲姏</span>
+            <span class="api"><span class="st"></span>Nano Banana 路 鍏抽敭甯?/span>
+            <span class="api"><span class="st"></span>ComfyUI 路 涓夊崱/涓€鑷存€?/span>
+            <span class="api"><span class="st"></span>Qwen-Edit 路 鍥惧儚缂栬緫</span>
+            <span class="api remote"><span class="st"></span>杈捐姮濂?Resolve 路 杩滅▼鍓緫</span>
+            <span class="api remote"><span class="st"></span>ElevenLabs / ACE-Step 路 澹伴煶</span>
+            <span class="api"><span class="st"></span>ffmpeg 路 鍚堟垚灏佽</span>
+          </div>
+          <ul class="pipe-list" style="margin-top:16px">
+            <li><span class="k">缁熶竴缂栨帓</span><span class="d">API 缃戝叧閴存潈 + 浠诲姟闃熷垪 + 鍥炶皟锛屾墍鏈夎皟鐢ㄧ暀鐥?/span></li>
+            <li><span class="k">杩滅▼鍗忎綔</span><span class="d">杈捐姮濂囪繙绋嬪伐浣滅珯锛屽紓鍦拌皟鑹插笀鎺ュ叆鍚屼竴姣嶇増</span></li>
+            <li><span class="k">鍚堣瀛樿瘉</span><span class="d">鐢熸垚鍙傛暟銆佹彁绀鸿瘝銆佸鏍歌褰曞叏閾捐矾鍙拷婧?/span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 娴佹按绾?-->
+  <section id="pipeline">
+    <div class="sec-head reveal">
+      <div class="eyebrow"><span class="idx">02 /</span> 鐢熶骇涓昏酱</div>
+      <h2>鍏樁娈垫櫤鑳藉埗鐗囨祦姘寸嚎</h2>
+      <p>鐐瑰嚮浠讳竴闃舵灞曞紑锛氭瘡涓珯鐐规爣娉?b>浣滀笟姝ラ</b>銆?b>璐ｄ换閮ㄩ棬涓庤矗浠讳汉</b>銆?b>宸ュ叿/鎺ュ叆</b>銆?b>浜や粯鐗?/b>涓?b>瀹℃牳闂?/b>銆傜化绾负涓昏矗涓庣敓鎴愯兘閲忋€侀噾涓轰汉宸ュ鏍搁棬銆佽摑涓洪噾娉版妧鏈帴鍏ャ€?/p>
+    </div>
+
+    <div class="govbar glass reveal">
+      <div class="gk"><span class="gdot"></span>鍒涗綔缁熼</div>
+      <p>鍏ㄥ叚闃舵鍧囧湪 <b>涓撲笟褰辫瀵兼紨鍏ㄧ▼鎸囧</b> 涓?<b>涓撲笟缂栧墽鍏ㄧ▼瀹℃牳</b> 涔嬩笅杩愯鈥斺€斿婕旀妸鎺ц鍚笌鍙欎簨锛岀紪鍓у畧浣忓墽鏈€昏緫涓庡彶瀹烇紝AI 涓庡伐鍏蜂粎鍦ㄥ叾鍐崇瓥妗嗘灦鍐呮墽琛屻€?/p>
+    </div>
+
+    <div class="controls reveal">
+      <button class="btn" id="expandAll">灞曞紑鍏ㄩ儴</button>
+      <button class="btn" id="collapseAll">鏀惰捣鍏ㄩ儴</button>
+      <div class="legend">
+        <span><i style="background:var(--crimson)"></i>娌充紶鍒涗綔 / 涓昏矗</span>
+        <span><i style="background:var(--azure)"></i>閲戞嘲鎶€鏈?/span>
+        <span><i style="background:var(--gold)"></i>浜哄伐瀹℃牳闂?/span>
+      </div>
+    </div>
+
+    <div class="spine" id="spine">
+      <!-- 1 -->
+      <div class="stage reveal"><div class="stage-card glass">
+        <div class="stage-top" tabindex="0" role="button" aria-expanded="false">
+          <div class="stage-num">01</div>
+          <div class="stage-meta"><h3>绛栧垝绔嬮」</h3><div class="sub">IP 閫夐 路 椤圭洰浜偣 路 绛栧垝妗?/div>
+            <div class="stage-tags"><span class="chip hc">娌充紶绛栧垝閮?/span><span class="chip">L1 鍐崇瓥灞?/span><span class="chip">ClaudeCode 璋冪爺</span></div></div>
+          <div class="stage-right"><span class="gate">瀹℃牳闂?鈶?绔嬮」璇勫</span><span class="toggle">+</span></div>
+        </div>
+        <div class="stage-body"><div class="stage-body-inner">
+          <div class="steps">
+            <div class="step"><span class="sn">1.1</span><div class="stx"><b>閫夐涓?IP 璇勪及</b><p>灏忚/鍘熷垱棰樻潗绛涢€夛紝甯傚満涓庡悎瑙勫垵鍒ゃ€?/p></div></div>
+            <div class="step"><span class="sn">1.2</span><div class="stx"><b>椤圭洰浜偣鎻愮偧</b><p>ClaudeCode 杈呭姪鎷夊彇鍗栫偣銆佸鏍囥€佸樊寮傚寲瀹氫綅銆?/p></div></div>
+            <div class="step"><span class="sn">1.3</span><div class="stx"><b>鏂囨湰绛栧垝妗?+ PPT 绛栧垝妗?/b><p>椤圭洰鍩烘湰淇℃伅銆佹晠浜嬪ぇ绾?浜虹墿灏忎紶銆佷富瑙嗚鍙傝€冦€侀绠楁瑕併€佸懆鏈熴€佹嫙鍒朵綔鏂瑰紡銆?/p></div></div>
+          </div>
+          <div class="detail-grid">
+            <div class="dbox"><div class="dl">璐ｄ换閮ㄩ棬 / 璐ｄ换浜?/div><div class="owner-row"><span class="owner"><b>涓昏矗</b> 绛栧垝閮紙绛栧垝鎬荤洃 L3锛?/span><span class="owner"><b>瀹℃壒</b> 鍑哄搧浜?/ 鎬诲埗鐗?L1</span></div></div>
+            <div class="dbox"><div class="dl">宸ュ叿 / 鎺ュ叆</div><div class="owner-row"><span class="owner">ClaudeCode</span><span class="owner">璋冪爺 skill</span></div></div>
+            <div class="dbox"><div class="dl">浜や粯鐗?/div><ul><li>绔嬮」涔?路 鏂囨湰绛栧垝妗?/li><li>PPT 绛栧垝妗堬紙鍚富瑙嗚/棰勭畻/鍛ㄦ湡锛?/li></ul></div>
+            <div class="dbox gatebox"><div class="dl">瀹℃牳闂?鈶?路 绔嬮」璇勫</div><ul><li>鍐崇瓥灞傝瘎瀹★細棰樻潗/棰勭畻/鍚堣</li><li>閫氳繃 鈫?鎺堟潈杩涘叆鍓ф湰宸ョ▼</li></ul></div>
+          </div>
+        </div></div>
+      </div></div>
+
+      <!-- 2 -->
+      <div class="stage reveal"><div class="stage-card glass">
+        <div class="stage-top" tabindex="0" role="button" aria-expanded="false">
+          <div class="stage-num">02</div>
+          <div class="stage-meta"><h3>鍓ф湰宸ョ▼ 路 褰辫鍦ｇ粡銆愭枃鏈眰銆?/h3><div class="sub">鍓ф湰 路 鑰冭瘉 路 涓栫晫瑙?路 鍒嗛泦 路 瀵圭櫧</div>
+            <div class="stage-tags"><span class="chip hc">鍓ф湰閮?/span><span class="chip hc">鑰冭瘉椤鹃棶缁?/span><span class="chip">ClaudeCode + Codex</span><span class="chip">浜哄伐瀹℃牳</span></div></div>
+          <div class="stage-right"><span class="gate">瀹℃牳闂?鈶?鍓ф湰缁堢瀹?/span><span class="toggle">+</span></div>
+        </div>
+        <div class="stage-body"><div class="stage-body-inner">
+          <div class="steps">
+            <div class="step"><span class="sn">2.1</span><div class="stx"><b>灏忚 鈫?鍓ф湰鏀圭紪</b><p>ClaudeCode+Codex 缁撴瀯鍖栨敼缂栵紝鍦烘/鑺傚鍒囧垎銆?/p></div></div>
+            <div class="step"><span class="sn">2.2</span><div class="stx"><b>鍒嗘瀽鍓ф湰 路 鑰冭瘉</b><p>鑰冭瘉缁勬牳楠屽彶瀹?閫昏緫锛屾爣娉ㄩ闄╀笌淇鐐广€?/p></div></div>
+            <div class="step"><span class="sn">2.3</span><div class="stx"><b>涓栫晫瑙傛瀯寤?/b><p>鏃朵唬/鍦扮悊/浜虹墿鍏崇郴璁惧畾锛屽舰鎴愬湥缁忓簳灞傝瀹氬簱銆?/p></div></div>
+            <div class="step"><span class="sn">2.4</span><div class="stx"><b>鏂囧鍓ф湰 路 鍒嗛泦 路 瀵圭櫧璁捐</b><p>鎴愰泦鑴氭湰銆佸垎闆嗗ぇ绾层€侀€愬満瀵圭櫧鏈€?/p></div></div>
+          </div>
+          <div class="detail-grid">
+            <div class="dbox"><div class="dl">璐ｄ换閮ㄩ棬 / 璐ｄ换浜?/div><div class="owner-row"><span class="owner"><b>涓昏矗</b> 鍓ф湰閮紙鏂囧缁熺 L3锛?/span><span class="owner"><b>鍗忎綔</b> 鑰冭瘉椤鹃棶缁?/span><span class="owner"><b>瀹℃壒</b> 瀵兼紨 + 鎬诲埗鐗?L2/L1</span></div></div>
+            <div class="dbox"><div class="dl">宸ュ叿 / 鎺ュ叆</div><div class="owner-row"><span class="owner">ClaudeCode</span><span class="owner">Codex</span><span class="owner">浜哄伐绮句慨</span></div></div>
+            <div class="dbox"><div class="dl">浜や粯鐗?/div><ul><li>褰辫鍦ｇ粡路鏂囨湰鍗凤紙涓栫晫瑙?璁惧畾锛?/li><li>鏂囧鍓ф湰 路 鍒嗛泦澶х翰 路 瀵圭櫧鏈?/li></ul></div>
+            <div class="dbox gatebox"><div class="dl">瀹℃牳闂?鈶?路 鍓ф湰缁堢</div><ul><li>鍙插疄/閫昏緫/鐗堟潈涓夊</li><li>浜哄伐绛惧瓧閿佸畾锛岃繘鍏ヨ瑙夎璁?/li></ul></div>
+          </div>
+        </div></div>
+      </div></div>
+
+      <!-- 3 -->
+      <div class="stage reveal"><div class="stage-card glass">
+        <div class="stage-top" tabindex="0" role="button" aria-expanded="false">
+          <div class="stage-num">03</div>
+          <div class="stage-meta"><h3>鍒嗛暅涓庤瑙夎璁?路 褰辫鍦ｇ粡銆愯瑙夊眰銆?/h3><div class="sub">鍒嗛暅 路 浜鸿/鍦烘櫙/閬撳叿 路 涓夊崱 路 鍒嗛暅鍥?/div>
+            <div class="stage-tags"><span class="chip hc">瀵兼紨閮?/span><span class="chip hc">缇庢湳璁捐閮?/span><span class="chip">ClaudeCode + Codex</span><span class="chip" style="color:var(--crimson-soft);border-color:rgba(229,9,20,.55)">GPT Image 2 路 缁濆涓诲姏</span><span class="chip">Nano Banana</span><span class="chip">ComfyUI</span></div></div>
+          <div class="stage-right"><span class="gate">瀹℃牳闂?鈶?涓€鑷存€?璧勪骇瀹?/span><span class="toggle">+</span></div>
+        </div>
+        <div class="stage-body"><div class="stage-body-inner">
+          <div class="steps">
+            <div class="step"><span class="sn">3.1</span><div class="stx"><b>鍒嗛暅澶磋剼鏈?路 闀滃ご璁捐</b><p>瀵兼紨閮ㄧ粡 <b>ClaudeCode + Codex</b> 缁撴瀯鍖栨媶闀滐紝鏍囨敞鏅埆/杩愰暅/鏃堕暱锛堝垎闀滀笌闀滃ご璁捐蹇呴』璧?CC+Codex锛夈€?/p></div></div>
+            <div class="step"><span class="sn">3.2</span><div class="stx"><b>浜虹墿 / 鍦烘櫙 / 閬撳叿璁捐</b><p>缇庢湳璁捐閮ㄥ嚭姒傚康璁捐锛岄攣瀹氳瑙夊熀璋冦€?/p></div></div>
+            <div class="step"><span class="sn">3.3</span><div class="stx"><b>浜虹墿鍗?/ 鍦烘櫙鍗?/ 閬撳叿鍗★紙涓夊崱锛?/b><p><b>GPT Image 2锛堜富鍔涳級</b> / Nano Banana / ComfyUI 瀹氬鍑哄浘锛屽缓绔嬪彲澶嶇敤涓€鑷存€ц祫浜у簱銆?/p></div></div>
+            <div class="step"><span class="sn">3.4</span><div class="stx"><b>鍒嗛暅鍥?/b><p>閫愰暅鍏抽敭甯у嚭鍥撅紝褰㈡垚鍙鍖栧垎闀滆剼鏈€?/p></div></div>
+          </div>
+          <div class="detail-grid">
+            <div class="dbox"><div class="dl">璐ｄ换閮ㄩ棬 / 璐ｄ换浜?/div><div class="owner-row"><span class="owner"><b>涓昏矗</b> 缇庢湳璁捐閮紙缇庢湳鎸囧 L3锛?/span><span class="owner"><b>鍗忎綔</b> 瀵兼紨閮紙鍒嗛暅甯堬級</span></div></div>
+            <div class="dbox"><div class="dl">宸ュ叿 / 鎺ュ叆</div><div class="owner-row"><span class="owner"><b>ClaudeCode + Codex</b> 鍒嗛暅/闀滃ご閫昏緫</span><span class="owner"><b>GPT Image 2</b> 缁濆涓诲姏</span><span class="owner">Nano Banana</span><span class="owner">ComfyUI锛堜笓绾跨畻鍔涳級</span></div></div>
+            <div class="dbox"><div class="dl">浜や粯鐗?/div><ul><li>鍒嗛暅澶磋剼鏈?路 鍒嗛暅鍥?/li><li>涓夊崱璧勪骇搴擄紙瑙掕壊/鍦烘櫙/閬撳叿锛?/li><li>鍒嗛暅澶存暣鐞嗘眹鎬昏〃 路 璧勪骇绠＄悊琛?/li></ul></div>
+            <div class="dbox gatebox"><div class="dl">瀹℃牳闂?鈶?路 涓€鑷存€?& 璧勪骇瀹℃牳</div><ul><li>瑙嗚涓€鑷存€ф牳楠屻€佽祫浜у鏍歌〃绛炬牳</li><li>閫氳繃 鈫?鍐荤粨璧勪骇锛岃繘鍏ョ敓鎴?/li></ul></div>
+          </div>
+        </div></div>
+      </div></div>
+
+      <!-- 4 -->
+      <div class="stage reveal"><div class="stage-card glass">
+        <div class="stage-top" tabindex="0" role="button" aria-expanded="false">
+          <div class="stage-num">04</div>
+          <div class="stage-meta"><h3>AI 瑙嗛鐢熸垚 路 褰辫鍦ｇ粡銆愮敓鎴愬眰銆?/h3><div class="sub">鍥?鏂囩敓瑙嗛 路 杩愰暅 路 鐗规晥瀵兼紨鍙?/div>
+            <div class="stage-tags"><span class="chip hc">AI 鐢熸垚閮?/span><span class="chip hc">瀵兼紨閮?/span><span class="chip jt">閲戞嘲涓撶嚎 / API</span><span class="chip">Seedance 路 Kling</span></div></div>
+          <div class="stage-right"><span class="gate">瀹℃牳闂?鈶?闀滃ご瀹＄墖</span><span class="toggle">+</span></div>
+        </div>
+        <div class="stage-body"><div class="stage-body-inner">
+          <div class="steps">
+            <div class="step"><span class="sn">4.1</span><div class="stx"><b>鍥剧敓瑙嗛 / 鏂囩敓瑙嗛</b><p>浠ヤ笁鍗?鍒嗛暅鍥句负閿氾紝Seedance/Kling 缁?API 涓撶嚎鎵归噺鍑洪暅锛?1 鍗″苟琛岋級銆?/p></div></div>
+            <div class="step"><span class="sn">4.2</span><div class="stx"><b>杩愰暅璁捐</b><p>瀵兼紨閮ㄩ€愰暅鎸囧畾杩愰暅/鏅埆/鑺傚鍙傛暟銆?/p></div></div>
+            <div class="step"><span class="sn">4.3</span><div class="stx"><b>鐗规晥瀵兼紨鍙?/b><p>缁熶竴璋冨害鐗规晥/杞満/姘涘洿锛屼骇鍑洪暅澶寸礌鏉愶紙瑙嗛/澹伴煶/鐗规晥锛夈€?/p></div></div>
+          </div>
+          <div class="detail-grid">
+            <div class="dbox"><div class="dl">璐ｄ换閮ㄩ棬 / 璐ｄ换浜?/div><div class="owner-row"><span class="owner"><b>涓昏矗</b> AI 鐢熸垚閮紙AI 缁勯暱 L3锛?/span><span class="owner"><b>鍗忎綔</b> 瀵兼紨閮?路 閲戞嘲 API 缁?/span><span class="owner"><b>鏀拺</b> 绠楀姏杩愮淮</span></div></div>
+            <div class="dbox"><div class="dl">宸ュ叿 / 鎺ュ叆</div><div class="owner-row"><span class="owner">Seedance API</span><span class="owner">Kling API</span><span class="owner">涓撶嚎绠楀姏闆嗙兢</span></div></div>
+            <div class="dbox"><div class="dl">浜や粯鐗?/div><ul><li>闀滃ご绱犳潗锛堣棰?澹伴煶/鐗规晥锛?/li><li>绱犳潗绠＄悊鏂囨。锛堝満璁板崟/缁熺琛級</li><li>AI 鍒朵綔路璧勪骇瀹℃牳琛?路 鍒剁墖鏃ユ姤</li></ul></div>
+            <div class="dbox gatebox"><div class="dl">瀹℃牳闂?鈶?路 闀滃ご瀹＄墖</div><ul><li>瀵兼紨+璐ㄦ帶閫愰暅瀹★紝鏍囨敞閲嶇敓鎴愭竻鍗?/li><li>鍚堟牸闀滃ご鍏ョ簿鍓礌鏉愭睜</li></ul></div>
+          </div>
+        </div></div>
+      </div></div>
+
+      <!-- 5 -->
+      <div class="stage reveal"><div class="stage-card glass">
+        <div class="stage-top" tabindex="0" role="button" aria-expanded="false">
+          <div class="stage-num">05</div>
+          <div class="stage-meta"><h3>鍚庢湡鍚堟垚</h3><div class="sub">鍓緫 路 鍚堟垚 路 璋冭壊 路 澹伴煶 路 鎴愮墖</div>
+            <div class="stage-tags"><span class="chip hc">鍚庢湡閮?/span><span class="chip jt">杈捐姮濂囪繙绋?/span><span class="chip">ffmpeg 路 鍚堟垚</span></div></div>
+          <div class="stage-right"><span class="gate">瀹℃牳闂?鈶?鍚庢湡璐ㄦ</span><span class="toggle">+</span></div>
+        </div>
+        <div class="stage-body"><div class="stage-body-inner">
+          <div class="steps">
+            <div class="step"><span class="sn">5.1</span><div class="stx"><b>鍓緫锛堣揪鑺杩滅▼锛?/b><p>寮傚湴鍓緫甯堢粡杩滅▼宸ヤ綔绔欐帴鍏ュ悓涓€姣嶇増锛屾垚搴忕簿鍓€?/p></div></div>
+            <div class="step"><span class="sn">5.2</span><div class="stx"><b>鐗规晥鍚堟垚 路 璋冭壊</b><p>鍚堟垚灞傚彔鍔犮€佽揪鑺璋冭壊缁熶竴褰辫皟銆?/p></div></div>
+            <div class="step"><span class="sn">5.3</span><div class="stx"><b>澹伴煶 路 閰嶄箰 路 娣烽煶</b><p>ElevenLabs/ACE-Step 閰嶉煶閰嶄箰锛宖fmpeg 灏佽銆?/p></div></div>
+            <div class="step"><span class="sn">5.4</span><div class="stx"><b>鎴愮墖姣嶇増杈撳嚭</b><p>杈撳嚭鎴愮墖姣嶇増涓庡瑙勬牸鍙戝竷鐗堟湰銆?/p></div></div>
+          </div>
+          <div class="detail-grid">
+            <div class="dbox"><div class="dl">璐ｄ换閮ㄩ棬 / 璐ｄ换浜?/div><div class="owner-row"><span class="owner"><b>涓昏矗</b> 鍚庢湡閮紙鍚庢湡鎬荤洃 L3锛?/span><span class="owner"><b>鍗忎綔</b> 閲戞嘲 API 缁勶紙杩滅▼鎺ュ叆锛?/span></div></div>
+            <div class="dbox"><div class="dl">宸ュ叿 / 鎺ュ叆</div><div class="owner-row"><span class="owner">杈捐姮濂?Resolve锛堣繙绋嬶級</span><span class="owner">ffmpeg</span><span class="owner">ElevenLabs / ACE-Step</span></div></div>
+            <div class="dbox"><div class="dl">浜や粯鐗?/div><ul><li>绮惧壀搴忓垪 路 璋冭壊姣嶇増</li><li>鎴愮墖姣嶇増 + 鍙戝竷鐗堟湰</li></ul></div>
+            <div class="dbox gatebox"><div class="dl">瀹℃牳闂?鈶?路 鍚庢湡璐ㄦ</div><ul><li>鐢婚潰/澹伴煶/鑺傚璐ㄦ</li><li>鎶€瀹￠€氳繃 鈫?閫佺粓瀹?/li></ul></div>
+          </div>
+        </div></div>
+      </div></div>
+
+      <!-- 6 -->
+      <div class="stage reveal"><div class="stage-card glass">
+        <div class="stage-top" tabindex="0" role="button" aria-expanded="false">
+          <div class="stage-num">06</div>
+          <div class="stage-meta"><h3>瀹℃牳浜や粯</h3><div class="sub">鍐呭瀹?路 鍚堣瀹?路 缁堝 路 褰掓。鍙戝竷</div>
+            <div class="stage-tags"><span class="chip hc">瀹℃牳 / 璐ㄦ帶閮?/span><span class="chip jt">閲戞嘲鍚堣缁?/span><span class="chip">L1 鍐崇瓥灞?/span></div></div>
+          <div class="stage-right"><span class="gate">瀹℃牳闂?鈶?缁堝 + 鍚堣鍙戝竷</span><span class="toggle">+</span></div>
+        </div>
+        <div class="stage-body"><div class="stage-body-inner">
+          <div class="steps">
+            <div class="step"><span class="sn">6.1</span><div class="stx"><b>鍐呭缁堝</b><p>璐ㄦ帶閮ㄥ鎴愮墖鍋氬唴瀹?浠峰€艰/涓€鑷存€х粓妫€銆?/p></div></div>
+            <div class="step"><span class="sn">6.2</span><div class="stx"><b>鍚堣瀹℃牳锛堥噾娉帮級</b><p>AIGC 鍚堣瀹℃煡锛岀敓鎴愬弬鏁颁笌瀹℃牳璁板綍鐣欑棔瀛樿瘉銆?/p></div></div>
+            <div class="step"><span class="sn">6.3</span><div class="stx"><b>鍐崇瓥灞傜粓绛?路 浜や粯褰掓。</b><p>L1 鎺堟潈鍙戝竷锛屾垚鐗囦笌鍏ㄩ摼璺祫浜у綊妗ｃ€?/p></div></div>
+          </div>
+          <div class="detail-grid">
+            <div class="dbox"><div class="dl">璐ｄ换閮ㄩ棬 / 璐ｄ换浜?/div><div class="owner-row"><span class="owner"><b>涓昏矗</b> 瀹℃牳/璐ㄦ帶閮紙QC 涓荤 L3锛?/span><span class="owner"><b>鍗忎綔</b> 閲戞嘲鍚堣缁?/span><span class="owner"><b>缁堟壒</b> 鍑哄搧浜?L1</span></div></div>
+            <div class="dbox"><div class="dl">宸ュ叿 / 鎺ュ叆</div><div class="owner-row"><span class="owner">澶氱骇瀹℃牳娴?/span><span class="owner">鍚堣瀛樿瘉绯荤粺</span></div></div>
+            <div class="dbox"><div class="dl">浜や粯鐗?/div><ul><li>鎴愮墖锛堢粓鐗堬級 路 浜や粯鍖?/li><li>鍏ㄩ摼璺綊妗ｏ紙鍦ｇ粡/璧勪骇/瀹℃牳璁板綍锛?/li></ul></div>
+            <div class="dbox gatebox"><div class="dl">瀹℃牳闂?鈶?路 缁堝 & 鍚堣</div><ul><li>鍐呭+鍚堣鍙岀</li><li>鎺堟潈鍙戝竷 / 褰掓。缁撻」</li></ul></div>
+          </div>
+        </div></div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- RACI -->
+  <section id="raci">
+    <div class="sec-head reveal">
+      <div class="eyebrow"><span class="idx">03 /</span> 璐ｄ换鐭╅樀</div>
+      <h2>閮ㄩ棬 脳 闃舵璐ｄ换鐭╅樀</h2>
+      <p>妯涓€涓儴闂ㄧ殑鍏ㄦ祦绋嬭亴璐ｏ紝绾佃涓€涓樁娈电殑璐ｄ换鍒嗗竷銆?b>R</b> 涓昏矗鎵ц銆?b>A</b> 瀹℃壒绛惧瓧銆?b>C</b> 鍗忎綔鍙備笌銆?b>S</b> 鏀拺淇濋殰銆?/p>
+    </div>
+    <div class="matrix-wrap glass reveal">
+      <table class="raci">
+        <thead><tr><th style="text-align:left">閮ㄩ棬 \ 闃舵</th><th>鈶?绛栧垝绔嬮」</th><th>鈶?鍓ф湰宸ョ▼</th><th>鈶?鍒嗛暅璁捐</th><th>鈶?AI 鐢熸垚</th><th>鈶?鍚庢湡鍚堟垚</th><th>鈶?瀹℃牳浜や粯</th></tr></thead>
+        <tbody>
+          <tr><th>绛栧垝閮?/th><td><span class="r r-R">R</span></td><td><span class="r r-C">C</span></td><td></td><td></td><td></td><td><span class="r r-C">C</span></td></tr>
+          <tr><th>鍓ф湰閮?/th><td><span class="r r-C">C</span></td><td><span class="r r-R">R</span></td><td><span class="r r-C">C</span></td><td></td><td></td><td></td></tr>
+          <tr><th>鑰冭瘉椤鹃棶缁?/th><td><span class="r r-S">S</span></td><td><span class="r r-C">C</span></td><td><span class="r r-S">S</span></td><td></td><td></td><td><span class="r r-C">C</span></td></tr>
+          <tr><th>瀵兼紨閮?/th><td></td><td><span class="r r-A">A</span></td><td><span class="r r-R">R</span></td><td><span class="r r-C">C</span></td><td><span class="r r-C">C</span></td><td><span class="r r-C">C</span></td></tr>
+          <tr><th>缇庢湳璁捐閮?/th><td></td><td></td><td><span class="r r-R">R</span></td><td><span class="r r-S">S</span></td><td></td><td></td></tr>
+          <tr><th>AI 鐢熸垚閮?/th><td></td><td></td><td><span class="r r-C">C</span></td><td><span class="r r-R">R</span></td><td><span class="r r-S">S</span></td><td></td></tr>
+          <tr><th>鍚庢湡閮?/th><td></td><td></td><td></td><td><span class="r r-C">C</span></td><td><span class="r r-R">R</span></td><td><span class="r r-C">C</span></td></tr>
+          <tr><th>鍒剁墖閮紙缁熺锛?/th><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td></tr>
+          <tr><th>璐㈠姟閮?/th><td><span class="r r-S">S</span></td><td></td><td></td><td><span class="r r-S">S</span></td><td></td><td><span class="r r-S">S</span></td></tr>
+          <tr><th>瀹℃牳 / 璐ㄦ帶閮?/th><td><span class="r r-C">C</span></td><td><span class="r r-C">C</span></td><td><span class="r r-A">A</span></td><td><span class="r r-A">A</span></td><td><span class="r r-A">A</span></td><td><span class="r r-R">R</span></td></tr>
+          <tr><th>閲戞嘲 路 绠楀姏杩愮淮</th><td></td><td></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td></td></tr>
+          <tr><th>閲戞嘲 路 API 宸ョ▼</th><td></td><td><span class="r r-S">S</span></td><td><span class="r r-S">S</span></td><td><span class="r r-R">R</span></td><td><span class="r r-R">R</span></td><td></td></tr>
+          <tr><th>閲戞嘲 路 鍚堣缁?/th><td><span class="r r-C">C</span></td><td></td><td></td><td></td><td></td><td><span class="r r-A">A</span></td></tr>
+          <tr><th>L1 鍐崇瓥灞?/th><td><span class="r r-A">A</span></td><td><span class="r r-A">A</span></td><td></td><td></td><td></td><td><span class="r r-A">A</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="raci-key reveal">
+      <span><span class="r r-R">R</span> 涓昏矗鎵ц</span><span><span class="r r-A">A</span> 瀹℃壒绛惧瓧</span>
+      <span><span class="r r-C">C</span> 鍗忎綔鍙備笌</span><span><span class="r r-S">S</span> 鏀拺淇濋殰</span>
+    </div>
+  </section>
+
+  <!-- 鎶€鏈帴鍏?-->
+  <section id="tech">
+    <div class="sec-head reveal">
+      <div class="eyebrow"><span class="idx">04 /</span> 閲戞嘲鎶€鏈簳搴?/div>
+      <h2>涓撶嚎鎺ュ叆 路 API 缂栨帓 路 鍚堣瀛樿瘉</h2>
+      <p>閲戞嘲浣滀负鎶€鏈笌鍚堣搴曞骇锛屼负娌充紶鍒涗綔鍏ㄦ祦绋嬫彁渚涖€?b>鎺ュ緱杩涖€佽窇寰楀姩銆佺暀寰楃棔</b>銆嶇殑鍩虹璁炬柦淇濋殰銆?/p>
+    </div>
+    <div class="infra">
+      <div class="infra-card glass reveal">
+        <h4><span class="ic mono">鈬?/span> 鏁版嵁 / 绠楀姏娴佸悜</h4>
+        <ul class="pipe-list">
+          <li><span class="k">鏈湴宸ヤ綅</span><span class="d">娌充紶鍚勯儴闂ㄤ骇鍑哄湥缁?鍒嗛暅/涓夊崱锛岀粡涓撶嚎涓婅</span></li>
+          <li><span class="k">閲戞嘲缃戝叧</span><span class="d">閴存潈 路 閰嶉 路 浼樺厛绾ч槦鍒?路 鎴愭湰璁￠噺</span></li>
+          <li><span class="k">绠楀姏闆嗙兢</span><span class="d">8脳H100 + 4脳5090 鐢熸垚/娓叉煋锛?1 鍗″苟琛?/span></li>
+          <li><span class="k">API 灞?/span><span class="d">Seedance / Kling / 杈捐姮濂囪繙绋嬬粺涓€缂栨帓</span></li>
+          <li><span class="k">鍥炰紶褰掓。</span><span class="d">绱犳潗 + 鍙傛暟 + 瀹℃牳璁板綍鍥炴湰鍦拌祫浜у簱</span></li>
+        </ul>
+      </div>
+      <div class="infra-card glass reveal">
+        <h4><span class="ic mono">鉁?/span> 鍚堣涓庡彲杩芥函</h4>
+        <ul class="pipe-list">
+          <li><span class="k">鍏ㄧ▼鐣欑棔</span><span class="d">鎻愮ず璇?鐢熸垚鍙傛暟/妯″瀷鐗堟湰閫愰暅瀛樿瘉</span></li>
+          <li><span class="k">瀹℃牳杩芥函</span><span class="d">鍏亾瀹℃牳闂ㄧ瀛楄褰曟寕鎺ュ搴斾氦浠樼墿</span></li>
+          <li><span class="k">鍚堣瀹℃煡</span><span class="d">鍙戝竷鍓?AIGC 鍚堣瀹★紝棣欐腐鍚堣缁撴瀯鎵挎帴</span></li>
+          <li><span class="k">鎴愭湰鏍哥畻</span><span class="d">姣忛暅绠楀姏鎴愭湰鍥炴祦璐㈠姟棰勭畻瀵圭収琛?/span></li>
+        </ul>
+        <div class="api-badges" style="margin-top:14px">
+          <span class="api"><span class="st"></span>n8n 缂栨帓</span>
+          <span class="api"><span class="st"></span>璧勪骇搴?/ 鍦鸿鍗?/span>
+          <span class="api remote"><span class="st"></span>杩滅▼杈捐姮濂囧伐浣滅珯</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 浣跨敤鏉冪鐞?-->
+  <section id="access">
+    <div class="sec-head reveal">
+      <div class="eyebrow"><span class="idx">05 /</span> 浣跨敤鏉冪鐞?路 璁块棶鎺у埗</div>
+      <h2>鏍稿績鐢熶骇璧勬枡鐨勪弗鏍兼巿鏉?/h2>
+      <p><b>ClaudeCode 涓?Codex 鏄€屽奖瑙嗗湥缁忋€嶇殑鏍稿績鐢熶骇璧勬枡锛屼笉瀵瑰鏍″鐢燂紙AI 鎿嶄綔鍛樸€佸壀杈戝笀绛?L4 鎵ц灞傦級寮€鏀俱€?/b>鍓ф湰宸ョ▼涓?b>鍒嗛暅/闀滃ご璁捐</b>绛夋牳蹇冨垱浣滅幆鑺傦紝鐢辨牳蹇冨憳宸ワ紙鍓ф湰閮?绛栧垝閮?瀵兼紨閮?缇庢湳璁捐閮級鍦?b>鍙楁帶宸ヤ綅</b>浣跨敤 CC + Codex锛涘鐢熷彧鍦ㄦ矙绠卞唴棰嗙敤<b>鍐荤粨鍚?/b>鐨勫湥缁?鍒嗛暅/绱犳潗锛屾垨缁?API 缃戝叧浠ｇ悊鎻愪氦鐢熸垚浠诲姟鈥斺€斿缁堟帴瑙︿笉鍒板簳灞傚伐鍏蜂笌瀵嗛挜銆傞噰鐢ㄣ€屽垎绾ф巿鏉?路 鏈€灏忔潈闄?路 瀵嗛挜闆朵笅鍙?路 缃戝叧鍗曠偣绠℃帶 路 鍏ㄩ噺瀹¤銆嶇殑 RBAC 璁块棶鎺у埗銆?/p>
+    </div>
+
+    <div class="principles reveal">
+      <div class="principle glass"><div class="pn">01</div><h4>鏈€灏忔潈闄?/h4><p>鎸夎鑹插彧鎺堜簣瀹屾垚鏈亴鎵€闇€鐨勬渶灏忓伐鍏蜂笌鏁版嵁鑼冨洿锛岄粯璁ゆ嫆缁濄€?/p></div>
+      <div class="principle glass"><div class="pn">02</div><h4>瀵嗛挜闆朵笅鍙?/h4><p>ANTHROPIC_API_KEY / Codex 鍑瘉鍙瓨閲戞嘲缃戝叧涓绘満锛岀粷涓嶈惤鍦板埌瀛︾敓/鎿嶄綔鍛樻満鍣ㄣ€?/p></div>
+      <div class="principle glass"><div class="pn">03</div><h4>缃戝叧鍗曠偣绠℃帶</h4><p>鎵€鏈夌敓鎴愯姹傜粡 claude-bridge 缃戝叧 + BRIDGE_TOKEN 閴存潈浠ｇ悊锛屾湰鍦版嬁涓嶅埌搴曞眰宸ュ叿銆?/p></div>
+      <div class="principle glass"><div class="pn">04</div><h4>鍏ㄩ噺瀹¤</h4><p>閫愭璋冪敤鐣欑棔 who / when / what / cost锛岃繚瑙勪笌瓒呴鍙拷婧€佸彲鍥炴函銆?/p></div>
+    </div>
+
+    <div class="matrix-wrap glass reveal" style="margin-bottom:16px">
+      <table class="raci acc-matrix">
+        <thead><tr>
+          <th>瑙掕壊 \ 璧勬簮</th><th>ClaudeCode</th><th>Codex</th><th>鐢熸垚缃戝叧<br>Seedance/Kling</th><th>杈捐姮濂囪繙绋?/th><th>鍦ｇ粡/璧勪骇搴?/th><th>API 瀵嗛挜</th>
+        </tr></thead>
+        <tbody>
+          <tr><th>L1 鍐崇瓥灞?/th><td><span class="acc acc-full">鈼忓畬鍏?/span></td><td><span class="acc acc-full">鈼忓畬鍏?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-full">鈼忓畬鍏?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td></tr>
+          <tr><th>L2 瀵兼紨 / 鎶€鏈€荤洃</th><td><span class="acc acc-ctrl">鈼愬彈鎺?/span></td><td><span class="acc acc-ctrl">鈼愬彈鎺?/span></td><td><span class="acc acc-ctrl">鈼愬彈鎺?/span></td><td><span class="acc acc-ctrl">鈼愬彈鎺?/span></td><td><span class="acc acc-full">鈼忓畬鍏?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td></tr>
+          <tr><th>鍓ф湰閮?/ 绛栧垝閮紙鏍稿績鍒涗綔锛?/th><td><span class="acc acc-ctrl">鈼愬彈鎺?/span></td><td><span class="acc acc-ctrl">鈼愬彈鎺?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-full">鈼忓畬鍏?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td></tr>
+          <tr><th>缇庢湳璁捐閮?/th><td><span class="acc acc-ctrl">鈼愬彈鎺?/span></td><td><span class="acc acc-ctrl">鈼愬彈鎺?/span></td><td><span class="acc acc-gw">鈬勭綉鍏?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-ro">鈼嬭鍐櫬疯祫浜?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td></tr>
+          <tr><th>AI 鐢熸垚閮?<b style="color:var(--gold-soft)">锛堝惈瀛︾敓鎿嶄綔鍛橈級</b></th><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-gw">鈬勭綉鍏充唬鐞?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-ro">鈼嬪彧璇宦峰湥缁?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td></tr>
+          <tr><th>鍚庢湡閮?<b style="color:var(--gold-soft)">锛堝惈瀛︾敓鍓緫甯堬級</b></th><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-ro">鈼嬪彧璇诲伐浣?/span></td><td><span class="acc acc-ro">鈼嬪彧璇宦风礌鏉?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td></tr>
+          <tr><th>閲戞嘲 路 API 宸ョ▼ / 鍚堣</th><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-no">鉀旂姝?/span></td><td><span class="acc acc-ctrl">鈼愮鐞?/span></td><td><span class="acc acc-ctrl">鈼愮鐞?/span></td><td><span class="acc acc-ro">鈼嬪璁?/span></td><td><span class="acc acc-ctrl">鈼愭墭绠?/span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="raci-key reveal" style="margin-bottom:34px">
+      <span><span class="acc acc-full">鈼忓畬鍏?/span> 鐩存帴璁块棶</span>
+      <span><span class="acc acc-ctrl">鈼愬彈鎺?/span> 闇€瀹℃壒 + 鍙楁帶宸ヤ綅</span>
+      <span><span class="acc acc-gw">鈬勭綉鍏?/span> 浠呯粡 API 缃戝叧浠ｇ悊</span>
+      <span><span class="acc acc-ro">鈼嬪彧璇?/span> 棰嗙敤/鍙</span>
+      <span><span class="acc acc-no">鉀旂姝?/span> 鏃犳潈璁块棶</span>
+    </div>
+
+    <div class="sec-head reveal" style="margin-bottom:20px"><h2 style="font-size:22px">涓夊尯鐗╃悊 / 缃戠粶闅旂</h2></div>
+    <div class="zones">
+      <div class="zone za glass reveal">
+        <div class="zt">ZONE A 路 鏈€楂樺瘑绾?/div><h4>鏍稿績鍒涗綔鍖?/h4>
+        <div class="ztool">ClaudeCode + Codex 路 閿婚€犲奖瑙嗗湥缁?/div>
+        <ul>
+          <li>鍙楁帶涓撶嚎宸ヤ綅锛岄渶瀹℃壒 + NDA + 宸ヤ綅缁戝畾</li>
+          <li>浠?L1/L2 涓庡墽鏈€佺瓥鍒掓牳蹇冨憳宸ュ噯鍏?/li>
+          <li>瀵嗛挜鎵樼浜庨噾娉扮綉鍏筹紝宸ヤ綅涓嶈惤鍦板嚟璇?/li>
+          <li>浜у嚭鍦ｇ粡/鍒嗛暅缁忓鏍搁棬閿佸畾鍚庢柟鍙笅鍙?/li>
+        </ul>
+        <div class="who">鈼?鍑嗗叆锛氭牳蹇冨憳宸?路 绛惧瓧瀹℃壒</div>
+      </div>
+      <div class="zone zb glass reveal">
+        <div class="zt">ZONE B 路 鍙楁帶鐢熶骇</div><h4>鍙楁帶鐢熸垚鍖?/h4>
+        <div class="ztool">API 缃戝叧 路 Seedance / Kling 鍑洪暅</div>
+        <ul>
+          <li>AI 鐢熸垚閮ㄧ粡 claude-bridge 缃戝叧鎻愪氦浠诲姟</li>
+          <li>BRIDGE_TOKEN 閴存潈锛屾棤搴曞眰宸ュ叿銆佹棤瀵嗛挜</li>
+          <li>鍙棰嗙敤鍐荤粨鍚庣殑鍦ｇ粡 / 鍒嗛暅 / 涓夊崱</li>
+          <li>姣忛暅璋冪敤涓庣畻鍔涙垚鏈€愭潯瀹¤鐣欑棔</li>
+        </ul>
+        <div class="who">鈼?鍑嗗叆锛欰I 鎿嶄綔鍛橈紙瀛︾敓锛壜?鍙楅檺浠ょ墝</div>
+      </div>
+      <div class="zone zc glass reveal">
+        <div class="zt">ZONE C 路 娌欑</div><h4>瀛︾敓娌欑鍖?/h4>
+        <div class="ztool">杈捐姮濂囧彧璇诲伐浣?路 鍓緫 / 鍚堟垚</div>
+        <ul>
+          <li>鍓緫/鎿嶄綔瀛︾敓浠呮帴鍏ヨ揪鑺杩滅▼宸ヤ綅</li>
+          <li>鏃犲缃戙€佹棤鐢熸垚寮忓伐鍏枫€佹棤 API 瀵嗛挜</li>
+          <li>鍙棰嗙敤绱犳潗锛岃緭鍑哄甫姘村嵃涓庡璁℃爣璇?/li>
+          <li>绂诲満 / 杩濊涓€閿悐閿€浠ょ墝涓庡伐浣嶆潈闄?/li>
+        </ul>
+        <div class="who">鈼?鍑嗗叆锛氬壀杈戝笀锛堝鐢燂級路 娌欑浠ょ墝</div>
+      </div>
+    </div>
+
+    <div class="sec-head reveal" style="margin-bottom:20px"><h2 style="font-size:22px">鍑嗗叆鐢熷懡鍛ㄦ湡</h2></div>
+    <div class="lifecycle reveal">
+      <div class="lc glass"><h4>鐢宠</h4><p>鎻愪氦瑙掕壊 + 鎵€闇€宸ュ叿/鏁版嵁鑼冨洿銆?/p></div>
+      <div class="lc glass"><h4>瀹℃壒</h4><p>L2 + 鍚堣瀹樺弻绛撅紝绛剧讲 NDA / 淇濆瘑鍗忚銆?/p></div>
+      <div class="lc glass"><h4>鎺堟潈</h4><p>缃戝叧涓嬪彂鍙楅檺浠ょ墝锛堥潪瀵嗛挜锛夛紝缁戝畾宸ヤ綅/鏃舵銆?/p></div>
+      <div class="lc glass"><h4>瀹¤</h4><p>閫愭璋冪敤鐣欑棔 who/when/what/cost銆?/p></div>
+      <div class="lc glass"><h4>澶嶆牳</h4><p>瀛ｅ害鏉冮檺澶嶅锛岃秴棰?闂茬疆鍗抽檷鏉冦€?/p></div>
+      <div class="lc glass"><h4>鍚婇攢</h4><p>绂诲満/杩濊涓€閿悐閿€浠ょ墝涓庡叏閮ㄨ闂€?/p></div>
+    </div>
+  </section>
+
+  <!-- 褰掓。 -->
+  <section id="archive">
+    <div class="sec-head reveal">
+      <div class="eyebrow"><span class="idx">06 /</span> 鍒剁墖绠＄悊鏂囦欢褰掓。</div>
+      <h2>鏂囦欢浣撶郴</h2>
+      <p>淇濈暀娌充紶浼犵粺鍒剁墖绠＄悊鏂囦欢缁撴瀯锛屽湪銆岀粺绛规枃浠躲€嶄腑骞惰<b>浼犵粺鍒朵綔</b>涓?<b>AI 鍒朵綔</b>涓ゆ潯褰掓。绾匡紝鍏ㄩ儴鎸傛帴鍒板搴旀祦姘寸嚎闃舵銆?/p>
+    </div>
+    <div class="arch-grid">
+      <div class="arch glass reveal"><h4>绛栧垝鏂囦欢 <span class="tg">闃舵鈶?/span></h4><div class="files"><span class="file">鏂囨湰绛栧垝妗?/span><span class="file">PPT 绛栧垝妗?/span><span class="file">椤圭洰鍩烘湰淇℃伅</span><span class="file">鏁呬簨澶х翰+浜虹墿灏忎紶</span><span class="file">椤圭洰浜偣</span></div></div>
+      <div class="arch glass reveal"><h4>鍓ф湰鏂囦欢 <span class="tg">闃舵鈶?/span></h4><div class="files"><span class="file">褰辫鍦ｇ粡路鏂囨湰鍗?/span><span class="file">鏂囧鍓ф湰</span><span class="file">鍒嗛泦澶х翰</span><span class="file">瀵圭櫧鏈?/span><span class="file">鑰冭瘉璁板綍</span></div></div>
+      <div class="arch glass reveal"><h4>缁熺鏂囦欢 路 浼犵粺鍒朵綔 <span class="tg">闃舵鈶⑩懁</span></h4><div class="files"><span class="file">椤哄満鏅〃</span><span class="file">鍒嗗満鏅〃</span><span class="file">鎷嶆憚澶ц鍒?/span><span class="file">閫氬憡</span><span class="file">鍒剁墖鏃ユ姤</span></div></div>
+      <div class="arch glass reveal"><h4>缁熺鏂囦欢 路 AI 鍒朵綔 <span class="tg">闃舵鈶⑩懀</span></h4><div class="files"><span class="file">鍒嗛暅澶存暣鐞嗘眹鎬昏〃</span><span class="file">璧勪骇绠＄悊琛?/span><span class="file">璧勪骇瀹℃牳琛?/span><span class="file">鍒剁墖鏃ユ姤</span></div><p class="note">// 鏂板 AI 鍒朵綔褰掓。绾?/p></div>
+      <div class="arch glass reveal"><h4>璐㈠姟鏂囦欢 <span class="tg">鍏ㄦ祦绋?/span></h4><div class="files"><span class="file">棰勭畻琛?/span><span class="file">璐㈠姟鏃ユ姤</span><span class="file">璐㈠姟鍛ㄦ姤</span><span class="file">鍚堝悓缁熻琛?/span><span class="file">璐㈠姟鍒嗙被琛?/span><span class="file">棰勭畻瀵圭収琛?/span></div></div>
+      <div class="arch glass reveal"><h4>鍒剁墖绠＄悊鏂囦欢 <span class="tg">鍏ㄦ祦绋?/span></h4><div class="files"><span class="file">鍒剁墖鏃ユ姤</span><span class="file">婕斿憳/璧勬簮缁熺琛?/span><span class="file">鍦烘櫙绠＄悊琛?/span><span class="file">鏈嶅寲閬撶鐞嗚〃</span><span class="file">浜哄憳鍑哄嫟琛?/span><span class="file">杞﹁締绠＄悊琛?/span><span class="file">鐢熸椿鍒剁墖锛堥/瀹?琛岋級</span></div></div>
+      <div class="arch glass reveal"><h4>绱犳潗鏂囦欢 <span class="tg">闃舵鈶?/span></h4><div class="files"><span class="file">瑙嗛绱犳潗</span><span class="file">澹伴煶绱犳潗</span><span class="file">鐗规晥绱犳潗</span><span class="file">鍦鸿鍗?/span><span class="file">缁熺琛?/span></div></div>
+      <div class="arch glass reveal"><h4>鎴愮墖鏂囦欢 <span class="tg">闃舵鈶も懃</span></h4><div class="files"><span class="file">鎴愮墖姣嶇増</span><span class="file">鍙戝竷鐗堟湰</span><span class="file">瀹℃牳璁板綍</span><span class="file">鍚堣瀛樿瘉</span><span class="file">鍏ㄩ摼璺綊妗ｅ寘</span></div></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap frow">
+    <div>閲戞嘲 脳 娌充紶 路 AI 鏅鸿兘鍒剁墖娴佹按绾挎柟妗?路 <span class="mono">Production Bible 鈫?Final Cut</span></div>
+    <div class="mono">鍒嗗眰绾?路 鍒嗛儴闂?路 涓撶嚎 + API 路 鍏棬鍙拷婧?路 v2.0</div>
+  </div>
+</footer>
+
+<script>
+  // tabs
+  const tabs=[...document.querySelectorAll('.tab')];
+  const panels=[...document.querySelectorAll('.tabpanel')];
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.setAttribute('aria-selected',x===t));
+    const key=t.dataset.tab;
+    panels.forEach(p=>p.classList.toggle('on',p.dataset.panel===key));
+  }));
+
+  // pipeline expand
+  const stages=[...document.querySelectorAll('.stage')];
+  function setOpen(stage,open){
+    stage.classList.toggle('open',open);
+    stage.querySelector('.stage-top').setAttribute('aria-expanded',open);
+  }
+  stages.forEach(stage=>{
+    const top=stage.querySelector('.stage-top');
+    const toggle=()=>setOpen(stage,!stage.classList.contains('open'));
+    top.addEventListener('click',toggle);
+    top.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}});
+  });
+  document.getElementById('expandAll').addEventListener('click',()=>stages.forEach(s=>setOpen(s,true)));
+  document.getElementById('collapseAll').addEventListener('click',()=>stages.forEach(s=>setOpen(s,false)));
+  if(stages[0]) setOpen(stages[0],true);
+
+  // scroll reveal
+  const io=new IntersectionObserver((es)=>{
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{
+    el.style.transitionDelay=(Math.min(i,6)*40)+'ms';
+    io.observe(el);
+  });
+
+  // cinematic abstract texture 鈥?depth dust + faint code rain + anamorphic sweep
+  (function(){
+    const c=document.getElementById('fx'); if(!c||!c.getContext) return;
+    const ctx=c.getContext('2d');
+    const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+    const GL='01{}<>/=+*#|:.銈偆銈︽案鍏夊奖闀?;
+    let W,H,DPR,parts,cols,t=0;
+    const mk=()=>({x:Math.random()*W,y:Math.random()*H,z:Math.random()});
+    function size(){
+      DPR=Math.min(window.devicePixelRatio||1,2);
+      W=c.width=innerWidth*DPR; H=c.height=innerHeight*DPR;
+      c.style.width=innerWidth+'px'; c.style.height=innerHeight+'px';
+      parts=Array.from({length:Math.round(innerWidth/15)},mk);
+      cols=Array.from({length:Math.round(innerWidth/68)},()=>({
+        x:Math.random()*W,y:Math.random()*H,v:(.3+Math.random()*.8)*DPR,
+        ch:GL[(Math.random()*GL.length)|0],tint:Math.random()<.5}));
+    }
+    function frame(){
+      t++; ctx.clearRect(0,0,W,H);
+      for(const p of parts){
+        const sp=(.14+p.z*.5)*DPR;
+        p.y-=sp; p.x+=Math.sin(t*.002+p.z*6)*.22*DPR;
+        if(p.y<-4){p.y=H+4;p.x=Math.random()*W;}
+        ctx.beginPath(); ctx.arc(p.x,p.y,(.4+p.z*1.7)*DPR,0,6.283);
+        ctx.fillStyle='rgba(255,'+(238-(p.z*32|0))+','+(228-(p.z*66|0))+','+(.05+p.z*.18)+')';
+        ctx.fill();
+      }
+      ctx.font=(12*DPR)+'px ui-monospace,Consolas,monospace';
+      for(const col of cols){
+        col.y+=col.v;
+        if(col.y>H+20){col.y=-20;col.x=Math.random()*W;col.ch=GL[(Math.random()*GL.length)|0];}
+        ctx.fillStyle=col.tint?'rgba(229,60,70,.06)':'rgba(90,150,255,.055)';
+        ctx.fillText(col.ch,col.x,col.y);
+      }
+      const lx=W*(.5+Math.sin(t*.0015)*.42);
+      const g=ctx.createLinearGradient(lx-70*DPR,0,lx+70*DPR,0);
+      g.addColorStop(0,'rgba(130,90,255,0)');
+      g.addColorStop(.5,'rgba(160,130,255,.05)');
+      g.addColorStop(1,'rgba(130,90,255,0)');
+      ctx.fillStyle=g; ctx.fillRect(lx-70*DPR,0,140*DPR,H);
+      if(!reduce) requestAnimationFrame(frame);
+    }
+    addEventListener('resize',size,{passive:true});
+    size(); requestAnimationFrame(frame);
+  })();
+</script>
+
+</body>
+</html>
