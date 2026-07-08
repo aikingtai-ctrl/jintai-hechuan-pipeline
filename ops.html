@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>智算共同体 · 金泰AI × 河传 运营架构</title>
+<style>
+:root{
+  --black:#050505; --coal:#0c0c0e; --ink:#141418;
+  --gold:#d4af37; --gold-hi:#f5e08a; --gold-lo:#8a6d1f;
+  --crimson:#b3122e; --blue:#2b5f9e;
+  --ivory:#f2ead9; --dim:#9a8f78;
+  --serif:"Georgia","Times New Roman","STZhongsong","SimSun",serif;
+  --sans:"Microsoft YaHei","PingFang SC",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--black); color:var(--ivory);
+  font-family:var(--sans); font-size:17px; line-height:1.75;
+  overflow-x:hidden;
+}
+
+/* ====== 胶片颗粒 & 暗角 ====== */
+body::before{
+  content:""; position:fixed; inset:0; z-index:2; pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  animation:grain 0.9s steps(3) infinite;
+}
+@keyframes grain{0%{transform:translate(0,0)}33%{transform:translate(-4px,3px)}66%{transform:translate(3px,-4px)}100%{transform:translate(0,0)}}
+body::after{
+  content:""; position:fixed; inset:0; z-index:1; pointer-events:none;
+  background:radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.55) 100%);
+}
+
+/* ====== 开幕黑幕（letterbox curtain） ====== */
+.curtain{position:fixed;left:0;width:100%;height:50vh;background:#000;z-index:60;transition:height 1.6s cubic-bezier(.77,0,.18,1) .4s}
+.curtain.top{top:0}.curtain.bottom{bottom:0}
+body.open .curtain{height:0}
+.letterbox{position:fixed;left:0;width:100%;height:34px;background:#000;z-index:40}
+.letterbox.top{top:0}.letterbox.bottom{bottom:0}
+@media(max-width:700px){.letterbox{height:18px}}
+
+/* ====== 顶部金色导航 ====== */
+nav{
+  position:fixed;top:34px;left:0;width:100%;z-index:30;
+  display:flex;justify-content:center;gap:28px;padding:12px 10px;
+  background:linear-gradient(180deg,rgba(5,5,5,.92),rgba(5,5,5,0));
+  font-family:var(--serif);letter-spacing:2px;font-size:14px;flex-wrap:wrap;
+}
+nav a{color:var(--dim);text-decoration:none;transition:.3s;white-space:nowrap}
+nav a:hover{color:var(--gold-hi);text-shadow:0 0 12px rgba(212,175,55,.6)}
+@media(max-width:700px){nav{top:18px;gap:14px;font-size:12px}}
+
+/* ====== HERO 片头 ====== */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;position:relative;padding:120px 20px 80px;
+}
+.hero .spot{
+  position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(600px 420px at 50% 38%, rgba(212,175,55,.14), transparent 70%);
+  animation:spot 7s ease-in-out infinite alternate;
+}
+@keyframes spot{from{transform:translateX(-90px)}to{transform:translateX(90px)}}
+.presents{
+  font-family:var(--serif);letter-spacing:6px;color:var(--dim);font-size:15px;
+  text-transform:uppercase;margin-bottom:26px;
+}
+.gold-title{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(52px,9vw,118px);line-height:1.12;letter-spacing:6px;
+  background:linear-gradient(180deg,#fdf6d8 0%,var(--gold-hi) 22%,var(--gold) 46%,var(--gold-lo) 72%,#e8cf6e 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 6px 24px rgba(212,175,55,.35));
+}
+.hero .sub{
+  margin-top:22px;font-size:clamp(16px,2.4vw,24px);letter-spacing:8px;color:var(--ivory);
+}
+.hero .tagline{
+  margin-top:34px;font-family:var(--serif);color:var(--gold);
+  font-size:clamp(15px,2vw,21px);letter-spacing:3px;
+}
+.hero .rule{width:220px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:30px auto 0}
+.hero .meta{margin-top:26px;color:var(--dim);font-size:13.5px;letter-spacing:2px}
+.scroll-cue{position:absolute;bottom:64px;left:50%;transform:translateX(-50%);color:var(--gold);font-size:26px;animation:cue 1.8s ease-in-out infinite}
+@keyframes cue{0%,100%{transform:translate(-50%,0);opacity:.9}50%{transform:translate(-50%,12px);opacity:.4}}
+
+/* ====== 跑马灯 ticker ====== */
+.ticker{
+  border-top:1px solid rgba(212,175,55,.35);border-bottom:1px solid rgba(212,175,55,.35);
+  background:#0a0a0c;overflow:hidden;white-space:nowrap;padding:10px 0;position:relative;z-index:3;
+}
+.ticker span{
+  display:inline-block;padding-left:100%;
+  animation:tick 36s linear infinite;
+  font-family:var(--serif);letter-spacing:4px;color:var(--gold);font-size:15px;
+}
+@keyframes tick{to{transform:translateX(-100%)}}
+
+/* ====== 章节公共 ====== */
+section.act{max-width:1180px;margin:0 auto;padding:110px 26px 70px;position:relative;z-index:3}
+.act-label{
+  font-family:var(--serif);letter-spacing:10px;color:var(--crimson);
+  font-size:16px;text-transform:uppercase;margin-bottom:10px;
+}
+h2.act-title{
+  font-family:var(--serif);font-size:clamp(34px,5vw,56px);letter-spacing:4px;line-height:1.25;
+  background:linear-gradient(180deg,#fdf6d8,var(--gold) 55%,var(--gold-lo));
+  -webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:8px;
+}
+.act-sub{color:var(--dim);font-size:17px;margin-bottom:44px;letter-spacing:1px}
+
+/* 滚动显现 */
+.reveal{opacity:0;transform:translateY(46px);transition:opacity .9s ease,transform .9s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ====== ACT I 双线分流 ====== */
+.lanes{display:flex;gap:24px;flex-wrap:wrap}
+.lane{
+  flex:1;min-width:320px;border:1px solid rgba(212,175,55,.3);border-radius:6px;
+  background:linear-gradient(180deg,#101014,#0a0a0d);padding:0;overflow:hidden;
+  transition:transform .4s,box-shadow .4s;
+}
+.lane:hover{transform:translateY(-8px);box-shadow:0 22px 60px rgba(212,175,55,.14)}
+.lane header{
+  padding:20px 26px;font-family:var(--serif);font-size:24px;letter-spacing:3px;
+  border-bottom:1px solid rgba(212,175,55,.25);
+}
+.lane.a header{color:var(--gold-hi);background:linear-gradient(90deg,rgba(212,175,55,.16),transparent)}
+.lane.b header{color:#9dc3ef;background:linear-gradient(90deg,rgba(43,95,158,.28),transparent)}
+.lane header small{display:block;font-size:13px;color:var(--dim);letter-spacing:2px;margin-top:4px}
+.lane .body{padding:22px 26px 28px}
+.lane .who{
+  display:inline-block;border:1px solid var(--gold);color:var(--gold);
+  border-radius:3px;padding:2px 14px;font-size:14px;letter-spacing:2px;margin-bottom:14px;
+}
+.lane.b .who{border-color:#6f9fd8;color:#9dc3ef}
+.lane ul{list-style:none}
+.lane li{padding:9px 0 9px 28px;position:relative;border-bottom:1px dashed rgba(255,255,255,.08);font-size:16px}
+.lane li::before{content:"◆";position:absolute;left:2px;color:var(--gold);font-size:11px;top:14px}
+.lane.b li::before{color:#6f9fd8}
+.lane li b{color:var(--gold-hi)}
+.lane.b li b{color:#bcd8f5}
+
+/* 红线警示卡（rating card 风格） */
+.rating-card{
+  margin-top:44px;border:3px solid var(--crimson);border-radius:4px;
+  background:linear-gradient(180deg,#160507,#0d0304);padding:30px 34px;
+  box-shadow:0 0 44px rgba(179,18,46,.25), inset 0 0 30px rgba(179,18,46,.08);
+  position:relative;
+}
+.rating-card .stamp{
+  position:absolute;top:-16px;left:26px;background:var(--crimson);color:#fff;
+  font-family:var(--serif);letter-spacing:4px;padding:5px 18px;font-size:14px;border-radius:2px;
+}
+.rating-card h3{font-family:var(--serif);color:#ff9aa8;font-size:24px;letter-spacing:2px;margin-bottom:12px}
+.rating-card p{font-size:16.5px;color:#f3d9db}
+.rating-card b{color:#ffb3bd}
+
+/* ====== ACT II 对接矩阵（演职员表风格） ====== */
+.tiers{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:52px}
+.tier{
+  flex:1;min-width:280px;border-top:2px solid var(--gold);background:#0e0e12;
+  padding:22px 24px;border-radius:0 0 6px 6px;
+}
+.tier .t-freq{color:var(--crimson);font-family:var(--serif);letter-spacing:3px;font-size:13px}
+.tier h3{font-family:var(--serif);color:var(--gold-hi);font-size:21px;letter-spacing:2px;margin:6px 0 10px}
+.tier p{color:var(--ivory);font-size:15.5px}
+.credits{
+  border-top:1px solid rgba(212,175,55,.3);border-bottom:1px solid rgba(212,175,55,.3);
+  padding:34px 10px;background:linear-gradient(180deg,rgba(212,175,55,.04),transparent);
+}
+.credits .row{
+  display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  max-width:860px;margin:0 auto;padding:13px 6px;border-bottom:1px dotted rgba(255,255,255,.12);
+}
+.credits .role{font-family:var(--serif);color:var(--dim);letter-spacing:2px;font-size:16px;text-align:left;flex:1}
+.credits .dots{flex:0 1 120px;border-bottom:1px dotted rgba(212,175,55,.4);transform:translateY(-5px)}
+.credits .name{font-family:var(--serif);color:var(--gold-hi);font-size:17.5px;letter-spacing:1px;text-align:right;flex:1.3}
+.credits-note{color:var(--dim);text-align:center;font-size:14px;margin-top:18px;letter-spacing:1px}
+
+/* ====== ACT III 数据金库 ====== */
+.vault{display:flex;gap:24px;flex-wrap:wrap;align-items:stretch}
+.vault-core{
+  flex:1.1;min-width:300px;border:1px solid var(--gold);border-radius:6px;
+  background:radial-gradient(420px 300px at 50% 0%, rgba(212,175,55,.12), transparent), #0e0e11;
+  padding:30px;text-align:center;
+}
+.vault-core .icon{font-size:52px;margin-bottom:10px}
+.vault-core h3{font-family:var(--serif);color:var(--gold-hi);font-size:24px;letter-spacing:3px;margin-bottom:12px}
+.vault-core p{font-size:16px}
+.layers{flex:1.6;min-width:320px;display:flex;flex-direction:column;gap:14px}
+.layer{
+  border-left:4px solid var(--gold);background:#0e0e12;padding:16px 22px;border-radius:0 6px 6px 0;
+  transition:transform .35s;
+}
+.layer:hover{transform:translateX(10px)}
+.layer.l2{border-color:var(--blue)}
+.layer.l3{border-color:var(--crimson)}
+.layer h4{font-family:var(--serif);color:var(--gold-hi);letter-spacing:2px;font-size:18.5px;margin-bottom:4px}
+.layer.l2 h4{color:#9dc3ef}.layer.l3 h4{color:#ff9aa8}
+.layer p{font-size:15px;color:var(--ivory)}
+.gate{
+  margin-top:26px;border:1px dashed rgba(212,175,55,.5);border-radius:6px;padding:18px 24px;
+  display:flex;gap:30px;flex-wrap:wrap;justify-content:center;background:#0b0b0e;
+}
+.gate div{font-size:15.5px}
+.gate b{color:var(--gold-hi);font-family:var(--serif);letter-spacing:2px}
+
+/* ====== ACT IV 日夜算力 ====== */
+.stage-toggle{
+  display:flex;justify-content:center;gap:0;margin-bottom:36px;font-family:var(--serif);
+}
+.stage-toggle button{
+  background:#0e0e12;color:var(--dim);border:1px solid rgba(212,175,55,.4);
+  padding:12px 44px;font-size:18px;letter-spacing:4px;cursor:pointer;font-family:var(--serif);transition:.35s;
+}
+.stage-toggle button:first-child{border-radius:4px 0 0 4px}
+.stage-toggle button:last-child{border-radius:0 4px 4px 0;border-left:none}
+.stage-toggle button.on{background:linear-gradient(180deg,var(--gold-hi),var(--gold));color:#151004;font-weight:700;box-shadow:0 0 26px rgba(212,175,55,.4)}
+.stage{display:none}
+.stage.show{display:block;animation:fadeUp .7s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+.machines{display:flex;gap:24px;flex-wrap:wrap}
+.machine{
+  flex:1;min-width:320px;background:#0e0e12;border:1px solid rgba(255,255,255,.12);
+  border-radius:6px;overflow:hidden;
+}
+.machine header{padding:16px 24px;font-family:var(--serif);letter-spacing:2px;font-size:20px}
+.machine.h100 header{background:linear-gradient(90deg,rgba(179,18,46,.35),transparent);color:#ffb3bd}
+.machine.g5090 header{background:linear-gradient(90deg,rgba(43,95,158,.4),transparent);color:#9dc3ef}
+.machine header small{display:block;font-size:13px;color:var(--dim);letter-spacing:1px}
+.machine .rows{padding:8px 24px 20px}
+.machine .r{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px dashed rgba(255,255,255,.1);font-size:15.5px}
+.machine .r span:last-child{color:var(--gold-hi);white-space:nowrap}
+.rules{margin-top:40px;display:flex;gap:18px;flex-wrap:wrap}
+.rule-card{
+  flex:1;min-width:260px;background:#0e0e12;border-top:2px solid var(--crimson);
+  padding:20px 22px;border-radius:0 0 6px 6px;
+}
+.rule-card h4{font-family:var(--serif);color:var(--gold-hi);font-size:18px;letter-spacing:2px;margin-bottom:8px}
+.rule-card p{font-size:15px}
+.rule-card b{color:#ffb3bd}
+
+/* 数字滚动 */
+.stats{display:flex;gap:20px;flex-wrap:wrap;margin-top:44px;justify-content:center}
+.stat{
+  min-width:200px;text-align:center;padding:22px 26px;border:1px solid rgba(212,175,55,.25);
+  border-radius:6px;background:linear-gradient(180deg,#101014,#0a0a0d);
+}
+.stat .num{
+  font-family:var(--serif);font-size:44px;color:var(--gold-hi);letter-spacing:1px;
+  text-shadow:0 0 24px rgba(212,175,55,.4);
+}
+.stat .lbl{color:var(--dim);font-size:14px;letter-spacing:2px;margin-top:4px}
+
+/* ====== 终幕 ====== */
+.finale{
+  text-align:center;padding:130px 24px 60px;position:relative;z-index:3;
+  background:radial-gradient(560px 380px at 50% 30%, rgba(212,175,55,.1), transparent);
+}
+.finale .gold-title{font-size:clamp(38px,6vw,72px)}
+.finale .line{color:var(--ivory);font-size:19px;letter-spacing:3px;margin-top:22px}
+.finale .cta{
+  display:inline-block;margin-top:40px;border:1px solid var(--gold);color:var(--gold-hi);
+  font-family:var(--serif);letter-spacing:4px;font-size:17px;padding:14px 46px;border-radius:3px;
+  transition:.35s;cursor:default;
+}
+.finale .cta:hover{background:rgba(212,175,55,.12);box-shadow:0 0 30px rgba(212,175,55,.35)}
+footer{
+  text-align:center;color:var(--dim);font-size:13px;letter-spacing:2px;
+  padding:30px 20px 70px;position:relative;z-index:3;
+}
+footer .rule{width:180px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 18px}
+
+/* ============ 大字版覆盖：小字放大一倍 ============ */
+body{font-size:22px}
+nav{font-size:22px;gap:34px}
+@media(max-width:700px){nav{font-size:17px;gap:16px}}
+.presents{font-size:24px;letter-spacing:4px}
+.hero .sub{font-size:clamp(24px,3.4vw,36px)}
+.hero .tagline{font-size:clamp(22px,2.8vw,32px)}
+.hero .meta{font-size:21px}
+.ticker span{font-size:24px}
+.act-label{font-size:24px}
+h2.act-title{font-size:clamp(40px,5.6vw,66px)}
+.act-sub{font-size:25px}
+.lane header{font-size:30px}
+.lane header small{font-size:21px}
+.lane .who{font-size:22px;padding:4px 18px}
+.lane li{font-size:24px;padding:12px 0 12px 34px}
+.lane li::before{font-size:15px;top:20px}
+.rating-card .stamp{font-size:21px;padding:6px 22px;top:-20px}
+.rating-card h3{font-size:32px}
+.rating-card p{font-size:25px}
+.tier .t-freq{font-size:20px}
+.tier h3{font-size:28px}
+.tier p{font-size:23px}
+.credits .role{font-size:25px}
+.credits .name{font-size:26px}
+.credits-note{font-size:21px}
+.vault-core h3{font-size:31px}
+.vault-core p{font-size:24px}
+.vault-core p span{font-size:21px !important}
+.layer h4{font-size:26px}
+.layer p{font-size:23px}
+.gate div{font-size:24px}
+.stage-toggle button{font-size:26px;padding:14px 48px}
+.machine header{font-size:28px}
+.machine header small{font-size:20px}
+.machine .r{font-size:24px}
+.rule-card h4{font-size:26px}
+.rule-card p{font-size:23px}
+.stat .num{font-size:54px}
+.stat .lbl{font-size:21px}
+.finale .line{font-size:28px}
+.finale .cta{font-size:26px}
+footer{font-size:20px}
+</style>
+</head>
+<body>
+
+<div class="curtain top"></div>
+<div class="curtain bottom"></div>
+<div class="letterbox top"></div>
+<div class="letterbox bottom"></div>
+
+<nav>
+  <a href="#act1">第一幕 · 双线分流</a>
+  <a href="#act2">第二幕 · 一对一对接</a>
+  <a href="#act3">第三幕 · 数据不落地</a>
+  <a href="#act4">第四幕 · 算力日夜</a>
+</nav>
+
+<!-- ============ 片头 ============ -->
+<header class="hero">
+  <div class="spot"></div>
+  <div class="presents">JINTAI AI &nbsp;×&nbsp; HEBEI INSTITUTE OF COMMUNICATIONS &nbsp;PRESENTS</div>
+  <h1 class="gold-title">智算共同体</h1>
+  <div class="sub">金泰AI × 河传 · 运营架构总纲</div>
+  <div class="rule"></div>
+  <div class="tagline">"专线为血管 · 对接为神经 · 平台为心脏 · 算力为肌肉"</div>
+  <div class="meta">A PRODUCTION ARCHITECTURE IN FOUR ACTS &nbsp;｜&nbsp; 2026</div>
+  <div class="scroll-cue">▼</div>
+</header>
+
+<div class="ticker"><span>
+  ◆ 北京—石家庄 跨省专线 4–6ms &nbsp;&nbsp; ◆ 云上制片厂 · 素材不出机房 &nbsp;&nbsp; ◆ 8×H100 AI工厂 · 4×5090 制作车间 &nbsp;&nbsp; ◆ SEEDANCE 年度产能保底 &nbsp;&nbsp; ◆ 统一平台入口 · 数据分层托管 &nbsp;&nbsp; ◆ 商业交付 › 教学课程 › 科研实验 › 自由创作 &nbsp;&nbsp; ◆ 北京—石家庄 跨省专线 4–6ms &nbsp;&nbsp; ◆ 云上制片厂 · 素材不出机房 &nbsp;&nbsp; ◆ 8×H100 AI工厂 · 4×5090 制作车间 &nbsp;&nbsp; ◆ SEEDANCE 年度产能保底 &nbsp;&nbsp; ◆ 统一平台入口 · 数据分层托管
+</span></div>
+
+<!-- ============ ACT I ============ -->
+<section class="act" id="act1">
+  <div class="act-label reveal">ACT I · 双线分流</div>
+  <h2 class="act-title reveal">两条通道，各司其职</h2>
+  <p class="act-sub reveal">交互式流量走专线，异步任务走 SD-WAN —— 人群划分是流量性质的自然结果。</p>
+
+  <div class="lanes">
+    <div class="lane a reveal">
+      <header>点到点专线<small>THE MAIN LINE · 交互通道 · 4–6ms</small></header>
+      <div class="body">
+        <span class="who">教师 + 博士/研究生 · 首批白名单 ≤30 人</span>
+        <ul>
+          <li><b>云桌面画面流</b>：编码 Agent 环境（Codex 等）、云剪辑、调色、审片</li>
+          <li>工具与密钥<b>全部驻留金泰北京机房</b>，人在河传只看画面、发键鼠</li>
+          <li>每次会话<b>实名绑定 + 全程审计</b></li>
+          <li>低时延保障拖时间线、敲代码的真实手感</li>
+        </ul>
+      </div>
+    </div>
+    <div class="lane b reveal">
+      <header>SD-WAN 互联网组网<small>THE SECOND UNIT · 异步通道</small></header>
+      <div class="body">
+        <span class="who">全体学生 · 可大规模开放</span>
+        <ul>
+          <li>平台网页提交任务：<b>国产大模型 API</b>（GLM / DeepSeek / Qwen）</li>
+          <li><b>SEEDANCE 视频生成</b>：提示词进 → 成片出，排队交付</li>
+          <li>异步出片，公网抖动无影响</li>
+          <li>全国产栈，<b>干净、可写进合同</b>、可放量</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="rating-card reveal">
+    <div class="stamp">RED LINE · 合规红线</div>
+    <h3>本片含一条不可逾越的红线</h3>
+    <p>海外编码工具<b>绝不以"发 API key"的方式提供给校方人员</b>——那等同向第三方转售海外模型通道。
+    唯一合规形态是<b>云桌面</b>：工具装在金泰机房、海外调用从金泰发起、密钥不出机房、专线上只跑画面流。
+    对外合同与宣传写"智能编码 Agent 开发环境"，<b>可承诺名单 = Codex（香港实体企业渠道）+ 国产编码模型</b>。</p>
+  </div>
+</section>
+
+<!-- ============ ACT II ============ -->
+<section class="act" id="act2">
+  <div class="act-label reveal">ACT II · 一对一对接</div>
+  <h2 class="act-title reveal">三层治理，学院对位</h2>
+  <p class="act-sub reveal">固化成制度，而不是"谁嗓门大谁用得多"。需求走平台工单，不走口头。</p>
+
+  <div class="tiers">
+    <div class="tier reveal">
+      <div class="t-freq">每季度 · QUARTERLY</div>
+      <h3>决策层 · 校企联席会</h3>
+      <p>金泰负责人 + 学校分管校领导：定方向、定资源、定结算。制度化立项，对冲人事变动。</p>
+    </div>
+    <div class="tier reveal">
+      <div class="t-freq">每周 · WEEKLY</div>
+      <h3>执行层 · 学院双人组</h3>
+      <p>每个学院一组：金泰对接人（制片/客户成功）⇌ 学院教学秘书/专业负责人。需求单制，周例会。</p>
+    </div>
+    <div class="tier reveal">
+      <div class="t-freq">7 × 24 · ALWAYS ON</div>
+      <h3>技术层 · NOC ⇌ 信息中心</h3>
+      <p>故障、账号、机房环境的日常通道。专线与平台的健康状态双向可见。</p>
+    </div>
+  </div>
+
+  <div class="credits reveal">
+    <div class="row"><div class="role">影视 / 导演 / 摄影系</div><div class="dots"></div><div class="name">云上制片厂 · 云剪辑 / 调色 / 渲染农场</div></div>
+    <div class="row"><div class="role">动画与数字艺术学院</div><div class="dots"></div><div class="name">ComfyUI 工作流 + SEEDANCE 生成</div></div>
+    <div class="row"><div class="role">播音主持学院</div><div class="dots"></div><div class="name">TTS 配音 · 数字人</div></div>
+    <div class="row"><div class="role">新闻传播学院</div><div class="dots"></div><div class="name">国产 LLM 写作 · 内容审校</div></div>
+    <div class="row"><div class="role">研究生院 / 研究院</div><div class="dots"></div><div class="name">编码 Agent 环境 · 数据集 / LoRA 科研</div></div>
+    <div class="row"><div class="role">校办产业 / 执行部门</div><div class="dots"></div><div class="name">商业项目共制（金轨 · 分账合作）</div></div>
+    <div class="credits-note">—— 每院一个配额包 · 每学期复盘用量与成果 · 用量数据即下学期议价与扩容依据 ——</div>
+  </div>
+</section>
+
+<!-- ============ ACT III ============ -->
+<section class="act" id="act3">
+  <div class="act-label reveal">ACT III · 数据不落地</div>
+  <h2 class="act-title reveal">一个入口，一个闸口</h2>
+  <p class="act-sub reveal">所有人只从金泰AI平台进，所有产出自动归档金泰数据中心，任何数据出门都过闸。</p>
+
+  <div class="vault">
+    <div class="vault-core reveal">
+      <div class="icon">🏛</div>
+      <h3>统一平台入口</h3>
+      <p>实名 SSO · 学号/工号绑定<br>专线与 SD-WAN <b>都只通到平台网关</b><br>不存在绕开平台的旁路<br><br><span style="color:var(--dim);font-size:14px">账号配额 · 分级网关 · 审计日志<br>—— 平台 v1 三件套，先于大规模接入上线</span></p>
+    </div>
+    <div class="layers">
+      <div class="layer reveal">
+        <h4>Ⅰ 教学作业层 · 学生课程产出</h4>
+        <p>学校持教学使用权；金泰可脱敏后转化为模板 / 训练素材（合同写明）。</p>
+      </div>
+      <div class="layer l2 reveal">
+        <h4>Ⅱ 科研层 · 教师 / 博士项目</h4>
+        <p>私有托管，导出需审批；成果权属归研究团队。</p>
+      </div>
+      <div class="layer l3 reveal">
+        <h4>Ⅲ 商业层 · 金轨共制项目</h4>
+        <p>按项目合同约定权属与分账；数据资产可入表。</p>
+      </div>
+      <div class="gate reveal">
+        <div><b>入闸</b> ｜ 上传经病毒与内容扫描</div>
+        <div><b>出闸</b> ｜ 导出走审批 + 水印 + 日志，大文件限流</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACT IV ============ -->
+<section class="act" id="act4">
+  <div class="act-label reveal">ACT IV · 算力日夜</div>
+  <h2 class="act-title reveal">先分工，再分时，最后分队列</h2>
+  <p class="act-sub reveal">A 机 8×H100 = AI 工厂（生成/推理/训练）；B 机 4×5090 = 制作车间（剪辑/调色/渲染）。</p>
+
+  <div class="stage-toggle reveal">
+    <button id="btnDay" class="on">☀ 白天 8:00–20:00</button>
+    <button id="btnNight">☾ 夜间 20:00–8:00</button>
+  </div>
+
+  <div class="stage show" id="stageDay">
+    <div class="machines">
+      <div class="machine g5090 reveal">
+        <header>B 机 · 4 × 5090<small>制作车间 · 教学时段全部让给"人"</small></header>
+        <div class="rows">
+          <div class="r"><span>教师/博士 云桌面（整卡调色）</span><span>3–4 路</span></div>
+          <div class="r"><span>或 代理剪辑（分片虚拟化）</span><span>8–12 路</span></div>
+          <div class="r"><span>在线审片（转码流）</span><span>30–50 并发</span></div>
+        </div>
+      </div>
+      <div class="machine h100 reveal">
+        <header>A 机 · 8 × H100<small>AI 工厂 · 在线服务 + 异步队列</small></header>
+        <div class="rows">
+          <div class="r"><span>国产 LLM 在线推理（全校问答/写作）</span><span>2 卡常驻</span></div>
+          <div class="r"><span>学生图像 / 短视频异步队列</span><span>4 卡</span></div>
+          <div class="r"><span>科研 / 机动（LoRA 实验、突发）</span><span>2 卡预留</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage" id="stageNight">
+    <div class="machines">
+      <div class="machine g5090 reveal in">
+        <header>B 机 · 4 × 5090<small>制作车间 · 夜间变身渲染农场</small></header>
+        <div class="rows">
+          <div class="r"><span>渲染队列（UE / Blender / 达芬奇输出）</span><span>500–1200 帧/夜</span></div>
+          <div class="r"><span>队列优先级</span><span>商业 › 课程 › 自由创作</span></div>
+        </div>
+      </div>
+      <div class="machine h100 reveal in">
+        <header>A 机 · 8 × H100<small>AI 工厂 · 夜间批量生产</small></header>
+        <div class="rows">
+          <div class="r"><span>开源模型批量视频生成</span><span>600–1000 段/夜</span></div>
+          <div class="r"><span>LoRA 训练（角色/风格资产）</span><span>按需</span></div>
+          <div class="r"><span>LLM 批处理（字幕/翻译/审校）</span><span>批量</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rules">
+    <div class="rule-card reveal">
+      <h4>① 一切进队列</h4>
+      <p>不给任何部门裸机。各学院按 <b>GPU·小时/月</b> 配额包使用，用超降优先级、不断供。</p>
+    </div>
+    <div class="rule-card reveal">
+      <h4>② 统一优先级</h4>
+      <p><b>商业交付 › 教学课程 › 科研实验 › 自由创作</b>；寒暑假切"全夜间模式"跑金泰产能。</p>
+    </div>
+    <div class="rule-card reveal">
+      <h4>③ SEEDANCE 优先消化</h4>
+      <p>学生视频生成优先派给 SEEDANCE（外部 API 不占本地卡，<b>月度保底产能必须用掉</b>）；本地 H100 留给私有化任务。</p>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat reveal"><div class="num" data-n="12">0</div><div class="lbl">GPU 总卡数（8×H100 + 4×5090）</div></div>
+    <div class="stat reveal"><div class="num" data-n="50">0</div><div class="lbl">白天在线审片并发（峰值）</div></div>
+    <div class="stat reveal"><div class="num" data-n="1200">0</div><div class="lbl">夜间渲染帧产能（帧/夜）</div></div>
+    <div class="stat reveal"><div class="num" data-n="1000">0</div><div class="lbl">夜间视频生成（段/夜）</div></div>
+  </div>
+
+  <div class="rating-card reveal" style="margin-top:48px">
+    <div class="stamp">BOTTLENECK · 前置条件</div>
+    <h3>存储 IO 是第一瓶颈</h3>
+    <p>教学并发一上来，先补 <b>NVMe 存储节点 + 25/100GbE 内网</b>——否则本幕所有算力规划都会卡在读写上。</p>
+  </div>
+</section>
+
+<!-- ============ 终幕 ============ -->
+<section class="finale">
+  <div class="act-label">FINALE</div>
+  <h2 class="gold-title">四幕合一，即刻开机</h2>
+  <div class="line">网络分流 → 组织对接 → 数据闭环 → 算力调度</div>
+  <div class="cta">先行动作：校内审批启动 · 专线议价 · 平台 v1 上线</div>
+</section>
+
+<footer>
+  <div class="rule"></div>
+  金泰AI智算平台 × 河北传媒学院 · 运营架构 · 2026<br>
+  A JINTAI AI PRODUCTION &nbsp;·&nbsp; ALL DATA STAYS IN THE VAULT
+</footer>
+
+<script>
+// 开幕拉幕
+window.addEventListener('load', () => {
+  setTimeout(() => document.body.classList.add('open'), 150);
+});
+
+// 滚动显现
+const io = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// 日夜切换
+const btnDay = document.getElementById('btnDay'), btnNight = document.getElementById('btnNight');
+const sDay = document.getElementById('stageDay'), sNight = document.getElementById('stageNight');
+function show(day) {
+  btnDay.classList.toggle('on', day); btnNight.classList.toggle('on', !day);
+  sDay.classList.toggle('show', day); sNight.classList.toggle('show', !day);
+}
+btnDay.onclick = () => show(true);
+btnNight.onclick = () => show(false);
+// 自动演示轮播（用户点击后停止）
+let auto = setInterval(() => show(!btnDay.classList.contains('on')), 6000);
+[btnDay, btnNight].forEach(b => b.addEventListener('click', () => clearInterval(auto)));
+
+// 数字滚动
+const nio = new IntersectionObserver(es => {
+  es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target, target = +el.dataset.n, dur = 1400, t0 = performance.now();
+    (function step(t) {
+      const p = Math.min((t - t0) / dur, 1);
+      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))).toLocaleString();
+      if (p < 1) requestAnimationFrame(step);
+    })(t0);
+    nio.unobserve(el);
+  });
+}, { threshold: 0.6 });
+document.querySelectorAll('.stat .num').forEach(el => nio.observe(el));
+</script>
+</body>
+</html>
