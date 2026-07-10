@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<title>金泰×河传 · AI制片年度规划方案</title>
+<style>
+  :root{
+    --ink:#0A0D12; --panel:#131922; --panel2:#0F141C;
+    --mist:#94A2B3; --screen:#EDF2F8;
+    --amber:#FFB13D; --amber-dim:#8a5f22;
+    --teal:#2ED3C3;
+    --line:#232C38;
+    --display:"Bahnschrift","Arial Narrow","Microsoft YaHei",sans-serif;
+    --body:"Segoe UI","Microsoft YaHei",sans-serif;
+    --mono:"Cascadia Code","Consolas",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--ink);color:var(--screen);font-family:var(--body);line-height:1.7;overflow-x:hidden}
+  #fluid{position:fixed;inset:0;z-index:0;opacity:.55;pointer-events:none}
+  .grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E")}
+  .wrap{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:0 28px}
+
+  .stripe{height:10px;background:repeating-linear-gradient(-45deg,var(--amber) 0 14px,#0A0D12 14px 28px)}
+  .topbar{position:sticky;top:0;z-index:5;background:rgba(10,13,18,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .topbar .wrap{display:flex;justify-content:space-between;align-items:center;height:52px}
+  .topbar .id{font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:var(--mist)}
+  .topbar .id b{color:var(--amber);font-weight:600}
+  .tally{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--amber);margin-right:8px;animation:tally 2.4s infinite}
+  @keyframes tally{0%,100%{opacity:1}50%{opacity:.25}}
+
+  header.hero{padding:96px 0 64px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.3em;color:var(--amber);text-transform:uppercase;margin-bottom:20px}
+  h1{font-family:var(--display);font-weight:700;font-size:clamp(40px,6.4vw,72px);line-height:1.08;letter-spacing:.01em;text-wrap:balance}
+  h1 .thin{color:var(--mist);font-weight:300}
+  .hero p.lede{max-width:38em;margin-top:22px;color:var(--mist);font-size:16px}
+  .slate{margin-top:44px;border:1px solid var(--line);background:var(--panel2)}
+  .slate .stripe{height:8px}
+  .slate-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+  .slate-cell{padding:18px 20px;border-right:1px solid var(--line)}
+  .slate-cell:last-child{border-right:none}
+  .slate-cell .k{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--mist);text-transform:uppercase}
+  .slate-cell .v{font-family:var(--display);font-size:30px;font-weight:700;margin-top:6px;font-variant-numeric:tabular-nums}
+  .slate-cell .v em{font-style:normal;font-size:14px;color:var(--mist);font-weight:400;margin-left:4px}
+  .slate-cell .v.am{color:var(--amber)}
+
+  section{padding:72px 0 12px}
+  .reel{display:flex;align-items:center;gap:16px;margin-bottom:10px}
+  .reel .no{font-family:var(--mono);font-size:12px;letter-spacing:.25em;color:var(--amber)}
+  .reel .bar{flex:1;height:6px;background:repeating-linear-gradient(-45deg,var(--amber-dim) 0 10px,transparent 10px 20px)}
+  h2{font-family:var(--display);font-size:clamp(26px,3.4vw,38px);font-weight:700;letter-spacing:.01em;margin-bottom:10px;text-wrap:balance}
+  .sub{color:var(--mist);max-width:44em;margin-bottom:34px}
+  .sub b{color:var(--screen);font-weight:600}
+
+  .phases{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .phase{background:var(--panel);border:1px solid var(--line);padding:26px 24px;position:relative;transition:border-color .25s,transform .25s}
+  .phase:hover{border-color:var(--amber);transform:translateY(-3px)}
+  .phase .tag{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--teal)}
+  .phase .n{font-family:var(--display);font-size:54px;font-weight:700;color:var(--amber);line-height:1.1;margin:10px 0 2px;font-variant-numeric:tabular-nums}
+  .phase .n em{font-style:normal;font-size:16px;color:var(--mist);font-weight:400}
+  .phase .b{font-family:var(--display);font-size:22px;font-weight:700}
+  .phase .d{font-size:13px;color:var(--mist);margin-top:10px}
+  .phase.cur{border-color:var(--amber)}
+  .phase.cur::after{content:"本方案对应档";position:absolute;top:14px;right:14px;font-size:11px;color:var(--ink);background:var(--amber);padding:2px 8px;font-weight:600}
+
+  table.sheet{width:100%;border-collapse:collapse;background:var(--panel2);border:1px solid var(--line);font-size:14px}
+  .sheet th{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mist);text-align:left;padding:12px 16px;border-bottom:2px solid var(--amber);white-space:nowrap}
+  .sheet td{padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+  .sheet tr:last-child td{border-bottom:none}
+  .sheet .tier{font-family:var(--display);font-weight:700;font-size:16px;white-space:nowrap}
+  .sheet .num{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--amber);white-space:nowrap}
+  .sheet .dim{color:var(--mist);font-size:13px}
+  .scroll{overflow-x:auto}
+
+  .poolbar{display:flex;height:64px;border:1px solid var(--line);margin:26px 0 8px;font-family:var(--mono)}
+  .poolbar>div{display:flex;flex-direction:column;justify-content:center;padding:0 16px;min-width:0}
+  .poolbar .pa{background:linear-gradient(120deg,#c77f1d,var(--amber));color:#1a1204;width:58.4%}
+  .poolbar .pb{background:#22303f;color:var(--screen);width:24.3%}
+  .poolbar .pc{background:linear-gradient(120deg,#0e5f58,var(--teal));color:#04211d;width:17.3%}
+  .poolbar .t{font-size:11px;letter-spacing:.1em;opacity:.85}
+  .poolbar .m{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums}
+  .legend{font-size:12px;color:var(--mist);font-family:var(--mono);margin-bottom:30px}
+
+  .months{display:grid;grid-template-columns:repeat(12,1fr);gap:8px;align-items:end;height:220px;margin:34px 0 6px}
+  .mcol{display:flex;flex-direction:column;justify-content:flex-end;height:100%;gap:2px}
+  .mcol .seg{width:100%;transition:filter .2s}
+  .mcol:hover .seg{filter:brightness(1.25)}
+  .seg.a{background:var(--amber)}
+  .seg.b{background:#3a4a5d}
+  .seg.c{background:var(--teal)}
+  .mlab{font-family:var(--mono);font-size:10px;color:var(--mist);text-align:center;margin-top:8px}
+  .mval{font-family:var(--mono);font-size:10px;color:var(--screen);text-align:center;margin-bottom:6px;font-variant-numeric:tabular-nums}
+  .mnote{font-size:12px;color:var(--mist);font-family:var(--mono);margin-bottom:28px}
+
+  .formula{background:var(--panel2);border:1px solid var(--line);border-left:4px solid var(--amber);padding:22px 24px;font-family:var(--mono);font-size:15px;margin:26px 0;overflow-x:auto;white-space:nowrap}
+  .formula b{color:var(--amber);font-weight:600}
+  .formula i{color:var(--teal);font-style:normal}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 30px}
+  .chip{border:1px solid var(--line);background:var(--panel);padding:10px 16px;font-size:13px}
+  .chip b{font-family:var(--mono);color:var(--amber);margin-right:8px}
+  .chip.t b{color:var(--teal)}
+
+  .gov{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+  .gcard{background:var(--panel);border:1px solid var(--line);padding:22px 24px}
+  .gcard h3{font-family:var(--display);font-size:18px;margin-bottom:8px}
+  .gcard h3::before{content:"■";color:var(--amber);margin-right:10px;font-size:12px;vertical-align:2px}
+  .gcard p{font-size:13.5px;color:var(--mist)}
+  .gcard p b{color:var(--screen);font-weight:600}
+
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:26px}
+  .scard{border:1px solid var(--line);padding:24px;background:var(--panel2)}
+  .scard .k{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--mist);text-transform:uppercase}
+  .scard .v{font-family:var(--display);font-size:40px;font-weight:700;color:var(--amber);font-variant-numeric:tabular-nums;margin:8px 0 4px}
+  .scard.t .v{color:var(--teal)}
+  .scard p{font-size:13px;color:var(--mist)}
+
+  footer{margin-top:80px;border-top:1px solid var(--line);padding:36px 0 60px}
+  footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  footer p{font-family:var(--mono);font-size:12px;color:var(--mist);max-width:46em}
+  footer p b{color:var(--amber);font-weight:600}
+
+  @media (max-width:820px){
+    .slate-grid{grid-template-columns:1fr 1fr}
+    .slate-cell:nth-child(2){border-right:none}
+    .slate-cell{border-bottom:1px solid var(--line)}
+    .phases,.gov,.split{grid-template-columns:1fr}
+    .months{grid-template-columns:repeat(12,1fr);height:160px}
+    .mval{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .tally{animation:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+
+<div class="stripe"></div>
+<nav class="topbar">
+  <div class="wrap">
+    <span class="id"><span class="tally"></span>JT-HC · <b>PRODUCTION PLAN</b> 2026/27</span>
+    <span class="id">口径:仅 API 消耗 · USD</span>
+  </div>
+</nav>
+<canvas id="fluid"></canvas>
+<div class="grain"></div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">金泰AI × 河北传媒 · 校企共创</div>
+    <h1>AI 制片流水线<br><span class="thin">50 人年度用量规划</span></h1>
+    <p class="lede">合规 AIGC 生产线的第一份校企联合排期:企业日历 × 校历双轨计费,学生零个人 Key,全年封顶 9 万美元——比同规模纯企业方案省一半以上。</p>
+    <div class="slate">
+      <div class="stripe"></div>
+      <div class="slate-grid">
+        <div class="slate-cell"><div class="k">Crew · 编组</div><div class="v">50<em>人</em></div></div>
+        <div class="slate-cell"><div class="k">Schedule · 周期</div><div class="v">365<em>天</em></div></div>
+        <div class="slate-cell"><div class="k">Forecast · 消耗预测</div><div class="v am">$80,052</div></div>
+        <div class="slate-cell"><div class="k">Cap · 预算封顶</div><div class="v am">$90,000</div></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="phases">
+  <div class="wrap">
+    <div class="reel"><span class="no">REEL 01</span><div class="bar"></div></div>
+    <h2>三阶段递进,这是 50 人档</h2>
+    <p class="sub">总路线从 20 人起步逐档扩编。校企混编让 50 人档的真实消耗远低于纯企业上限——省出的空间投给评审日旗舰额度与暑期共创营。</p>
+    <div class="phases">
+      <div class="phase">
+        <div class="tag">PHASE 01 · 2026.08—11</div>
+        <div class="n">20<em> 人</em></div>
+        <div class="b">年化 $80,000</div>
+        <div class="d">金泰核心试运行,校准真实用量,建监控与熔断</div>
+      </div>
+      <div class="phase">
+        <div class="tag">PHASE 02 · 2026.12—2027.03</div>
+        <div class="n">40<em> 人</em></div>
+        <div class="b">年化 $150,000</div>
+        <div class="d">全员上线,双轨制配额固化,升档门槛:使用率 75–95% 且产出不降</div>
+      </div>
+      <div class="phase cur">
+        <div class="tag">PHASE 03 · 2027.04 起</div>
+        <div class="n">50<em> 人</em></div>
+        <div class="b">封顶 $90,000<span style="color:var(--mist);font-size:13px;font-weight:400">(校企混编实际)</span></div>
+        <div class="d">金泰 15 人 + 河传师生 35 人,本页方案即此档的落地明细</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="crew">
+  <div class="wrap">
+    <div class="reel"><span class="no">REEL 02</span><div class="bar"></div></div>
+    <h2>通告单:50 人编组与消耗画像</h2>
+    <p class="sub">费率来自 token 级建模(缓存读 1 折、Batch 半价已计入),对应 Excel 工作簿中的蓝色可调假设。</p>
+    <div class="scroll">
+    <table class="sheet">
+      <tr><th>层级</th><th>构成</th><th>人数</th><th>人均/工作日</th><th>Token 画像</th><th>日历</th></tr>
+      <tr>
+        <td class="tier">A 重度</td><td>金泰流水线 / 剪辑开发</td>
+        <td class="num">8</td><td class="num">$22.0</td>
+        <td class="dim">Claude Code 全天 agentic:新输入 1.2M + 缓存读 30M + 缓存写 1.5M + 输出 350K(Sonnet 5 主力)</td>
+        <td class="dim">企业历</td>
+      </tr>
+      <tr>
+        <td class="tier">B 中度</td><td>金泰制片 7 + 河传教师/导演组 5</td>
+        <td class="num">12</td><td class="num">$7.0</td>
+        <td class="dim">剧本 / 分镜 / 审片:Terra 主力 + Sol 按需,日输入 2M(60% 缓存)+ 输出 150K</td>
+        <td class="dim">金泰随企业历,河传随校历</td>
+      </tr>
+      <tr>
+        <td class="tier">C 轻度</td><td>河传学生共创组</td>
+        <td class="num">30</td><td class="num">$2.5</td>
+        <td class="dim">Batch 半价通道:日输入 1M + 输出 100K,Haiku/Sonnet 混合,班组共享池</td>
+        <td class="dim">校历(学期 1.0 / 考试周 0.3 / 寒暑假 0.15)</td>
+      </tr>
+    </table>
+    </div>
+    <div class="poolbar">
+      <div class="pa"><span class="t">A 池 · 58.4%</span><span class="m">$46,763</span></div>
+      <div class="pb"><span class="t">B 池 · 24.3%</span><span class="m">$19,469</span></div>
+      <div class="pc"><span class="t">C 池 · 17.3%</span><span class="m">$13,820</span></div>
+    </div>
+    <div class="legend">全年三池合计 $80,052 · 学期内满员工作日 ≈ $335/天 · 寒暑假 ≈ $225/天</div>
+  </div>
+</section>
+
+<section id="forecast">
+  <div class="wrap">
+    <div class="reel"><span class="no">REEL 03</span><div class="bar"></div></div>
+    <h2>12 个月消耗曲线</h2>
+    <p class="sub">寒假(春节)与暑假自动落谷,评审/交片日(每月最后两个工作日 ×1.4)已计入。数据与 Excel「月度汇总」逐月一致。</p>
+    <div class="months" id="months"></div>
+    <div class="mnote">■ <span style="color:var(--amber)">A 池</span> ■ <span style="color:#7d93ab">B 池</span> ■ <span style="color:var(--teal)">C 学生池</span> · 柱顶为当月合计(USD)</div>
+  </div>
+</section>
+
+<section id="calendar">
+  <div class="wrap">
+    <div class="reel"><span class="no">REEL 04</span><div class="bar"></div></div>
+    <h2>双日历计费机制</h2>
+    <p class="sub">一条公式管一整年,任何一天的预算都可复算、可审计:</p>
+    <div class="formula">当日预算 = 费率 × 人数 × <b>企业权重</b> × <i>校历系数</i>(仅河传师生)</div>
+    <div class="chips">
+      <div class="chip"><b>1.0</b>普通工作日</div>
+      <div class="chip"><b>1.4</b>评审/交片日(每月最后两个工作日,解锁 Opus 4.8 / Sol)</div>
+      <div class="chip"><b>0.1</b>周末与法定节假日 → 全团队共享池,个人配额关闭</div>
+      <div class="chip t"><b>1.0</b>教学周</div>
+      <div class="chip t"><b>0.3</b>考试周</div>
+      <div class="chip t"><b>0.15</b>寒暑假(办共创营时上调至 0.4–0.6)</div>
+    </div>
+    <div class="gov">
+      <div class="gcard"><h3>周五 20:00 降级窗口</h3><p>网关自动切换 <b>Sol→Terra、Opus→Sonnet/Haiku</b>;周一 08:00 恢复工作日模式并重发个人配额。P0 级问题走审批群指令临时解锁。</p></div>
+      <div class="gcard"><h3>三级熔断</h3><p>月消耗 <b>80% 预警</b> / <b>90% 旗舰仅审批</b> / <b>100% 只留 Batch</b>;非工作日消费超 $5 且无值班报备,立即排查挂机脚本。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="compliance">
+  <div class="wrap">
+    <div class="reel"><span class="no">REEL 05</span><div class="bar"></div></div>
+    <h2>学生管控与合规四件套</h2>
+    <p class="sub">承接金泰「合规 AIGC 生产线」定位——这一页同时是给河传的安全承诺。</p>
+    <div class="gov">
+      <div class="gcard"><h3>学生零个人 Key</h3><p>30 名学生不发任何个人 API Key。按班组建教学 Workspace,<b>组长持临时凭证</b>,日硬顶按 C 池 ÷ 组数下发,超即停。</p></div>
+      <div class="gcard"><h3>Batch 优先通道</h3><p>学生任务默认 <b>22:00 入队、次日晨取结果</b>(半价);实时通道仅课堂实训时段开放。</p></div>
+      <div class="gcard"><h3>合规四件套</h3><p><b>账号实名 + 日志留存</b>、生成内容过审核节点(n8n 接内容安全 API)、素材成片<b>溯源水印</b>、学生作品版权开课前书面确认。</p></div>
+      <div class="gcard"><h3>费用分摊</h3><p>金泰承担 A 池 + B 金泰池;共创池按校企协议分摊——建议金泰出资源,河传以<b>学分课 / 实训基地</b>名义配套,或按成片分成折抵。</p></div>
+    </div>
+    <div class="split">
+      <div class="scard"><div class="k">金泰承担 · 固定层</div><div class="v">$59,782</div><p>A 池全额 + B 金泰池,全年随企业历,可预算化</p></div>
+      <div class="scard t"><div class="k">共创池 · 可谈分摊</div><div class="v">$20,270</div><p>河传教师 + 学生共创组,随校历波动,校企协议项</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>数据源</b> · 金泰河传50人API预测方案_2026-09_2027-08.xlsx(预测模型 / 每日计划 365 行 / 月度汇总 / 管控与分摊)。人数与费率为蓝色可调格,改后全表自动重算。</p>
+    <p><b>暂定项</b> · 河传校历与 2027 法定节假日均为暂定,正式通知发布后更新每日计划表对应列即可。定价基准 2026-07:Sol $5/$30 · Opus 4.8 $5/$25 · Sonnet 5 $3/$15(8/31 前 $2/$10)。</p>
+  </div>
+</footer>
+<div class="stripe"></div>
+
+<script>
+(function(){
+  var data = {
+    "26.09":[3995,1907,1702],"26.10":[3538,1688,1508],"26.11":[3995,1907,1702],
+    "26.12":[4330,2066,1845],"27.01":[3854,1251,380],"27.02":[2851,879,182],
+    "27.03":[4330,2066,1845],"27.04":[3995,1907,1702],"27.05":[3538,1688,1508],
+    "27.06":[3995,1538,912],"27.07":[4171,1286,267],"27.08":[4171,1286,267]
+  };
+  var max = 8241, host = document.getElementById('months'), html = '';
+  for (var k in data){
+    var v = data[k], tot = v[0]+v[1]+v[2];
+    html += '<div><div class="mval">'+tot.toLocaleString()+'</div><div class="mcol" style="height:'+(tot/max*180)+'px">'
+      + '<div class="seg c" style="height:'+(v[2]/tot*100)+'%"></div>'
+      + '<div class="seg b" style="height:'+(v[1]/tot*100)+'%"></div>'
+      + '<div class="seg a" style="height:'+(v[0]/tot*100)+'%"></div>'
+      + '</div><div class="mlab">'+k+'</div></div>';
+  }
+  host.innerHTML = html;
+
+  var cv = document.getElementById('fluid'), ctx = cv.getContext('2d');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function size(){ cv.width = innerWidth; cv.height = innerHeight; }
+  size(); addEventListener('resize', size);
+  var blobs = [
+    {x:.2,y:.25,r:.42,c:'255,177,61', s:.00016,p:0},
+    {x:.85,y:.7,r:.5,c:'46,211,195', s:.00011,p:2.1},
+    {x:.6,y:.15,r:.34,c:'255,140,40', s:.00021,p:4.2}
+  ];
+  function draw(t){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    for (var i=0;i<blobs.length;i++){
+      var b = blobs[i];
+      var x = (b.x + Math.sin(t*b.s + b.p)*.12) * cv.width;
+      var y = (b.y + Math.cos(t*b.s*1.3 + b.p)*.14) * cv.height;
+      var r = b.r * Math.min(cv.width, cv.height);
+      var g = ctx.createRadialGradient(x,y,0,x,y,r);
+      g.addColorStop(0,'rgba('+b.c+',0.10)');
+      g.addColorStop(1,'rgba('+b.c+',0)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(x,y,r,0,6.2832); ctx.fill();
+    }
+    if(!reduced) requestAnimationFrame(draw);
+  }
+  draw(0);
+})();
+</script>
+
+</body>
+</html>
